@@ -262,13 +262,13 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 		
 	- Start the server :
 		``` bash
-		sudo ./athena-start start
+		./athena-start start
 		```
 	- Other options :
 
-		`sudo ./athena-start stop` to stop the server
+		`./athena-start stop` to stop the server
 
-		`sudo ./athena-start restart` to restart the server
+		`./athena-start restart` to restart the server
 
-		`sudo ./athena-start status` to check the server status
+		`./athena-start status` to check the server status
 
