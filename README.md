@@ -278,3 +278,12 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 
 		`./athena-start status` to check the server status
 
+## Client
+1.  **Requierements**:
+
+	- Download links :
+		- https://github.com/Neo-Mind/WARP
+		- http://nemo.herc.ws/clients/ - `2022-04-06_Ragexe_1648707856` Will be used
+		- https://rathena.org/board/topic/106413-kro-full-client-2023-04-04-includes-bgm-rsu/
+		- https://github.com/llchrisll/ROenglishRE
+		- https://rathena.org/board/files/file/2766-grf-editor/
