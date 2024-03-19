@@ -1,3 +1,4 @@
+
 Let’s break down the journey to hosting a **Ragnarok Online rAthena server emulator** on **Ubuntu Minimal 20.04 LTS**
 
 1.  **Updating and Upgrading**:
@@ -130,7 +131,30 @@ Let’s break down the journey to hosting a **Ragnarok Online rAthena server emu
 		userid: YOURSERVERCOMUSER
 		passwd: SERVERCOMUSERPASS
 		```
+
+		next :
+		```
+		// Login Server IP
+		// The character server connects to the login server using this IP address.
+		// NOTE: This is useful when you are running behind a firewall or are on
+		// a machine with multiple interfaces.
+		login_ip: YOUR.WAN.IP
+		// Character Server IP 
+		// The IP address which clients will use to connect. 
+		// Set this to what your server's public IP address is. 
+		char_ip: YOUR.WAN.IP
+		```
 		- Exit the editor pressing `Ctrl+X` key , Submitting `Y` to save.
+
+	- Now that you've edited the Server Communication username and password you have to update it from the MySQL Database `Login` table.
+		-  Using : http://yourip/phpmyadmin/
+		-  Login with : `YOURMYSQLUSER` & `YOURMYSQLUSERPASS`
+		- Expand your `YOURDATABASENAME`
+		- Select `Login` table
+		- Edit the user with `id account_id` = `1`
+		- Replace 
+			- userid: `s1` with `YOURSERVERCOMUSER` 
+			- user_pass: `p1` with `SERVERCOMUSERPASS`
 		
 	-   Next edit the `inter_athena.conf` so the server will be able to read your MySQL Database.
 	(Make sure to use the `YOURMYSQLUSER` , `YOURMYSQLUSERPASS` & `YOURDATABASENAME` you made earlier)
@@ -198,9 +222,9 @@ Let’s break down the journey to hosting a **Ragnarok Online rAthena server emu
 
 		Uncomment the following lines (Removing the `//`)
 		```
-		char_ip: 127.0.0.1
+		char_ip: YOUR.WAN.IP
 		char_port: 6121
-		map_ip: 127.0.0.1
+		map_ip: YOUR.WAN.IP
 		map_port: 5121
 		```
 		- Exit the editor pressing `Ctrl+X` key , Submitting `Y` to save.
@@ -214,9 +238,9 @@ Let’s break down the journey to hosting a **Ragnarok Online rAthena server emu
 
 	- In this step you will need to define the Packet version in order to match the client you'll be using
 	(this will be explained in more detail later)
-Our example client version is going to be **20211103** formated as `YYYMMDD`:
+Our example client version is going to be **20220406** formated as `YYYMMDD`:
 		```bash
-		./configure --enable-packetver=20211103
+		./configure --enable-packetver=20220406 --enable-prere=yes --enable-vip=no
 		```
 
 	- Compilation Steps
