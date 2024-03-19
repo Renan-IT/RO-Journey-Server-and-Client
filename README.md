@@ -137,6 +137,11 @@ Let’s break down the journey to hosting a **Ragnarok Online rAthena server emu
 
 		next :
 		```
+		// Server name, use alternative character such as ASCII 160 for spaces.
+		// NOTE: Do not use spaces or any of these characters which are not allowed in
+		//       Windows filenames \/:*?"<>|
+		//       ... or else guild emblems won't work client-side!
+		server_name: YOURSERVERNAME
 		// Login Server IP
 		// The character server connects to the login server using this IP address.
 		// NOTE: This is useful when you are running behind a firewall or are on
