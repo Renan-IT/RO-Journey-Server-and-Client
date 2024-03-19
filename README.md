@@ -242,6 +242,9 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 		```bash
 		./configure --enable-packetver=20220406 --enable-prere=yes --enable-vip=no
 		```
+    -   Explanation:
+	    - `--enable-prere=yes ` to yes if you want pre-renewal mode
+	    - `--enable-vip=no` if you want to disable the VIP feature
 
 	- Compilation Steps
 
