@@ -1,4 +1,4 @@
-Let’s break down the journey to hosting a **Ragnarok Online Rathena server emulator** on **Ubuntu Minimal 20.04 LTS**
+Let’s break down the journey to hosting a **Ragnarok Online rAthena server emulator** on **Ubuntu Minimal 20.04 LTS**
 
 1.  **Updating and Upgrading**:
     
