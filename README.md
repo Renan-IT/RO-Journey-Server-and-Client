@@ -1,4 +1,5 @@
 
+
 # Setting up a functional rAthena server and client in `2024`
 Let’s break down the journey to hosting a **Ragnarok Online rAthena server emulator** on **Ubuntu Minimal 20.04 LTS** as well as your own **Fullclient**
 
