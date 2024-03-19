@@ -1,6 +1,8 @@
 
-Let’s break down the journey to hosting a **Ragnarok Online rAthena server emulator** on **Ubuntu Minimal 20.04 LTS**
+# Setting up a functional rAthena server and client in `2024`
+Let’s break down the journey to hosting a **Ragnarok Online rAthena server emulator** on **Ubuntu Minimal 20.04 LTS** as well as your own **Fullclient**
 
+## Server
 1.  **Updating and Upgrading**:
     
     -   Start by updating and upgrading your system. This is a good practice to ensure you have the latest security patches and software updates.
@@ -269,4 +271,4 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 		`sudo ./athena-start restart` to restart the server
 
 		`sudo ./athena-start status` to check the server status
-	
+
