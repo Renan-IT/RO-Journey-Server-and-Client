@@ -107,7 +107,7 @@ Let’s break down the journey to hosting a **Ragnarok Online rAthena server emu
 		Make sure to replace : `IGADMINUSER` & `IGADMINPASS` with your user and password
 		(This can be edited later directly onto the phpMyAdmin UI)
 		```sql
-		INSERT INTO `azurerath`.`login` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`, `vip_time`, `old_group`) VALUES ('20000000', 'IGADMINUSER', 'IGADMINPASS', 'M', 'admin@email.com', '99', '0', '0', '0', '0', '2022-02-20 00:00:00', '', '2022-02-20', '9', '', '0', '0', '0');
+		INSERT INTO `YOURDATABASENAME`.`login` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`, `vip_time`, `old_group`) VALUES ('20000000', 'IGADMINUSER', 'IGADMINPASS', 'M', 'admin@email.com', '99', '0', '0', '0', '0', '2022-02-20 00:00:00', '', '2022-02-20', '9', '', '0', '0', '0');
 		QUIT
 		```
 		
