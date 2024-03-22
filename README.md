@@ -291,7 +291,7 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 2.  **Extracting Archives**:
 
 	- Unzip the full client archive `kRO_FullClient_20230404.zip`.
-	- Also unzip the `ROenglishRE-master.zip` archive.
+	- Unzip the `ROenglishRE-master.zip` archive.
 	- Unzip the WARP archive.
 	- Install GRF Editor.
 
