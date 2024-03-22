@@ -287,3 +287,53 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 		- https://rathena.org/board/topic/106413-kro-full-client-2023-04-04-includes-bgm-rsu/
 		- https://github.com/llchrisll/ROenglishRE
 		- https://rathena.org/board/files/file/2766-grf-editor/
+
+2.  **Extracting Archives**:
+
+	- Unzip the full client archive `kRO_FullClient_20230404.zip`.
+	- Also unzip the `ROenglishRE-master.zip` archive.
+	- Unzip the WARP archive.
+	- Install GRF Editor.
+
+3.  **File Organization**:
+
+	- Create the following folder structure:
+		```
+		fullclient 
+		├─ client (contents from kRO_FullClient_20230404.zip) 
+		├─ ROenglishRE-master (contents from ROenglishRE-master.zip)
+		├─ WARP (contents from the WARP archive) 
+		├─ ragexe (your ragexe file) 
+		├─ archives (all other archives) 
+		└── endata
+		```
+		
+4.  **File Copying**:
+	- Copy files from the `ROenglishRE-master` folder to the `endata` folder. Maintain the order.
+	- Overwrite existing files if necessary.
+		- Copy all files from `ROenglishRE/Translation/Renewal/` and `ROenglishRE/Translation/Pre-Renewal/`.
+		- Copy all files from `ROenglishRE/Additions/`.
+		- For each folder in `ROenglishRE/Translation/Compatibility/YYYY-MM-DD/`, copy files from oldest to newest into the `endata` folder.
+		(Subfolders `Renewal/` and `PreRenewal/` you should always start with `Renewal/`.)
+
+5.  **Client Configuration**:
+
+	- In the `endata` folder, edit the `clientinfo.xml` file to specify your client's name and change the IP address.
+
+6.  **Creating the traduction GRF**:
+	- Open GRF Editor, create a new GRF file, and add all files from the `endata` folder.
+	- Save the GRF as `endata.grf`.
+	- Copy the `endata.grf` file to the `client` folder.
+	- Also copy all files from the `endata` folder to the `client` folder.
+
+7.  **Editing DATA.ini**:
+	- In the `client` folder, edit the `DATA.ini` file.
+	- Add the line `0=endata.grf` above `1=rdata.grf` and save the changes.
+
+8.  **Patching the Ragexe**:
+	- Execute `./WARP/win32/WARP.exe`.
+	- Load `./ragexe/2022-04-06_Ragexe_1648707856.exe` as the source in WARP.
+	- Use the top-left menu to load the WARP session and select `./ROenglishRE/Addons/2020_Translation.yml`.
+	- Apply the patches.
+	- Copy the patched ragexe to the `client` folder.
+
