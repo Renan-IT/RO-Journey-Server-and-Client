@@ -1,5 +1,24 @@
 # Setting up a functional rAthena server and client in `2024`
-Let's break down the journey to hosting a **Ragnarok Online rAthena server emulator** on **Ubuntu Minimal 20.04 LTS** as well as your own **Fullclient**
+
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Server Setup](#server)
+  - [Quick Setup (Automated)](#quick-setup-automated)
+  - [Manual Setup](#manual-setup)
+- [Client Setup](#client)
+- [Discord Bot Integration](#discord-bot-integration)
+- [Troubleshooting](#troubleshooting)
+- [Security Considerations](#security-considerations)
+- [Maintenance](#maintenance)
+
+## Prerequisites
+Before starting, ensure you have:
+- Ubuntu Minimal 20.04 LTS or later
+- At least 2GB RAM (4GB recommended)
+- 20GB free disk space
+- A stable internet connection
+- Basic knowledge of Linux commands
+- A public IP address (if hosting for external access)
 
 ## Server
 
@@ -39,6 +58,8 @@ The script will:
 - Import all necessary SQL files
 - Configure server files
 - Compile the server
+
+> **Note**: The script requires sudo privileges to install packages and configure the system.
 
 ### Manual Setup
 If you prefer to set up the server manually, follow these steps:
@@ -425,4 +446,83 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 	- Use the top-left menu to load the WARP session and select `./ROenglishRE/Addons/2020_Translation.yml`.
 	- Apply the patches.
 	- Copy the patched ragexe to the `client` folder.
+
+## Discord Bot Integration
+The repository includes a Discord bot that provides the following features:
+- Account creation and management
+- Password reset functionality
+- Real-time player statistics
+- WoE (War of Emperium) statistics
+- Server status monitoring
+
+To set up the Discord bot:
+1. Install Python dependencies:
+   ```bash
+   pip install discord.py mysql-connector-python table2ascii
+   ```
+2. Configure the database connection in `addons/discord-bot/bot.py`
+3. Add your Discord bot token
+4. Run the bot:
+   ```bash
+   python addons/discord-bot/bot.py
+   ```
+
+## Troubleshooting
+Common issues and solutions:
+
+1. **Server won't start**
+   - Check if all ports are open (6900, 6121, 5121)
+   - Verify MySQL is running: `sudo systemctl status mysql`
+   - Check server logs in `log/` directory
+
+2. **Database connection issues**
+   - Verify MySQL credentials in `inter_athena.conf`
+   - Ensure MySQL service is running
+   - Check firewall settings
+
+3. **Client connection problems**
+   - Verify packet version matches client
+   - Check server IP configuration
+   - Ensure client files are properly patched
+
+## Security Considerations
+1. **Firewall Configuration**
+   ```bash
+   sudo ufw allow 6900/tcp  # Login Server
+   sudo ufw allow 6121/tcp  # Char Server
+   sudo ufw allow 5121/tcp  # Map Server
+   sudo ufw allow 3306/tcp  # MySQL (if needed)
+   ```
+
+2. **Database Security**
+   - Use strong passwords
+   - Limit MySQL access to localhost when possible
+   - Regularly backup your database
+
+3. **Server Security**
+   - Keep system and packages updated
+   - Use secure passwords for all accounts
+   - Regularly check server logs for suspicious activity
+
+## Maintenance
+1. **Regular Backups**
+   ```bash
+   # Backup database
+   mysqldump -u YOURMYSQLUSER -p YOURDATABASENAME > backup.sql
+   
+   # Backup server files
+   tar -czf rathena_backup.tar.gz ~/rAthena/
+   ```
+
+2. **Server Updates**
+   ```bash
+   cd ~/rAthena
+   git pull
+   make clean
+   make server
+   ```
+
+3. **Log Management**
+   - Regularly check and rotate logs in `log/` directory
+   - Monitor error logs for issues
 
