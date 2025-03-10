@@ -455,17 +455,86 @@ The repository includes a Discord bot that provides the following features:
 - WoE (War of Emperium) statistics
 - Server status monitoring
 
-To set up the Discord bot:
-1. Install Python dependencies:
+### Bot Setup
+
+1. **Install Dependencies**
    ```bash
-   pip install discord.py mysql-connector-python table2ascii
+   cd addons/discord-bot
+   pip install -r requirements.txt
    ```
-2. Configure the database connection in `addons/discord-bot/bot.py`
-3. Add your Discord bot token
-4. Run the bot:
+
+2. **Configure the Bot**
+   - Copy the environment template:
+     ```bash
+     cp .env.template .env
+     ```
+   - Edit `.env` with your configuration:
+     ```
+     DISCORD_TOKEN=your_discord_bot_token_here
+     COMMAND_PREFIX=!
+     DB_HOST=localhost
+     DB_USER=your_database_user
+     DB_PASS=your_database_password
+     DB_NAME=your_database_name
+     ```
+
+3. **Run the Bot**
    ```bash
-   python addons/discord-bot/bot.py
+   python bot.py
    ```
+
+### Available Commands
+
+- `!accreate <username> <password> <gender>`: Create a new account
+  - Example: `!accreate player123 password123 M`
+  - Gender must be 'M' or 'F'
+
+- `!passrenew <new_password>`: Reset your account password
+  - Example: `!passrenew newpassword123`
+
+- `!online`: Show currently online players
+  - Displays player name, class, base level, and job level
+
+- `!woe`: Show WoE statistics
+  - Displays damage dealt, damage received, healing, kills, deaths, and skills used
+
+### Bot Structure
+```
+discord-bot/
+├── config/
+│   └── config.py         # Configuration settings
+├── utils/
+│   └── db.py            # Database utilities
+├── commands/
+│   ├── account.py       # Account-related commands
+│   └── stats.py         # Statistics commands
+├── bot.py               # Main bot file
+├── requirements.txt     # Python dependencies
+├── .env.template        # Environment variables template
+└── README.md           # Bot documentation
+```
+
+### Security Considerations
+- Never commit your `.env` file or any files containing sensitive information
+- Keep your Discord bot token and database credentials secure
+- Use strong passwords for all accounts
+- Regularly update your dependencies for security patches
+
+### Troubleshooting
+1. **Bot won't start**
+   - Check if your `.env` file is properly configured
+   - Verify your Discord bot token is valid
+   - Ensure all dependencies are installed
+
+2. **Database connection issues**
+   - Verify database credentials in `.env`
+   - Check if the database server is running
+   - Ensure the database user has proper permissions
+
+3. **Commands not working**
+   - Check if the bot has proper permissions in your Discord server
+   - Verify the command prefix in `.env`
+   - Ensure the bot is online and responding
 
 ## Troubleshooting
 Common issues and solutions:
