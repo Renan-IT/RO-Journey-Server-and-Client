@@ -650,3 +650,36 @@ Common issues and solutions:
    - Regularly check and rotate logs in `log/` directory
    - Monitor error logs for issues
 
+### Character Improvements
+- **More Inventory Space**: Carry up to 70% of your max weight (was 50%)
+- **Better Resting**: Recover 1% HP/SP per second while sitting
+- **Faster Skills**: No waiting for skill animations
+- **Improved Food Buffs**: 
+  - Food buffs last 30 minutes (was 5 minutes)
+  - Buffs persist through death
+  - Applies to all food items
+- **Better Endow**: 
+  - Assassins can switch off-hand weapons without losing endow
+  - Endow only removed when changing main-hand weapon
+  - Makes dual-wielding more viable for Assassins
+
+### Gameplay Improvements
+- **Easy Job Selection**: Direct job selection menu for new characters
+- **Safe Card Removal**: Remove cards without risk of destruction
+- **Better Buffs**: AoE versions of Bless and Agi for priests
+- **Same-Sex Marriage**: Marry any character regardless of gender
+- **MVP Tombstones**: 
+  - Shows who killed the MVP and when
+  - Tombs spawn where the MVP died
+  - Tomb disappears when MVP respawns
+  - Currently works for Baphomet, Dark Lord, and Golden Bug
+  - Clickable for detailed information
+
+### Trading Improvements
+- **Quick Vendors**: Use `@ws` to sell and `@wb` to buy items
+- **HD Ore Exchange**: Exchange regular ores for HD ores in Prontera
+  - 10 regular Oridecon = 1 HD Oridecon
+  - 10 regular Elunium = 1 HD Elunium
+  - Located in Prontera (150,150)
+- **Better Party EXP**: Increased experience rates for party play:
+
