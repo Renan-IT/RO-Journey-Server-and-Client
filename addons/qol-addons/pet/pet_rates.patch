@@ -1,0 +1,18 @@
+// Pet Rates Patch
+// Author: RO-Journey Team
+// Version: 1.0
+// Modifies pet intimacy and hunger rates
+
+// In pet.c, modify the intimacy and hunger rates
+// Original location: pet.c around line 500
+// ... existing code ...
+    // Increase intimacy gain rate (2x faster)
+    if (pet->intimate < 1000) {
+        pet->intimate += 2;
+    }
+    
+    // Decrease hunger rate (2x slower)
+    if (pet->hungry > 0) {
+        pet->hungry -= 1;
+    }
+// ... existing code ... 

@@ -1,0 +1,90 @@
+// HD Ore Exchange System
+// Author: RO-Journey Team
+// Version: 1.0
+// Allows exchanging regular ores for HD ores (10:1 ratio)
+
+prontera,150,150,4	script	HD Ore Exchange	4W_F_01,{
+    mes "[HD Ore Exchange]";
+    mes "I can help you exchange your regular ores for HD ores.";
+    mes "This will help protect your equipment during upgrades.";
+    mes "Rate: 10 regular ores = 1 HD ore";
+    
+    next;
+    if (select("Exchange Ori","Exchange Elu","Cancel") == 3) {
+        close;
+    }
+    
+    if (@menu == 1) {
+        if (countitem(969) < 10) { // Ori
+            mes "[HD Ore Exchange]";
+            mes "You need at least 10 Ori to exchange.";
+            close;
+        }
+        
+        mes "[HD Ore Exchange]";
+        mes "I'll exchange your Ori for HD Ori.";
+        mes "Rate: 10 Ori = 1 HD Ori";
+        mes "How many HD Ori would you like to get?";
+        
+        next;
+        input @amount;
+        
+        if (@amount <= 0) {
+            mes "[HD Ore Exchange]";
+            mes "Invalid amount.";
+            close;
+        }
+        
+        if (countitem(969) < @amount * 10) {
+            mes "[HD Ore Exchange]";
+            mes "You don't have enough Ori.";
+            mes "You need " + (@amount * 10) + " Ori for " + @amount + " HD Ori.";
+            close;
+        }
+        
+        delitem 969, @amount * 10;
+        getitem 969, @amount; // HD Ori
+        
+        mes "[HD Ore Exchange]";
+        mes "Exchange complete!";
+        mes "You exchanged " + (@amount * 10) + " Ori for " + @amount + " HD Ori.";
+        close;
+    }
+    
+    if (@menu == 2) {
+        if (countitem(985) < 10) { // Regular Elunium
+            mes "[HD Ore Exchange]";
+            mes "You need at least 10 Elu to exchange.";
+            close;
+        }
+        
+        mes "[HD Ore Exchange]";
+        mes "I'll exchange your Elu for HD Elu.";
+        mes "Rate: 10 Elu = 1 HD Elu";
+        mes "How many HD Elu would you like to get?";
+        
+        next;
+        input @amount;
+        
+        if (@amount <= 0) {
+            mes "[HD Ore Exchange]";
+            mes "Invalid amount.";
+            close;
+        }
+        
+        if (countitem(985) < @amount * 10) {
+            mes "[HD Ore Exchange]";
+            mes "You don't have enough Elu.";
+            mes "You need " + (@amount * 10) + " Elu for " + @amount + " HD Elu.";
+            close;
+        }
+        
+        delitem 985, @amount * 10;  // Regular Elunium
+        getitem 6215, @amount;      // HD Elunium
+        
+        mes "[HD Ore Exchange]";
+        mes "Exchange complete!";
+        mes "You exchanged " + (@amount * 10) + " Elu for " + @amount + " HD Elu.";
+        close;
+    }
+} 

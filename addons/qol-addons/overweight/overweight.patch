@@ -1,0 +1,13 @@
+// Overweight Limit Patch
+// Author: RO-Journey Team
+// Version: 1.0
+// Increases the overweight limit to 70%
+
+// In battle.c, modify the weight limit calculation
+// Original location: battle.c around line 1000
+// ... existing code ...
+    if (sd) {
+        // Increase weight limit to 70%
+        sd->weight_limit = (int)(sd->max_weight * 0.7);
+    }
+// ... existing code ... 

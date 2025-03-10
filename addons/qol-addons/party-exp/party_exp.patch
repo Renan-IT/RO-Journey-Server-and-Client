@@ -1,0 +1,24 @@
+// Party Experience Patch
+// Author: RO-Journey Team
+// Version: 1.0
+// Increases party experience rates
+
+// In battle.c, modify the party experience calculation
+// Original location: battle.c around line 2000
+// ... existing code ...
+    // Party experience bonus calculation
+    switch(party_count) {
+        case 1: exp_rate = 100; break;
+        case 2: exp_rate = 150; break;
+        case 3: exp_rate = 200; break;
+        case 4: exp_rate = 250; break;
+        case 5: exp_rate = 300; break;
+        case 6: exp_rate = 350; break;
+        case 7: exp_rate = 400; break;
+        case 8: exp_rate = 450; break;
+        case 9: exp_rate = 500; break;
+        case 10: exp_rate = 550; break;
+        case 11: exp_rate = 600; break;
+        case 12: exp_rate = 650; break;
+    }
+// ... existing code ... 
