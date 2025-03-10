@@ -455,6 +455,61 @@ The repository includes a Discord bot that provides the following features:
 - WoE (War of Emperium) statistics
 - Server status monitoring
 
+### WoE Tracking System
+The server includes a comprehensive WoE tracking system that monitors:
+- Player damage dealt and received
+- Healing amounts
+- Kill and death counts
+- Skill usage
+- Player participation
+- Guild performance
+
+#### Installation
+1. **Database Setup**
+   ```bash
+   mysql -u YOUR_DATABASE_USER -p YOUR_DATABASE_NAME < addons/discord-bot/sql/discord_bot.sql
+   ```
+
+2. **Server Integration**
+   ```bash
+   # Copy WoE tracker files
+   cp addons/woe-tracker/woe_tracker.c src/map/
+   cp addons/woe-tracker/woe_tracker.h src/map/
+   
+   # Apply battle system patch
+   cd rAthena
+   patch -p1 < addons/woe-tracker/battle.patch
+   
+   # Add tracking script
+   cp addons/woe-tracker/woe_tracker.txt conf/script/
+   ```
+
+3. **Configure Server**
+   Add to `conf/script.conf`:
+   ```conf
+   script: conf/script/woe_tracker.txt
+   ```
+
+4. **Compile Server**
+   ```bash
+   make clean
+   make server
+   ```
+
+#### Features
+- Real-time WoE statistics tracking
+- Automatic session management
+- Detailed player performance metrics
+- Guild participation tracking
+- Historical data storage
+- Integration with Discord bot for statistics display
+
+#### Database Structure
+The tracking system uses the following tables:
+- `woe_data`: Player statistics
+- `woe_sessions`: WoE event sessions
+- `woe_participation`: Player participation records
+
 ### Bot Setup
 
 1. **Install Dependencies**
