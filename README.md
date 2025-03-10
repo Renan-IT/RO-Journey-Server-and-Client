@@ -1,9 +1,48 @@
-
-
 # Setting up a functional rAthena server and client in `2024`
-Let’s break down the journey to hosting a **Ragnarok Online rAthena server emulator** on **Ubuntu Minimal 20.04 LTS** as well as your own **Fullclient**
+Let's break down the journey to hosting a **Ragnarok Online rAthena server emulator** on **Ubuntu Minimal 20.04 LTS** as well as your own **Fullclient**
 
 ## Server
+
+### Quick Setup (Automated)
+You can use the provided setup script to automate the entire server setup process:
+
+1. **Download the setup script**:
+   ```bash
+   wget https://raw.githubusercontent.com/Renan-IT/RO-Journey-Server-and-Client/main/setup.sh
+   ```
+
+2. **Make the script executable**:
+   ```bash
+   chmod +x setup.sh
+   ```
+
+3. **Run the script**:
+   ```bash
+   sudo ./setup.sh
+   ```
+
+4. **Follow the prompts**:
+   - Enter your database name (default: ragnarok)
+   - Enter your MySQL username (default: ragnarok)
+   - Enter your MySQL password (default: ragnarok)
+   - Enter your server name (default: MyRO)
+   - Enter your server's public IP
+   - Enter your admin username (default: admin)
+   - Enter your admin password (default: admin)
+   - Enter server communication username (default: s1)
+   - Enter server communication password (default: p1)
+
+The script will:
+- Update your system
+- Install all required dependencies
+- Set up MySQL database
+- Import all necessary SQL files
+- Configure server files
+- Compile the server
+
+### Manual Setup
+If you prefer to set up the server manually, follow these steps:
+
 1.  **Updating and Upgrading**:
     
     -   Start by updating and upgrading your system. This is a good practice to ensure you have the latest security patches and software updates.
@@ -30,27 +69,33 @@ Let’s break down the journey to hosting a **Ragnarok Online rAthena server emu
         sudo apt install php phpmyadmin mysql-server mysql-client -y
         sudo apt install nano
         sudo apt install git make gcc g++ -y
+        sudo apt install libmysqlclient-dev -y
+        sudo apt install libssl-dev -y
+        sudo apt install libzlib1g-dev -y
         ```
         
     -   Explanation:
-        -   `build-essential`: Installs essential tools (like compilers) needed for building software from source code.
-        -   `zlib1g-dev`: Provides development files for the zlib compression library.
-        -   `libpcre3-dev`: Installs development files for the PCRE (Perl Compatible Regular Expressions) library.
-        -   `libmariadb-dev`  and  `libmariadb-dev-compat`: These packages provide development files and compatibility libraries for MariaDB (a MySQL fork).
+        -  `build-essential`: Installs essential tools (like compilers) needed for building software from source code.
+        -  `zlib1g-dev`: Provides development files for the zlib compression library.
+        -  `libpcre3-dev`: Installs development files for the PCRE (Perl Compatible Regular Expressions) library.
+        -  `libmariadb-dev`  and  `libmariadb-dev-compat`: These packages provide development files and compatibility libraries for MariaDB (a MySQL fork).
         -   Ondřej Surý PHP repository provides PHP packages not available in the default Ubuntu repositories.
-        -   `php`: Installs PHP, a server-side scripting language.
-        -   `phpmyadmin`: A web-based interface for managing MySQL databases.
-        -   `mysql-server`  and  `mysql-client`: Installs MySQL server and client components.
+        -  `php`: Installs PHP, a server-side scripting language.
+        -  `phpmyadmin`: A web-based interface for managing MySQL databases.
+        -  `mysql-server`  and  `mysql-client`: Installs MySQL server and client components.
         -  `nano`: A lightweight and user-friendly text editor
         -  `git`: Installs the Git version control system. Git is widely used for managing source code repositories
         -  `make` `gcc` `g++`: Install essential development tools for compiling and building software
+        -  `libmysqlclient-dev`: Provides development files for the MySQL client library
+        -  `libssl-dev`: Provides development files for the OpenSSL library
+        -  `libzlib1g-dev`: Provides development files for the zlib compression library
 
     -   Notes:
-        After installing phpMyAdmin, you’ll be prompted to configure a database. Follow these instructions:
+        After installing phpMyAdmin, you'll be prompted to configure a database. Follow these instructions:
 
-        -   When prompted, type  **“yes”**  to configure the database.
+        -   When prompted, type  **"yes"**  to configure the database.
         -   Set up a password for the database user.
-        -   Select  **“1”**  (for  **apache2**) when asked to choose a web server.
+        -   Select  **"1"**  (for  **apache2**) when asked to choose a web server.
 
 3.  **Clone the rAthena Repository**:
 
@@ -92,15 +137,57 @@ Let’s break down the journey to hosting a **Ragnarok Online rAthena server emu
 		GRANT ALL ON log.* TO YOURMYSQLUSER@localhost;
 		QUIT
 		```
-	-   Now you can import the rAthena .sql files using the specified `YOURMYSQLUSER`  & `YOURDATABASENAME`
-	-   Commands :
+	-   Now you need to import all the necessary SQL files in the correct order. Make sure you're in the rAthena directory:
 		```bash
+		cd ~/rAthena
+		```
+
+	-   Import the SQL files in this specific order:
+		```bash
+		# Import main database tables
 		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/main.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/roulette_default_data.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/item_cash_db.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/item_cash_db2.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/item_db.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/item_db2.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/item_db_re.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/item_db2_re.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/mob_db.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/mob_db2.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/mob_db_re.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/mob_db2_re.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/mob_skill_db.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/mob_skill_db2.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/produce_db.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/quest_db.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/quest_db_re.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/shop_db.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/shop_db2.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/skill_db.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/skill_db2.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/skill_db_re.sql
+		mysql -u YOURMYSQLUSER -p YOURDATABASENAME < ./sql-files/skill_db2_re.sql
+
+		# Import log database tables
 		mysql -u YOURMYSQLUSER -p log < ./sql-files/logs.sql
 		```
-		- Enter your MySQL user pass `YOURMYSQLUSERPASS` when prompted.
 
-	-   Finish creating the first account directly on the database
+	-   Explanation of the SQL files:
+		- `main.sql`: Contains core game tables (accounts, characters, etc.)
+		- `roulette_default_data.sql`: Default roulette system data
+		- `item_*.sql`: Item database files (cash shop, regular items, etc.)
+		- `mob_*.sql`: Monster database files
+		- `mob_skill_*.sql`: Monster skill database files
+		- `produce_db.sql`: Crafting system database
+		- `quest_*.sql`: Quest system database files
+		- `shop_*.sql`: Shop system database files
+		- `skill_*.sql`: Skill system database files
+		- `logs.sql`: Logging system tables
+
+	-   Note: Files with `_re` suffix are for Renewal mode. If you're using Pre-Renewal mode, you can skip those files.
+
+	-   After importing all SQL files, create your first admin account:
 		```bash
 		sudo mysql -u YOURMYSQLUSER -p
 		```
@@ -248,11 +335,13 @@ Let’s break down the journey to hosting a **Ragnarok Online rAthena server emu
 	(this will be explained in more detail later)
 Our example client version is going to be **20220406** formated as `YYYMMDD`:
 		```bash
-		./configure --enable-packetver=20220406 --enable-prere=yes --enable-vip=no
+		./configure --enable-packetver=20220406 --enable-prere=yes --enable-vip=no --enable-64bit=yes --enable-debug=no
 		```
     -   Explanation:
 	    - `--enable-prere=yes ` to yes if you want pre-renewal mode
 	    - `--enable-vip=no` if you want to disable the VIP feature
+	    - `--enable-64bit=yes` if you want to compile for 64-bit architecture
+	    - `--enable-debug=no` if you want to compile without debugging information
 
 	- Compilation Steps
 
