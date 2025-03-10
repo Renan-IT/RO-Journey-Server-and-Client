@@ -1,0 +1,36 @@
+#include "woe_tracker.h"
+
+// ... existing code ...
+
+@@ -1000,6 +1001,9 @@ int battle_damage(struct block_list* src, struct block_list* target, int64 damage,
+     // ... existing damage calculation code ...
+ 
+     // Track WoE damage
++    if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE]) {
++        woe_tracker_damage((struct map_session_data*)src, damage);
++        woe_tracker_damage_received((struct map_session_data*)target, damage);
++    }
+ 
+     return damage;
+ }
+@@ -2000,6 +2004,9 @@ int battle_heal(struct block_list* src, struct block_list* target, int64 heal,
+     // ... existing healing code ...
+ 
+     // Track WoE healing
++    if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE]) {
++        woe_tracker_heal((struct map_session_data*)src, heal);
++    }
+ 
+     return heal;
+ }
+@@ -3000,6 +3007,9 @@ void battle_kill(struct block_list* src, struct block_list* target,
+     // ... existing kill code ...
+ 
+     // Track WoE kills
++    if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE]) {
++        woe_tracker_kill((struct map_session_data*)src);
++        woe_tracker_death((struct map_session_data*)target);
++    }
+ }
+ 
+ // ... rest of the file ... 
