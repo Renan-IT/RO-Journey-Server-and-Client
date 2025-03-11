@@ -1,20 +1,14 @@
-import os
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
-
 # Database configuration
 DB_CONFIG = {
-    'host': os.getenv('DB_HOST', 'localhost'),
-    'user': os.getenv('DB_USER', 'your_db_user'),
-    'password': os.getenv('DB_PASS', 'your_db_password'),
-    'database': os.getenv('DB_NAME', 'your_db_name')
+    'host': 'localhost',
+    'user': 'ragnarok',  # Your database user
+    'password': 'ragnarok',  # Your database password
+    'database': 'ragnarok'  # Your database name
 }
 
 # Discord configuration
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN', 'your_discord_bot_token')
-COMMAND_PREFIX = os.getenv('COMMAND_PREFIX', '!')
+DISCORD_TOKEN = 'your_discord_bot_token'  # Replace with your bot token
+COMMAND_PREFIX = '!'
 
 # Class names mapping
 CLASS_NAMES = {

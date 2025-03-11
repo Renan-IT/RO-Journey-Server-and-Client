@@ -1,152 +1,169 @@
 # Ragnarok Online Discord Bot
 
-A Discord bot for managing Ragnarok Online server accounts and displaying player statistics.
+A feature-rich Discord bot designed to enhance your Ragnarok Online server management and player experience.
 
 ## Features
 
-- Account creation and management
-- Password renewal
-- Online player list
-- WoE statistics display
-  - Damage dealt/received
-  - Healing amounts
-  - Kill/death counts
-  - Skill usage
-  - Player participation
-  - Guild performance
+### Account Management
+- Create new game accounts
+- Reset account passwords
+- View account status
 
-## Prerequisites
+### Server Statistics
+- Real-time player count
+- Online player list with details
+- Server status monitoring
 
+### WoE (War of Emperium) System
+The bot includes a comprehensive WoE tracking system that monitors:
+- Player damage dealt and received
+- Healing amounts
+- Kill and death counts
+- Skill usage statistics
+- Player participation rates
+- Guild performance metrics
+
+## Installation
+
+### Prerequisites
 - Python 3.8 or higher
 - MySQL/MariaDB database
 - Discord Bot Token
-- rAthena server with WoE tracking system installed
 
-## Database Setup
-
-The bot requires some modifications to your rAthena database. Run the following SQL script to add the necessary tables and columns:
-
+### Database Setup
 ```bash
 mysql -u YOUR_DATABASE_USER -p YOUR_DATABASE_NAME < sql/discord_bot.sql
 ```
 
-This will:
-1. Add a `discord_id` column to the `login` table
-2. Create tables for WoE statistics tracking:
-   - `woe_data`: Stores player statistics
-   - `woe_sessions`: Tracks WoE event sessions
-   - `woe_participation`: Records player participation
-3. Create necessary indexes for performance
-4. Create a view for easy access to WoE statistics
+### WoE Tracker Setup
+1. **Copy Source Files**
+   ```bash
+   cp woe-tracker/woe_tracker.c src/map/
+   cp woe-tracker/woe_tracker.h src/map/
+   ```
 
-### Database Structure
+2. **Apply Patches**
+   ```bash
+   cd rAthena
+   patch -p1 < addons/woe-tracker/battle.patch
+   ```
 
-#### woe_data Table
-- `player_name`: Character name
-- `damage_amount`: Total damage dealt
-- `damage_received`: Total damage received
-- `heal_amount`: Total healing provided
-- `kill_count`: Number of kills
-- `death_count`: Number of deaths
-- `skill_count`: Number of skills used
-- `last_update`: Last update timestamp
+3. **Add Scripts**
+   ```bash
+   cp woe-tracker/woe_tracker.txt conf/script/
+   ```
 
-#### woe_sessions Table
-- `start_time`: Session start time
-- `end_time`: Session end time
-- `castle_id`: Castle ID
-- `guild_id`: Guild ID
-- `guild_name`: Guild name
-- `status`: Session status (active/completed/cancelled)
+4. **Update Configuration**
+   Add to `conf/script.conf`:
+   ```conf
+   script: conf/script/woe_tracker.txt
+   ```
 
-#### woe_participation Table
-- `session_id`: Reference to woe_sessions
-- `player_name`: Character name
-- `guild_id`: Guild ID
-- `guild_name`: Guild name
-- `join_time`: Join timestamp
-- `leave_time`: Leave timestamp
+5. **Recompile Server**
+   ```bash
+   make clean
+   make server
+   ```
 
-## Setup
+### Bot Setup
 
-1. Clone the repository
-2. Install dependencies:
+1. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Configure the bot:
-   - Copy `.env.template` to `.env`:
-     ```bash
-     cp .env.template .env
-     ```
-   - Edit `.env` with your configuration:
-     ```
-     DISCORD_TOKEN=your_actual_discord_token
-     COMMAND_PREFIX=!
-     DB_HOST=your_database_host
-     DB_USER=your_database_user
-     DB_PASS=your_database_password
-     DB_NAME=your_database_name
-     ```
+2. **Configure the Bot**
+   Edit `config/config.py`:
+   ```python
+   # Database configuration
+   DB_CONFIG = {
+       'host': 'localhost',
+       'user': 'ragnarok',     # Your database user
+       'password': 'ragnarok', # Your database password
+       'database': 'ragnarok'  # Your database name
+   }
 
-4. Run the bot:
+   # Discord configuration
+   DISCORD_TOKEN = 'your_discord_bot_token'  # Your bot token
+   COMMAND_PREFIX = '!'
+   ```
+
+3. **Run the Bot**
    ```bash
    python bot.py
    ```
 
-## Commands
+## Available Commands
 
-- `!accreate <username> <password> <gender>`: Create a new account
+### Account Management
+- `!accreate <username> <password> <gender>` - Create a new account
   - Example: `!accreate player123 password123 M`
   - Gender must be 'M' or 'F'
-
-- `!passrenew <new_password>`: Reset your account password
+- `!passrenew <new_password>` - Reset your account password
   - Example: `!passrenew newpassword123`
 
-- `!online`: Show currently online players
+### Server Information
+- `!online` - Show currently online players
   - Displays player name, class, base level, and job level
+- `!status` - Show server status and player count
 
-- `!woe`: Show WoE statistics
-  - Displays damage dealt, damage received, healing, kills, deaths, and skills used
-  - Format: `!woe [player_name]` (optional player name for specific player stats)
+### WoE Statistics
+- `!woe` - Show WoE statistics
+  - Displays damage dealt/received, healing, kills, deaths, and skills used
+- `!woetop` - Show top performers in current WoE
+- `!guild <guild_name>` - Show guild WoE statistics
 
-- `!woe guild <guild_name>`: Show guild WoE statistics
-  - Displays guild performance in WoE
-  - Includes total damage, kills, and participation
+## Project Structure
+```
+discord-bot/
+├── config/
+│   └── config.py         # Configuration settings
+├── utils/
+│   └── db.py            # Database utilities
+├── commands/
+│   ├── account.py       # Account-related commands
+│   └── stats.py         # Statistics commands
+├── sql/
+│   └── discord_bot.sql  # Database schema
+├── bot.py               # Main bot file
+├── requirements.txt     # Python dependencies
+└── README.md           # Documentation
+```
 
-## Security Notes
+## Database Structure
+- `woe_data`: Player statistics during WoE
+- `woe_sessions`: WoE event session tracking
+- `woe_participation`: Player participation records
 
-- Never commit your `.env` file or any files containing sensitive information
-- Keep your Discord bot token and database credentials secure
+## Security Considerations
+- Keep your Discord bot token secure
 - Use strong passwords for all accounts
-- Regularly update your dependencies for security patches
+- Regularly update dependencies for security patches
+- Implement rate limiting for commands
+- Validate all user inputs
 
 ## Troubleshooting
 
-1. **Bot won't start**
-   - Check if your `.env` file is properly configured
-   - Verify your Discord bot token is valid
-   - Ensure all dependencies are installed
+### Bot Won't Start
+- Check if configuration in `config.py` is correct
+- Verify Discord bot token is valid
+- Ensure all dependencies are installed
+- Check Python version compatibility
 
-2. **Database connection issues**
-   - Verify database credentials in `.env`
-   - Check if the database server is running
-   - Ensure the database user has proper permissions
+### Database Connection Issues
+- Verify database credentials in `config.py`
+- Check if database server is running
+- Ensure database user has proper permissions
+- Check network connectivity
 
-3. **Commands not working**
-   - Check if the bot has proper permissions in your Discord server
-   - Verify the command prefix in `.env`
-   - Ensure the bot is online and responding
+### Commands Not Working
+- Check bot permissions in Discord server
+- Verify command prefix in `config.py`
+- Ensure bot is online and responding
+- Check command syntax
 
 ## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+Contributions are welcome! Please feel free to submit pull requests.
 
 ## License
-
 This project is licensed under the MIT License - see the LICENSE file for details.

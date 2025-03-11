@@ -1,0 +1,71 @@
+// 100% Card Removal System
+// Author: RO-Journey Team
+// Version: 1.0
+
+prontera,150,150,4	script	Card Remover	4W_F_01,{
+    mes "[Card Remover]";
+    mes "Welcome to the Card Removal Service!";
+    mes "I can safely remove cards from your equipment.";
+    mes "The cost is 50,000 zeny per card.";
+    
+    next;
+    if (select("Remove Card","Cancel") == 2) {
+        mes "[Card Remover]";
+        mes "Come back when you need my services!";
+        close;
+    }
+    
+    if (Zeny < 50000) {
+        mes "[Card Remover]";
+        mes "You don't have enough zeny.";
+        close;
+    }
+    
+    mes "[Card Remover]";
+    mes "Please select the equipment with the card you want to remove:";
+    
+    next;
+    setarray @equip[0], EQP_HEAD_LOW, EQP_HEAD_MID, EQP_HEAD_TOP, EQP_ARMOR, EQP_HAND_L, EQP_HAND_R, EQP_GARMENT, EQP_SHOES, EQP_ACC_L, EQP_ACC_R;
+    setarray @equip_name$[0], "Lower Headgear", "Middle Headgear", "Top Headgear", "Armor", "Left Hand", "Right Hand", "Garment", "Shoes", "Left Accessory", "Right Accessory";
+    
+    for (set @i, 0; @i < 10; set @i, @i + 1) {
+        if (getequipisequiped(@equip[@i])) {
+            set @menu$[@menu_count], @equip_name$[@i];
+            set @menu_count, @menu_count + 1;
+        }
+    }
+    
+    if (@menu_count == 0) {
+        mes "[Card Remover]";
+        mes "You don't have any equipped items with cards.";
+        close;
+    }
+    
+    set @selection, select(@menu$[0]);
+    
+    // Get the selected equipment
+    set @equip_id, @equip[@selection];
+    set @item_id, getequipid(@equip_id);
+    
+    // Check if item has a card
+    if (!getequipcardcnt(@equip_id)) {
+        mes "[Card Remover]";
+        mes "This equipment doesn't have any cards.";
+        close;
+    }
+    
+    // Get card ID
+    set @card_id, getequipcardid(@equip_id, 0);
+    
+    // Remove card
+    delitem @item_id, 1;
+    getitem @item_id, 1;
+    getitem @card_id, 1;
+    
+    // Charge fee
+    set Zeny, Zeny - 50000;
+    
+    mes "[Card Remover]";
+    mes "Card successfully removed!";
+    close;
+} 

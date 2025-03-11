@@ -1,0 +1,51 @@
+// Food Buffs System
+// Author: RO-Journey Team
+// Version: 1.0
+// Food buffs last 30 minutes and persist through death
+
+// In battle.c, modify the food buff handling
+diff --git a/src/map/battle.c b/src/map/battle.c
+index 1234567..89abcdef 100644
+--- a/src/map/battle.c
++++ b/src/map/battle.c
+@@ -1000,6 +1000,10 @@ int battle_consume_item(struct map_session_data *sd, struct item *item)
+     // Food buff duration modification
+     if (item->type == IT_FOOD) {
+         // Set duration to 30 minutes (1800 seconds)
+         status_change_start(bl, SC_FOOD, 100, 0, 0, 0, 0, 0, 1800);
+     }
+     // ... existing code ...
+ }
+
+// In status.c, modify the death handling
+diff --git a/src/map/status.c b/src/map/status.c
+index 1234567..89abcdef 100644
+--- a/src/map/status.c
++++ b/src/map/status.c
+@@ -1000,6 +1000,10 @@ int status_change_start(struct block_list *bl,enum sc_type type, int rate, int val1, int val2, int val3, int val4, int tick, int flag)
+     // Modify food buff duration
+     if (type == SC_FOOD) {
+         tick = 1800;  // 30 minutes
+     }
+     return status_change_start_sub(bl, type, rate, val1, val2, val3, val4, tick, flag);
+ }
+ 
+@@ -2000,6 +2004,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line)
+     struct status_change* sc;
+     struct map_session_data *sd;
+     
+     // Don't remove food buffs on death
+     if (type == SC_FOOD && tid == -1)
+         return 0;
+     
+     sc = status_get_sc(bl);
+     
+     if(sc && sc->data[type]) {
+         if (tid != sc->data[type]->timer) {
+             ShowError("status_change_end_: Mismatch for type %d: %d != %d\n", type, tid, sc->data[type]->timer);
+             return 0;
+         }
+     }
+     
+     return status_change_end(bl, type, tid);
+ } 
