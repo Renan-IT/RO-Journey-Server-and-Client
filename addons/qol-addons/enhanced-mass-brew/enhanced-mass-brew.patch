@@ -1,0 +1,86 @@
+diff --git a/src/map/skill.c b/src/map/skill.c
+index 1234567..89abcdef 100644
+--- a/src/map/skill.c
++++ b/src/map/skill.c
+@@ -8245,6 +8245,85 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, int slot1, int slot2, int slot3, int quantity, short trigger)
+ 	case AM_TWILIGHT1:
+ 	case AM_TWILIGHT2:
+ 	case AM_TWILIGHT3:
++		// Show selection menu based on skill level
++		if (skill_id == AM_TWILIGHT1) {
++			char menu_text[256];
++			sprintf(menu_text, "Select potion to mass produce:\\n\\n"
++				"^0055FF1.^000000 White Potion\\n"
++				"^0055FF2.^000000 Blue Potion");
++			clif_scriptmenu(sd, menu_text);
++			
++			if (nameid == ITEMID_WHITE_POTION || nameid == ITEMID_BLUE_POTION)
++				quantity = 200;
++		}
++		if (skill_id == AM_TWILIGHT2) {
++			char menu_text[256];
++			sprintf(menu_text, "Select item to mass produce:\\n\\n"
++				"^0055FF1.^000000 Condensed White Potion\\n"
++				"^0055FF2.^000000 Acid Bottle\\n"
++				"^0055FF3.^000000 Bottle Grenade");
++			clif_scriptmenu(sd, menu_text);
++			
++			if (nameid == ITEMID_WHITE_SLIM_POTION || 
++				nameid == ITEMID_ACID_BOTTLE || 
++				nameid == ITEMID_BOTTLE_GRENADE)
++				quantity = 200;
++		}
++		if (skill_id == AM_TWILIGHT3) {
++			char menu_text[256];
++			sprintf(menu_text, "Select item to mass produce:\\n\\n"
++				"^0055FF1.^000000 Alcohol\\n"
++				"^0055FF2.^000000 Glistening Coat");
++			clif_scriptmenu(sd, menu_text);
++			
++			if (nameid == ITEMID_ALCOHOL || nameid == ITEMID_GLISTENING_COAT)
++				quantity = 200;
++		}
++		
++		break;
++
++		// Add success rates for items
++		if (skill_id == AM_TWILIGHT1 || skill_id == AM_TWILIGHT2 || skill_id == AM_TWILIGHT3) {
++			switch(nameid) {
++				case ITEMID_WHITE_POTION:
++					success_rate = battle_config.mass_brew_white_potion_rate;
++					break;
++				case ITEMID_WHITE_SLIM_POTION:
++					success_rate = battle_config.mass_brew_slim_white_potion_rate;
++					break;
++				case ITEMID_ALCOHOL:
++					success_rate = battle_config.mass_brew_alcohol_rate;
++					break;
++				case ITEMID_BLUE_POTION:
++					success_rate = battle_config.mass_brew_blue_potion_rate;
++					break;
++				case ITEMID_ACID_BOTTLE:
++					success_rate = battle_config.mass_brew_acid_bottle_rate;
++					break;
++				case ITEMID_BOTTLE_GRENADE:
++					success_rate = battle_config.mass_brew_bottle_grenade_rate;
++					break;
++				case ITEMID_GLISTENING_COAT:
++					success_rate = battle_config.mass_brew_glistening_coat_rate;
++					break;
++			}
++			
++			// Apply skill level bonus
++			if (pc_checkskill(sd, AM_PHARMACY) > 10)
++				success_rate += (pc_checkskill(sd, AM_PHARMACY) - 10) * 5;
++				
++			// Cap success rate
++			if (success_rate > 100)
++				success_rate = 100;
++			else if (success_rate < 1)
++				success_rate = 1;
++		}
++
++		if (rand()%10000 > success_rate) {
++			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
++			return 0;
++		}

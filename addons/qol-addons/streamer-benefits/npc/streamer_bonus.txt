@@ -1,0 +1,50 @@
+-	script	StreamerBonus	FAKE_NPC,{
+OnInit:
+	setd "$StreamerBonus_Total", 0;
+	end;
+
+OnPCLoginEvent:
+	if (getaccountreg(getcharid(3), "#STREAMER") == 1) {
+		// Update total bonus (5% per streamer)
+		setd "$StreamerBonus_Total", min(25, getd("$StreamerBonus_Total") + 5);
+		.@current_bonus = min(25, getd("$StreamerBonus_Total"));
+		
+		// Apply the capped bonus
+		setbattleflag "base_exp_rate", getbattleflag("base_exp_rate") + .@current_bonus;
+		setbattleflag "job_exp_rate", getbattleflag("job_exp_rate") + .@current_bonus;
+		setbattleflag "item_rate_common", getbattleflag("item_rate_common") + .@current_bonus;
+		setbattleflag "item_rate_card", getbattleflag("item_rate_card") + .@current_bonus;
+		setbattleflag "item_rate_equip", getbattleflag("item_rate_equip") + .@current_bonus;
+		
+		announce "Streamer " + strcharinfo(0) + " is now online! Current server bonus: +" + .@current_bonus + "%!", bc_all;
+	}
+	end;
+
+OnPCLogoutEvent:
+	if (getaccountreg(getcharid(3), "#STREAMER") == 1) {
+		// Update total bonus
+		.@old_bonus = min(25, getd("$StreamerBonus_Total"));
+		setd "$StreamerBonus_Total", max(0, getd("$StreamerBonus_Total") - 5);
+		.@new_bonus = min(25, getd("$StreamerBonus_Total"));
+		
+		// Remove the old bonus
+		setbattleflag "base_exp_rate", getbattleflag("base_exp_rate") - .@old_bonus;
+		setbattleflag "job_exp_rate", getbattleflag("job_exp_rate") - .@old_bonus;
+		setbattleflag "item_rate_common", getbattleflag("item_rate_common") - .@old_bonus;
+		setbattleflag "item_rate_card", getbattleflag("item_rate_card") - .@old_bonus;
+		setbattleflag "item_rate_equip", getbattleflag("item_rate_equip") - .@old_bonus;
+		
+		// Apply the new bonus if any streamers are still online
+		if (.@new_bonus > 0) {
+			setbattleflag "base_exp_rate", getbattleflag("base_exp_rate") + .@new_bonus;
+			setbattleflag "job_exp_rate", getbattleflag("job_exp_rate") + .@new_bonus;
+			setbattleflag "item_rate_common", getbattleflag("item_rate_common") + .@new_bonus;
+			setbattleflag "item_rate_card", getbattleflag("item_rate_card") + .@new_bonus;
+			setbattleflag "item_rate_equip", getbattleflag("item_rate_equip") + .@new_bonus;
+			announce "Streamer " + strcharinfo(0) + " has gone offline. Current server bonus: +" + .@new_bonus + "%", bc_all;
+		} else {
+			announce "Streamer " + strcharinfo(0) + " has gone offline. All bonus rates returned to normal.", bc_all;
+		}
+	}
+	end;
+} 

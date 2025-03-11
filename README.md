@@ -1,4 +1,4 @@
-# Setting up a functional rAthena server and client in `2024`
+# Setting up a functional rAthena server and client in `2025`
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)

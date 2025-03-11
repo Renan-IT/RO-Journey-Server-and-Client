@@ -1,0 +1,24 @@
+--- a/src/map/mob.c
++++ b/src/map/mob.c
+@@ -2456,17 +2456,10 @@ int mob_item_drop(struct mob_data *md, struct item *item, int loot)
+ 	if (item == NULL)
+ 		return 0;
+ 		
++	// Apply random options to eligible equipment
+ 	int option_type = itemdb_check_random_options(item->nameid);
+ 	if (option_type > 0) {
+-		int special = 0;
+-		
+-		// Check for forged weapons
+-		struct item_data *id = itemdb_search(item->nameid);
+-		if (id && id->type == IT_WEAPON && id->weapon_level == 3) {
+-			special = 1; // Forged weapons get enhanced options
+-		}
+-		itemdb_roll_random_options(item, option_type, special);
++		itemdb_roll_random_options(item, option_type);
+ 	}
+ 
+ /*==========================================
+ * Initializes the delay drop structure for mob-dropped items.
+ *------------------------------------------*/
+```

@@ -1,0 +1,260 @@
+# Random Options Database
+Header:
+  Type: RANDOM_OPTION_DB
+  Version: 1
+
+Body:
+  # Base Stats (1-6)
+  - Id: RO_STR
+    Name: "STR"
+    Script: "bonus bStr,{}"
+  - Id: RO_AGI
+    Name: "AGI"
+    Script: "bonus bAgi,{}"
+  - Id: RO_VIT
+    Name: "VIT"
+    Script: "bonus bVit,{}"
+  - Id: RO_INT
+    Name: "INT"
+    Script: "bonus bInt,{}"
+  - Id: RO_DEX
+    Name: "DEX"
+    Script: "bonus bDex,{}"
+  - Id: RO_LUK
+    Name: "LUK"
+    Script: "bonus bLuk,{}"
+
+  # Attack/MATK (7-8)
+  - Id: RO_ATK
+    Name: "ATK"
+    Script: "bonus bAtk,{}"
+  - Id: RO_MATK
+    Name: "MATK"
+    Script: "bonus bMatk,{}"
+
+  # Speed Modifiers (9-10)
+  - Id: RO_ASPD
+    Name: "ASPD"
+    Script: "bonus bAspd,{}"
+  - Id: RO_CAST
+    Name: "Cast Time"
+    Script: "bonus bVariableCastrate,-{}"
+
+  # Size Damage (11-13)
+  - Id: RO_SIZE_S
+    Name: "Small Size Damage"
+    Script: "bonus bAddSize,Size_Small,{}"
+  - Id: RO_SIZE_M
+    Name: "Medium Size Damage"
+    Script: "bonus bAddSize,Size_Medium,{}"
+  - Id: RO_SIZE_L
+    Name: "Large Size Damage"
+    Script: "bonus bAddSize,Size_Large,{}"
+
+  # Race Damage (14-21)
+  - Id: RO_FORMLESS_DMG
+    Name: "Formless Race Damage"
+    Script: "bonus bAddRace,RC_Formless,{}"
+  - Id: RO_UNDEAD_DMG_RACE
+    Name: "Undead Race Damage"
+    Script: "bonus bAddRace,RC_Undead,{}"
+  - Id: RO_BRUTE_DMG
+    Name: "Brute Race Damage"
+    Script: "bonus bAddRace,RC_Brute,{}"
+  - Id: RO_PLANT_DMG
+    Name: "Plant Race Damage"
+    Script: "bonus bAddRace,RC_Plant,{}"
+  - Id: RO_INSECT_DMG
+    Name: "Insect Race Damage"
+    Script: "bonus bAddRace,RC_Insect,{}"
+  - Id: RO_FISH_DMG
+    Name: "Fish Race Damage"
+    Script: "bonus bAddRace,RC_Fish,{}"
+  - Id: RO_DEMON_DMG
+    Name: "Demon Race Damage"
+    Script: "bonus bAddRace,RC_Demon,{}"
+  - Id: RO_DEMI_HUMAN_DMG
+    Name: "Demi-Human Race Damage"
+    Script: "bonus bAddRace,RC_DemiHuman,{}"
+
+  # Elemental Attack Damage (22-29)
+  - Id: RO_FIRE_DMG
+    Name: "Fire Property Damage"
+    Script: "bonus bAddEle,Ele_Fire,{}"
+  - Id: RO_WATER_DMG
+    Name: "Water Property Damage"
+    Script: "bonus bAddEle,Ele_Water,{}"
+  - Id: RO_WIND_DMG
+    Name: "Wind Property Damage"
+    Script: "bonus bAddEle,Ele_Wind,{}"
+  - Id: RO_EARTH_DMG
+    Name: "Earth Property Damage"
+    Script: "bonus bAddEle,Ele_Earth,{}"
+  - Id: RO_HOLY_DMG
+    Name: "Holy Property Damage"
+    Script: "bonus bAddEle,Ele_Holy,{}"
+  - Id: RO_DARK_DMG
+    Name: "Dark Property Damage"
+    Script: "bonus bAddEle,Ele_Dark,{}"
+  - Id: RO_GHOST_DMG
+    Name: "Ghost Property Damage"
+    Script: "bonus bAddEle,Ele_Ghost,{}"
+  - Id: RO_UNDEAD_DMG
+    Name: "Undead Property Damage"
+    Script: "bonus bAddEle,Ele_Undead,{}"
+
+  # Special Effects (30-35)
+  - Id: RO_SP_COST
+    Name: "SP Cost"
+    Script: "bonus bUseSPrate,-{}"
+  - Id: RO_CRIT
+    Name: "Critical"
+    Script: "bonus bCritical,{}"
+  - Id: RO_CRIT_DMG
+    Name: "Critical Damage"
+    Script: "bonus bCritAtkRate,{}"
+  - Id: RO_HEAL_POWER
+    Name: "Heal Power"
+    Script: "bonus bHealPower,{}"
+  - Id: RO_HEAL_RECEIVE
+    Name: "Heal Received"
+    Script: "bonus bHealPower2,{}"
+  - Id: RO_LONG_RANGE_DMG
+    Name: "Long Range Damage"
+    Script: "bonus bLongAtkRate,{}"
+
+  # Defensive Stats (36-39)
+  - Id: RO_DEF
+    Name: "DEF"
+    Script: "bonus bDef,{}"
+  - Id: RO_MDEF
+    Name: "MDEF"
+    Script: "bonus bMdef,{}"
+  - Id: RO_HP
+    Name: "HP"
+    Script: "bonus bMaxHP,{}"
+  - Id: RO_SP
+    Name: "SP"
+    Script: "bonus bMaxSP,{}"
+
+  # Combat Stats (40-45)
+  - Id: RO_PERFECT_DODGE
+    Name: "Perfect Dodge"
+    Script: "bonus bPerfectHitRate,{}"
+  - Id: RO_HIT
+    Name: "Hit"
+    Script: "bonus bHit,{}"
+  - Id: RO_FLEE
+    Name: "Flee"
+    Script: "bonus bFlee,{}"
+  - Id: RO_ASPD_RATE
+    Name: "ASPD Rate"
+    Script: "bonus bAspdRate,{}"
+  - Id: RO_HP_REGEN
+    Name: "HP Regeneration"
+    Script: "bonus bHPrecovRate,{}"
+  - Id: RO_SP_REGEN
+    Name: "SP Regeneration"
+    Script: "bonus bSPrecovRate,{}"
+
+  # Size Damage Reduction (46-48)
+  - Id: RO_SIZE_S_RED
+    Name: "Small Size Damage Reduction"
+    Script: "bonus bSubSize,Size_Small,{}"
+  - Id: RO_SIZE_M_RED
+    Name: "Medium Size Damage Reduction"
+    Script: "bonus bSubSize,Size_Medium,{}"
+  - Id: RO_SIZE_L_RED
+    Name: "Large Size Damage Reduction"
+    Script: "bonus bSubSize,Size_Large,{}"
+
+  # Race Damage Reduction (49-56)
+  - Id: RO_FORMLESS_RED
+    Name: "Formless Race Resistance"
+    Script: "bonus bSubRace,RC_Formless,{}"
+  - Id: RO_UNDEAD_RED_RACE
+    Name: "Undead Race Resistance"
+    Script: "bonus bSubRace,RC_Undead,{}"
+  - Id: RO_BRUTE_RED
+    Name: "Brute Race Resistance"
+    Script: "bonus bSubRace,RC_Brute,{}"
+  - Id: RO_PLANT_RED
+    Name: "Plant Race Resistance"
+    Script: "bonus bSubRace,RC_Plant,{}"
+  - Id: RO_INSECT_RED
+    Name: "Insect Race Resistance"
+    Script: "bonus bSubRace,RC_Insect,{}"
+  - Id: RO_FISH_RED
+    Name: "Fish Race Resistance"
+    Script: "bonus bSubRace,RC_Fish,{}"
+  - Id: RO_DEMON_RED
+    Name: "Demon Race Resistance"
+    Script: "bonus bSubRace,RC_Demon,{}"
+  - Id: RO_DEMI_HUMAN_RED
+    Name: "Demi-Human Race Resistance"
+    Script: "bonus bSubRace,RC_DemiHuman,{}"
+
+  # Elemental Resistances (57-64)
+  - Id: RO_FIRE_RES
+    Name: "Fire Resistance"
+    Script: "bonus bSubEle,Ele_Fire,{}"
+  - Id: RO_WATER_RES
+    Name: "Water Resistance"
+    Script: "bonus bSubEle,Ele_Water,{}"
+  - Id: RO_WIND_RES
+    Name: "Wind Resistance"
+    Script: "bonus bSubEle,Ele_Wind,{}"
+  - Id: RO_EARTH_RES
+    Name: "Earth Resistance"
+    Script: "bonus bSubEle,Ele_Earth,{}"
+  - Id: RO_HOLY_RES
+    Name: "Holy Resistance"
+    Script: "bonus bSubEle,Ele_Holy,{}"
+  - Id: RO_DARK_RES
+    Name: "Dark Resistance"
+    Script: "bonus bSubEle,Ele_Dark,{}"
+  - Id: RO_GHOST_RES
+    Name: "Ghost Resistance"
+    Script: "bonus bSubEle,Ele_Ghost,{}"
+  - Id: RO_UNDEAD_RES
+    Name: "Undead Resistance"
+    Script: "bonus bSubEle,Ele_Undead,{}"
+
+  # Status Effect Resistances (65-75)
+  - Id: RO_POISON_RES
+    Name: "Poison Resistance"
+    Script: "bonus bResEff,Eff_Poison,{}"
+  - Id: RO_STUN_RES
+    Name: "Stun Resistance"
+    Script: "bonus bResEff,Eff_Stun,{}"
+  - Id: RO_FREEZE_RES
+    Name: "Freeze Resistance"
+    Script: "bonus bResEff,Eff_Freeze,{}"
+  - Id: RO_SILENCE_RES
+    Name: "Silence Resistance"
+    Script: "bonus bResEff,Eff_Silence,{}"
+  - Id: RO_BLIND_RES
+    Name: "Blind Resistance"
+    Script: "bonus bResEff,Eff_Blind,{}"
+  - Id: RO_CURSE_RES
+    Name: "Curse Resistance"
+    Script: "bonus bResEff,Eff_Curse,{}"
+  - Id: RO_SLEEP_RES
+    Name: "Sleep Resistance"
+    Script: "bonus bResEff,Eff_Sleep,{}"
+  - Id: RO_STONE_RES
+    Name: "Stone Resistance"
+    Script: "bonus bResEff,Eff_Stone,{}"
+  - Id: RO_BLEEDING_RES
+    Name: "Bleeding Resistance"
+    Script: "bonus bResEff,Eff_Bleeding,{}"
+  - Id: RO_CONFUSION_RES
+    Name: "Confusion Resistance"
+    Script: "bonus bResEff,Eff_Confusion,{}"
+  - Id: RO_CHAOS_RES
+    Name: "Chaos Resistance"
+    Script: "bonus bResEff,Eff_Chaos,{}"
+
+Footer:
+  Imports:
+    - Path: db/const.yml 
