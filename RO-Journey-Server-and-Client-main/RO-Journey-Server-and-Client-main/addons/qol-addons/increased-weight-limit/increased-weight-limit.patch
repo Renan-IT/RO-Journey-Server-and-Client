@@ -1,0 +1,12 @@
+diff --git a/src/map/battle.c b/src/map/battle.c
+index xxxxxxx..xxxxxxx 100644
+--- a/src/map/battle.c
++++ b/src/map/battle.c
+@@ -1000,7 +1000,7 @@ int battle_calc_weight_limit(struct map_session_data *sd)
+ {
+     if (sd) {
+-        sd->weight_limit = (int)(sd->max_weight * 0.5);
++        sd->weight_limit = (int)(sd->max_weight * 0.7);
+     }
+     return 0;
+ }

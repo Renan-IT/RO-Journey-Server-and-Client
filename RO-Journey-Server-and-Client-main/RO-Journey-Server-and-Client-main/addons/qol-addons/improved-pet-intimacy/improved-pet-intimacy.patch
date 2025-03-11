@@ -1,0 +1,39 @@
+diff --git a/src/map/pet.c b/src/map/pet.c
+index a1b2c3d..f4e5c3d 100644
+--- a/src/map/pet.c
++++ b/src/map/pet.c
+@@ -500,12 +500,12 @@ static int pet_hungry_timer(int tid, unsigned int tick, int id, intptr_t data)
+ 	if(pd->pet.intimate <= 0)
+ 		return 1;
+ 
+-	// Decrease hunger at half the normal rate
+-	if(battle_config.pet_hungry_delay_rate != 100)
+-		interval = interval * battle_config.pet_hungry_delay_rate / 200;
++	// Decrease hunger at half the normal rate (modified from /100 to /200)
++	interval = interval * battle_config.pet_hungry_delay_rate / 200;
+ 
+ 	pd->pet.hungry--;
+ 	if( pd->pet.hungry < 0 ) {
+ 		pd->pet.hungry = 0;
+ 		pet_stop_attack(pd);
+ 		pd->status.speed = pd->db->status.speed;
+ 	}
+ 
+@@ -600,7 +600,7 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
+ 	if(pd->pet.intimate > 900)
+ 		chance = (pd->pet.intimate - 900) / 5 + 100;
+ 	else if(pd->pet.intimate > 750) {
+-		chance = (pd->pet.intimate - 750) / 3 + 50;
++		chance = (pd->pet.intimate - 750) / 2 + 50; // Increased chance
+ 	} else
+ 		chance = pd->pet.intimate / 15 + 5;
+ 
+@@ -700,7 +700,7 @@ int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, unsigned int
+ 		if (pd->pet.intimate <= 900) {
+ 			if (pd->pet.intimate <= 750)
+ 				pd->pet.intimate += 1;
+-			else
++			else if (pd->pet.intimate <= 910) // Increased max intimacy gain
+ 				pd->pet.intimate += 2;
+ 			if (pd->pet.intimate > 1000)
+ 				pd->pet.intimate = 1000;

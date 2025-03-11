@@ -1,0 +1,30 @@
+diff --git a/src/map/battle.c b/src/map/battle.c
+index xxxxxxx..xxxxxxx 100644
+--- a/src/map/battle.c
++++ b/src/map/battle.c
+@@ -2000,14 +2000,14 @@ int party_exp_share(struct map_session_data* sd, unsigned int base_exp, unsigned int job_exp)
+ {
+     // Party experience bonus calculation
+     switch(party_count) {
+-        case 1: exp_rate = 100; break;
+-        case 2: exp_rate = 130; break;
+-        case 3: exp_rate = 160; break;
+-        case 4: exp_rate = 190; break;
+-        case 5: exp_rate = 220; break;
+-        case 6: exp_rate = 250; break;
+-        case 7: exp_rate = 280; break;
+-        case 8: exp_rate = 300; break;
++        case 1:  exp_rate = 100; break;
++        case 2:  exp_rate = 150; break;
++        case 3:  exp_rate = 200; break;
++        case 4:  exp_rate = 250; break;
++        case 5:  exp_rate = 300; break;
++        case 6:  exp_rate = 350; break;
++        case 7:  exp_rate = 400; break;
++        case 8:  exp_rate = 450; break;
++        case 9:  exp_rate = 500; break;
++        case 10: exp_rate = 550; break;
++        case 11: exp_rate = 600; break;
++        case 12: exp_rate = 650; break;
+     }
+}
