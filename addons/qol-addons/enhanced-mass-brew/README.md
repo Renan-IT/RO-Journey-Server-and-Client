@@ -1,53 +1,56 @@
-# Enhanced Mass Brew
+# Enhanced Mass Brewing System
 
-A Quality of Life addon that enhances the Alchemist's Twilight Pharmacy skill by adding more craftable items to the mass production system.
+This addon improves the mass brewing system for Alchemists by adding a selection menu and configurable success rates for different potions.
 
 ## Features
 
-### New Mass Production Items
-- **Blue Potions**
-  - Heal SP recovery
-  - Essential for long battles
-  - Perfect for party support
+- Selection menu for different mass brewing skills (AM_TWILIGHT1, AM_TWILIGHT2, AM_TWILIGHT3)
+- Configurable success rates for each potion type
+- Automatic quantity setting (200 items per successful brew)
+- Skill level bonus for success rates
 
-- **Acid Bottles**
-  - Key ingredient for acid demonstrations
-  - Useful for PvP/WoE
-  - Efficient mass production
+## Available Potions
 
-- **Bottle Grenades**
-  - Powerful offensive item
-  - Great for crowd control
-  - Cost-effective production
+### AM_TWILIGHT1
+- White Potion
+- Blue Potion
 
-- **Glistening Coats**
-  - Essential for advanced potions
-  - Improved production rate
-  - Resource efficient
+### AM_TWILIGHT2
+- Condensed White Potion
+- Acid Bottle
+- Bottle Grenade
 
-### Benefits
-- Faster production of essential items
-- More efficient use of materials
-- Reduced production costs
-- Enhanced Alchemist utility
+### AM_TWILIGHT3
+- Alcohol
+- Glistening Coat
+
+## Success Rates
+
+Success rates can be configured in `battle_config` for each potion type:
+- `mass_brew_white_potion_rate`
+- `mass_brew_blue_potion_rate`
+- `mass_brew_slim_white_potion_rate`
+- `mass_brew_acid_bottle_rate`
+- `mass_brew_bottle_grenade_rate`
+- `mass_brew_alcohol_rate`
+- `mass_brew_glistening_coat_rate`
+
+Additional bonus: +5% success rate per Pharmacy skill level above 10.
 
 ## Installation
 
-1. Apply the patch to your server:
-   ```bash
-   patch src/map/skill.c < enhanced-mass-brew.patch
-   ```
+1. Apply the patch file:
+```bash
+patch -p1 < addons/qol-addons/enhanced-mass-brew/enhanced-mass-brew.patch
+```
 
-2. Add the following to your `conf/battle/skill.conf`:
-   ```conf
-   // Enhanced Mass Brew Settings
-   mass_brew_blue_potion_rate: 100
-   mass_brew_acid_bottle_rate: 100
-   mass_brew_bottle_grenade_rate: 100
-   mass_brew_glistening_coat_rate: 100
-   ```
+2. Recompile your server
 
-3. Recompile your server and restart
+## Notes
+
+- The success rates are capped between 1% and 100%
+- Each successful brew produces 200 items
+- Failed attempts will display a skill failure message
 
 ## Technical Details
 
