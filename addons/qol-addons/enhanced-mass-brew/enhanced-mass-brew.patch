@@ -2,10 +2,13 @@ diff --git a/src/map/skill.c b/src/map/skill.c
 index 1234567..89abcdef 100644
 --- a/src/map/skill.c
 +++ b/src/map/skill.c
-@@ -8245,6 +8245,85 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, int slot1, int slot2, int slot3, int quantity, short trigger)
+@@ -8245,6 +8245,147 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, int slot1, int slot2, int slot3, int quantity, short trigger)
  	case AM_TWILIGHT1:
  	case AM_TWILIGHT2:
  	case AM_TWILIGHT3:
++		int max_quantity = 200;
++		int available_quantity = max_quantity;
++		
 +		// Show selection menu based on skill level
 +		if (skill_id == AM_TWILIGHT1) {
 +			char menu_text[256];
@@ -14,8 +17,16 @@ index 1234567..89abcdef 100644
 +				"^0055FF2.^000000 Blue Potion");
 +			clif_scriptmenu(sd, menu_text);
 +			
-+			if (nameid == ITEMID_WHITE_POTION || nameid == ITEMID_BLUE_POTION)
-+				quantity = 200;
++			if (nameid == ITEMID_WHITE_POTION) {
++				int herb_count = pc_countitem(sd, ITEMID_WHITE_HERB);
++				int bottle_count = pc_countitem(sd, ITEMID_EMPTY_POTION_BOTTLE);
++				available_quantity = min(min(herb_count, bottle_count), max_quantity);
++			} else if (nameid == ITEMID_BLUE_POTION) {
++				int herb_count = pc_countitem(sd, ITEMID_BLUE_HERB);
++				int scell_count = pc_countitem(sd, ITEMID_SCELL);
++				int bottle_count = pc_countitem(sd, ITEMID_EMPTY_POTION_BOTTLE);
++				available_quantity = min(min(min(herb_count, scell_count), bottle_count), max_quantity);
++			}
 +		}
 +		if (skill_id == AM_TWILIGHT2) {
 +			char menu_text[256];
@@ -25,10 +36,21 @@ index 1234567..89abcdef 100644
 +				"^0055FF3.^000000 Bottle Grenade");
 +			clif_scriptmenu(sd, menu_text);
 +			
-+			if (nameid == ITEMID_WHITE_SLIM_POTION || 
-+				nameid == ITEMID_ACID_BOTTLE || 
-+				nameid == ITEMID_BOTTLE_GRENADE)
-+				quantity = 200;
++			if (nameid == ITEMID_WHITE_SLIM_POTION) {
++				int potion_count = pc_countitem(sd, ITEMID_WHITE_POTION);
++				int starsand_count = pc_countitem(sd, ITEMID_WITCHED_STARSAND);
++				int tube_count = pc_countitem(sd, ITEMID_EMPTY_TEST_TUBE);
++				available_quantity = min(min(min(potion_count, starsand_count), tube_count), max_quantity);
++			} else if (nameid == ITEMID_ACID_BOTTLE) {
++				int bottle_count = pc_countitem(sd, ITEMID_EMPTY_BOTTLE);
++				int heart_count = pc_countitem(sd, ITEMID_IMMORTAL_HEART);
++				available_quantity = min(min(bottle_count, heart_count), max_quantity);
++			} else if (nameid == ITEMID_BOTTLE_GRENADE) {
++				int bottle_count = pc_countitem(sd, ITEMID_EMPTY_BOTTLE);
++				int alcohol_count = pc_countitem(sd, ITEMID_ALCOHOL);
++				int fabric_count = pc_countitem(sd, ITEMID_FABRIC);
++				available_quantity = min(min(min(bottle_count, alcohol_count), fabric_count), max_quantity);
++			}
 +		}
 +		if (skill_id == AM_TWILIGHT3) {
 +			char menu_text[256];
@@ -37,12 +59,28 @@ index 1234567..89abcdef 100644
 +				"^0055FF2.^000000 Glistening Coat");
 +			clif_scriptmenu(sd, menu_text);
 +			
-+			if (nameid == ITEMID_ALCOHOL || nameid == ITEMID_GLISTENING_COAT)
-+				quantity = 200;
++			if (nameid == ITEMID_ALCOHOL) {
++				int bottle_count = pc_countitem(sd, ITEMID_EMPTY_BOTTLE);
++				int stem_count = pc_countitem(sd, ITEMID_STEM) / 5;
++				int tube_count = pc_countitem(sd, ITEMID_EMPTY_TEST_TUBE);
++				int spore_count = pc_countitem(sd, ITEMID_POISON_SPORE) / 5;
++				available_quantity = min(min(min(min(bottle_count, stem_count), tube_count), spore_count), max_quantity);
++			} else if (nameid == ITEMID_GLISTENING_COAT) {
++				int bottle_count = pc_countitem(sd, ITEMID_EMPTY_BOTTLE);
++				int heart_count = pc_countitem(sd, ITEMID_HEART_OF_MERMAID);
++				int alcohol_count = pc_countitem(sd, ITEMID_ALCOHOL);
++				int fang_count = pc_countitem(sd, ITEMID_ZENORC_FANG);
++				available_quantity = min(min(min(min(bottle_count, heart_count), alcohol_count), fang_count), max_quantity);
++			}
 +		}
 +		
-+		break;
++		if (available_quantity <= 0) {
++			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
++			return 0;
++		}
 +
++		quantity = available_quantity;
++		
 +		// Add success rates for items
 +		if (skill_id == AM_TWILIGHT1 || skill_id == AM_TWILIGHT2 || skill_id == AM_TWILIGHT3) {
 +			switch(nameid) {
@@ -84,3 +122,77 @@ index 1234567..89abcdef 100644
 +			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 +			return 0;
 +		}
++		
++		// Remove required items based on the potion type
++		if (nameid == ITEMID_WHITE_POTION) {
++			pc_delitem(sd, ITEMID_WHITE_HERB, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_EMPTY_POTION_BOTTLE, quantity, 0, 0, LOG_TYPE_CONSUME);
++		} else if (nameid == ITEMID_BLUE_POTION) {
++			pc_delitem(sd, ITEMID_BLUE_HERB, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_SCELL, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_EMPTY_POTION_BOTTLE, quantity, 0, 0, LOG_TYPE_CONSUME);
++		} else if (nameid == ITEMID_WHITE_SLIM_POTION) {
++			pc_delitem(sd, ITEMID_WHITE_POTION, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_WITCHED_STARSAND, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_EMPTY_TEST_TUBE, quantity, 0, 0, LOG_TYPE_CONSUME);
++		} else if (nameid == ITEMID_ACID_BOTTLE) {
++			pc_delitem(sd, ITEMID_EMPTY_BOTTLE, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_IMMORTAL_HEART, quantity, 0, 0, LOG_TYPE_CONSUME);
++		} else if (nameid == ITEMID_BOTTLE_GRENADE) {
++			pc_delitem(sd, ITEMID_EMPTY_BOTTLE, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_ALCOHOL, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_FABRIC, quantity, 0, 0, LOG_TYPE_CONSUME);
++		} else if (nameid == ITEMID_ALCOHOL) {
++			pc_delitem(sd, ITEMID_EMPTY_BOTTLE, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_STEM, quantity * 5, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_EMPTY_TEST_TUBE, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_POISON_SPORE, quantity * 5, 0, 0, LOG_TYPE_CONSUME);
++		} else if (nameid == ITEMID_GLISTENING_COAT) {
++			pc_delitem(sd, ITEMID_EMPTY_BOTTLE, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_HEART_OF_MERMAID, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_ALCOHOL, quantity, 0, 0, LOG_TYPE_CONSUME);
++			pc_delitem(sd, ITEMID_ZENORC_FANG, quantity, 0, 0, LOG_TYPE_CONSUME);
++		}
+ 		break;
+ 
+ 		// Add success rates for items
+ 		if (skill_id == AM_TWILIGHT1 || skill_id == AM_TWILIGHT2 || skill_id == AM_TWILIGHT3) {
+ 			switch(nameid) {
+ 				case ITEMID_WHITE_POTION:
+ 					success_rate = battle_config.mass_brew_white_potion_rate;
+ 					break;
+ 				case ITEMID_WHITE_SLIM_POTION:
+ 					success_rate = battle_config.mass_brew_slim_white_potion_rate;
+ 					break;
+ 				case ITEMID_ALCOHOL:
+ 					success_rate = battle_config.mass_brew_alcohol_rate;
+ 					break;
+ 				case ITEMID_BLUE_POTION:
+ 					success_rate = battle_config.mass_brew_blue_potion_rate;
+ 					break;
+ 				case ITEMID_ACID_BOTTLE:
+ 					success_rate = battle_config.mass_brew_acid_bottle_rate;
+ 					break;
+ 				case ITEMID_BOTTLE_GRENADE:
+ 					success_rate = battle_config.mass_brew_bottle_grenade_rate;
+ 					break;
+ 				case ITEMID_GLISTENING_COAT:
+ 					success_rate = battle_config.mass_brew_glistening_coat_rate;
+ 					break;
+ 			}
+ 			
+ 			// Apply skill level bonus
+ 			if (pc_checkskill(sd, AM_PHARMACY) > 10)
+ 				success_rate += (pc_checkskill(sd, AM_PHARMACY) - 10) * 5;
+				
+ 			// Cap success rate
+ 			if (success_rate > 100)
+ 				success_rate = 100;
+ 			else if (success_rate < 1)
+ 				success_rate = 1;
+ 		}
+
+ 		if (rand()%10000 > success_rate) {
+ 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+ 			return 0;
+ 		}
