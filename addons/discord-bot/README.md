@@ -44,14 +44,22 @@ The bot includes a comprehensive WoE tracking system that monitors:
 2. **Download Required Files**
    - Use `wget` to download the necessary files:
      ```bash
-     wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/requirements.txt
-     wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/config/config.py
-     wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/bot.py
-     wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/sql/discord_bot.sql
-     wget -P addons/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/woe-tracker/woe_tracker.c
-     wget -P addons/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/woe-tracker/woe_tracker.h
-     wget -P addons/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/woe-tracker/woe_tracker.txt
-     wget -P addons/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/woe-tracker/battle.patch
+      mkdir -p addons/discord-bot
+      wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/requirements.txt
+      mkdir -p addons/discord-bot/config
+      wget -P addons/discord-bot/config https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/config/config.py
+      mkdir -p addons/discord-bot
+      wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/bot.py
+      mkdir -p addons/discord-bot/sql
+      wget -P addons/discord-bot/sql https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/sql/discord_bot.sql
+      mkdir -p addons/discord-bot/woe-tracker
+      wget -P addons/discord-bot/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/woe-tracker/woe_tracker.c
+      mkdir -p addons/discord-bot/woe-tracker
+      wget -P addons/discord-bot/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/woe-tracker/woe_tracker.h
+      mkdir -p addons/discord-bot/woe-tracker
+      wget -P addons/discord-bot/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/woe-tracker/woe_tracker.txt
+      mkdir -p addons/discord-bot/woe-tracker
+      wget -P addons/discord-bot/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/woe-tracker/battle.patch
      ```
 
 3. **Install Dependencies**
@@ -68,17 +76,17 @@ The bot includes a comprehensive WoE tracking system that monitors:
 5. **WoE Tracker Setup**
    - Copy source files:
      ```bash
-     cp addons/woe-tracker/woe_tracker.c src/map/
-     cp addons/woe-tracker/woe_tracker.h src/map/
+     cp addons/discord-bot/woe-tracker/woe_tracker.c src/map/
+     cp addons/discord-bot/woe-tracker/woe_tracker.h src/map/
      ```
    - Apply patches:
      ```bash
      cd /home/rathena
-     patch -p1 < addons/woe-tracker/battle.patch
+     patch -p1 < addons/discord-bot/woe-tracker/battle.patch
      ```
    - Add scripts:
      ```bash
-     cp addons/woe-tracker/woe_tracker.txt conf/script/
+     cp addons/discord-bot/woe-tracker/woe_tracker.txt conf/script/
      ```
    - Update configuration:
      - Append the following line to `conf/import/script.conf`:
