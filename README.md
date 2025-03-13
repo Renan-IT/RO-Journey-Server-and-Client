@@ -380,64 +380,70 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 
 		`./athena-start status` to check the server status
 
-## Client
-1.  **Requierements**:
+## Client Setup
 
-	- Download links :
-		- https://github.com/Neo-Mind/WARP
-		- http://nemo.herc.ws/clients/ - `2022-04-06_Ragexe_1648707856` Will be used
-		- https://rathena.org/board/topic/106413-kro-full-client-2023-04-04-includes-bgm-rsu/
-		- https://github.com/llchrisll/ROenglishRE
-		- https://rathena.org/board/files/file/2766-grf-editor/
+### 1. Requirements
 
-2.  **Extracting Archives**:
+- **Download the following files:**
+  - [WARP](https://github.com/Neo-Mind/WARP)
+  - [Ragexe Client](http://nemo.herc.ws/clients/) - Use `2022-04-06_Ragexe_1648707856`
+  - [kRO Full Client 2023-04-04](https://rathena.org/board/topic/106413-kro-full-client-2023-04-04-includes-bgm-rsu/)
+  - [ROenglishRE](https://github.com/llchrisll/ROenglishRE)
+  - [GRF Editor](https://rathena.org/board/files/file/2766-grf-editor/)
 
-	- Unzip the full client archive `kRO_FullClient_20230404.zip`.
-	- Unzip the `ROenglishRE-master.zip` archive.
-	- Unzip the WARP archive.
-	- Install GRF Editor.
+### 2. Extracting Archives
 
-3.  **File Organization**:
+- **Unzip the following archives:**
+  - `kRO_FullClient_20230404.zip`
+  - `ROenglishRE-master.zip`
+  - WARP archive
+- **Install** the GRF Editor.
 
-	- Create the following folder structure:
-		```
-		fullclient 
-		├─ client (contents from kRO_FullClient_20230404.zip) 
-		├─ ROenglishRE-master (contents from ROenglishRE-master.zip)
-		├─ WARP (contents from the WARP archive) 
-		├─ ragexe (your ragexe file) 
-		├─ archives (all other archives) 
-		└── endata
-		```
-		
-4.  **File Copying**:
-	- Copy files from the `ROenglishRE-master` folder to the `endata` folder. Maintain the order.
-	- Overwrite existing files if necessary.
-		- Copy all files from `ROenglishRE/Translation/Renewal/` and `ROenglishRE/Translation/Pre-Renewal/`.
-		- Copy all files from `ROenglishRE/Additions/`.
-		- For each folder in `ROenglishRE/Translation/Compatibility/YYYY-MM-DD/`, copy files from oldest to newest into the `endata` folder.
-		(Subfolders `Renewal/` and `PreRenewal/` you should always start with `Renewal/`.)
+### 3. File Organization
 
-5.  **Client Configuration**:
+- **Create the following folder structure:**
+  ```
+  fullclient
+  ├─ client (contents from kRO_FullClient_20230404.zip)
+  ├─ ROenglishRE-master (contents from ROenglishRE-master.zip)
+  ├─ WARP (contents from the WARP archive)
+  ├─ ragexe (your ragexe file)
+  └─ archives (all other archives)
+  ```
 
-	- In the `endata` folder, edit the `clientinfo.xml` file to specify your client's name and change the IP address.
+### 4. File Copying
 
-6.  **Creating the traduction GRF**:
-	- Open GRF Editor, create a new GRF file, and add all files from the `endata` folder.
-	- Save the GRF as `endata.grf`.
-	- Copy the `endata.grf` file to the `client` folder.
-	- Also copy all files from the `endata` folder to the `client` folder.
+- **Navigate to** `ROenglishRE-master/Tools` and execute the following scripts:
+  - `ClientGenerator.bat`: Select `prere (1)` and `2022-04-06 (11)`
+  - `AdditionsGenerator.bat`: Enter `20220406` and add every "all in one" package
+  - `CLSGenerator.bat`: Select all "all in one" packages
+- **Open** the newly created `Client/` folder.
 
-7.  **Editing DATA.ini**:
-	- In the `client` folder, edit the `DATA.ini` file.
-	- Add the line `0=endata.grf` above `1=rdata.grf` and save the changes.
+### 5. Client Configuration
 
-8.  **Patching the Ragexe**:
-	- Execute `./WARP/win32/WARP.exe`.
-	- Load `./ragexe/2022-04-06_Ragexe_1648707856.exe` as the source in WARP.
-	- Use the top-left menu to load the WARP session and select `./ROenglishRE/Addons/2020_Translation.yml`.
-	- Apply the patches.
-	- Copy the patched ragexe to the `client` folder.
+- **Edit** the `clientinfo.xml` file in the `data` folder to specify your client's name and change the IP address.
+- **Delete** the `\stylingshop` folder located in `data\luafiles514\lua files\`.
+
+### 6. Creating the Translation GRF
+
+- **Open** GRF Editor, create a new GRF file, and add all files from the `data` folder.
+- **Save** the GRF as `server.grf`.
+- **Copy** the `server.grf` file to the `client(kro)` folder.
+- **Copy** all files from the `Client/` folder to the `client` folder.
+
+### 7. Editing DATA.ini
+
+- **Edit** the `DATA.ini` file in the `client` folder:
+  - Add the line `0=server.grf` above `1=data.grf`
+  - Ensure `2=rdata.grf` is listed and save the changes.
+
+### 8. Patching the Ragexe
+
+- **Execute** `./WARP/win32/WARP.exe`.
+- **Load** `./ragexe/2022-04-06_Ragexe_1648707856.exe` as the source in WARP.
+- **Use** the top-left menu to load the WARP session and select `./ROenglishRE/Addons/WARP SESSIONS/2019-06_Translation.yml`.
+- **Click** `Select Recommended` and apply the patches.
+- **Copy** the patched ragexe to the `client` folder.
 
 ## Discord Bot Integration
 This server comes with a Discord bot that provides various features to help manage your server and enhance player experience. The bot includes account management, WoE statistics tracking, and server status monitoring.
