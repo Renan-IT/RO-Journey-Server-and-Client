@@ -1,0 +1,34 @@
+// WoE Tracker Integration Script
+// This script integrates the WoE tracking system with the server's WoE events
+
+// WoE Start Event
+OnAgitStart:
+    // Start tracking session
+    set .@session_id, woe_tracker_start_session(.@castle_id, .@guild_id, .@guild_name);
+    if (.@session_id == -1) {
+        announce("Failed to start WoE tracking session", bc_all);
+        end;
+    }
+    end;
+
+// WoE End Event
+OnAgitEnd:
+    // End tracking session
+    woe_tracker_end_session(.@session_id);
+    end;
+
+// Player Enter WoE Map
+OnPCLoadMapEvent:
+    if (mapflag == gvg || mapflag == gvg_castle) {
+        // Track player participation
+        woe_tracker_participation(getcharid(0));
+    }
+    end;
+
+// Player Use Skill
+OnPCUseSkill:
+    if (mapflag == gvg || mapflag == gvg_castle) {
+        // Track skill usage
+        woe_tracker_skill(getcharid(0));
+    }
+    end; 
