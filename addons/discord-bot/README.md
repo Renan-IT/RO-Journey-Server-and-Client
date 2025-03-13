@@ -26,71 +26,90 @@ The bot includes a comprehensive WoE tracking system that monitors:
 ## Installation
 
 ### Prerequisites
-- Python 3.8 or higher
+- **Python 3.8 or higher**: Ensure Python is installed on your system. You can install it using the following command:
+  ```bash
+  sudo apt update
+  sudo apt install python3 python3-pip
+  ```
 - MySQL/MariaDB database
 - Discord Bot Token
 
-### Database Setup
-```bash
-mysql -u YOUR_DATABASE_USER -p YOUR_DATABASE_NAME < sql/discord_bot.sql
-```
+### Setup Instructions
 
-### WoE Tracker Setup
-1. **Copy Source Files**
+1. **Navigate to the rAthena Directory**
    ```bash
-   cp woe-tracker/woe_tracker.c src/map/
-   cp woe-tracker/woe_tracker.h src/map/
+   cd /home/rathena
    ```
 
-2. **Apply Patches**
+2. **Download Required Files**
+   - Use `wget` to download the necessary files:
+     ```bash
+     wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/requirements.txt
+     wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/config/config.py
+     wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/bot.py
+     wget -P addons/discord-bot https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/discord-bot/sql/discord_bot.sql
+     wget -P addons/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/woe-tracker/woe_tracker.c
+     wget -P addons/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/woe-tracker/woe_tracker.h
+     wget -P addons/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/woe-tracker/woe_tracker.txt
+     wget -P addons/woe-tracker https://github.com/Renan-IT/RO-Journey-Server-and-Client/raw/main/addons/woe-tracker/battle.patch
+     ```
+
+3. **Install Dependencies**
    ```bash
-   cd rAthena
-   patch -p1 < addons/woe-tracker/battle.patch
+   pip install -r addons/discord-bot/requirements.txt
    ```
 
-3. **Add Scripts**
+4. **Database Setup**
+   - Import the database schema:
+     ```bash
+     mysql -u $DB_USER -p $DB_NAME < addons/discord-bot/sql/discord_bot.sql
+     ```
+
+5. **WoE Tracker Setup**
+   - Copy source files:
+     ```bash
+     cp addons/woe-tracker/woe_tracker.c src/map/
+     cp addons/woe-tracker/woe_tracker.h src/map/
+     ```
+   - Apply patches:
+     ```bash
+     cd /home/rathena
+     patch -p1 < addons/woe-tracker/battle.patch
+     ```
+   - Add scripts:
+     ```bash
+     cp addons/woe-tracker/woe_tracker.txt conf/script/
+     ```
+   - Update configuration:
+     - Append the following line to `conf/import/script.conf`:
+       ```bash
+       echo "script: conf/script/woe_tracker.txt" >> conf/import/script.conf
+       ```
+   - Recompile the server:
+     ```bash
+     make clean
+     make server
+     ```
+
+6. **Configure the Bot**
+   - Edit `addons/discord-bot/config/config.py` with your database and Discord bot details:
+     ```python
+     # Database configuration
+     DB_CONFIG = {
+         'host': 'localhost',
+         'user': '$DB_USER',     # Your database user
+         'password': '$DB_PASS', # Your database password
+         'database': '$DB_NAME'  # Your database name
+     }
+
+     # Discord configuration
+     DISCORD_TOKEN = 'your_discord_bot_token'  # Your bot token
+     COMMAND_PREFIX = '!'
+     ```
+
+7. **Run the Bot**
    ```bash
-   cp woe-tracker/woe_tracker.txt conf/script/
-   ```
-
-4. **Update Configuration**
-   Add to `conf/script.conf`:
-   ```conf
-   script: conf/script/woe_tracker.txt
-   ```
-
-5. **Recompile Server**
-   ```bash
-   make clean
-   make server
-   ```
-
-### Bot Setup
-
-1. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Configure the Bot**
-   Edit `config/config.py`:
-   ```python
-   # Database configuration
-   DB_CONFIG = {
-       'host': 'localhost',
-       'user': 'ragnarok',     # Your database user
-       'password': 'ragnarok', # Your database password
-       'database': 'ragnarok'  # Your database name
-   }
-
-   # Discord configuration
-   DISCORD_TOKEN = 'your_discord_bot_token'  # Your bot token
-   COMMAND_PREFIX = '!'
-   ```
-
-3. **Run the Bot**
-   ```bash
-   python bot.py
+   python addons/discord-bot/bot.py
    ```
 
 ## Available Commands
