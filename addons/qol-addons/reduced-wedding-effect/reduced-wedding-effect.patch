@@ -1,0 +1,11 @@
+--- a/src/map/status.c
++++ b/src/map/status.c
+@@ -8526,7 +8526,7 @@ int status_change_start(struct block_list* bl, enum sc_type type, int rate, int val
+                 if(sd) {
+                     sd->status.clothes_color = val4;
+                     clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,val4);
+-                    tick = 60 * 60 * 1000; // 60 minutes
++                    tick = 5 * 60 * 1000; // 5 minutes
+                 }
+                 break;
+``` 

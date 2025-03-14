@@ -1,0 +1,57 @@
+prontera,151,185,4	script	Redeem Code	4_F_ANGEL,{
+	mes "[Redeem Code]";
+	mes "Enter a streamer's redeem code:";
+	input .@input$;
+	
+	if (.@input$ == "") {
+		mes "Please enter a valid code.";
+		close;
+	}
+	
+	if (.@input$ != getd("$RedeemCode_Active")) {
+		mes "[Redeem Code]";
+		mes "Invalid or expired code.";
+		close;
+	}
+	
+	// Valid code found - give random prize
+	setd "$RedeemCode_Active", ""; // Invalidate code
+	
+	// Select random prize
+	.@prize_type = rand(5);
+	
+	mes "[Redeem Code]";
+	mes "Congratulations!";
+	mes "You are the first to redeem this code!";
+	mes "You received:";
+	
+	switch(.@prize_type) {
+	case 0: // Zeny
+		.@amount = rand(10000, 50000);
+		Zeny += .@amount;
+		mes "^FF0000" + .@amount + "^000000 zeny!";
+		break;
+		
+	case 1: // Bubble Gum
+		getitem 12210, 1;
+		mes "^FF0000Bubble Gum^000000!";
+		break;
+		
+	case 2: // Battle Manual
+		getitem 12208, 1;
+		mes "^FF0000Battle Manual^000000!";
+		break;
+		
+	case 3: // Old Card Album
+		getitem 616, 1;
+		mes "^FF0000Old Card Album^000000!";
+		break;
+		
+	case 4: // Old Purple Box
+		getitem 603, 1;
+		mes "^FF0000Old Purple Box^000000!";
+		break;
+	}
+	
+	close;
+} 

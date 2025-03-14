@@ -1,0 +1,69 @@
+--- a/src/map/guild.c
++++ b/src/map/guild.c
+@@ -1245,6 +1245,55 @@ int guild_castle_count_members(struct guild_castle *gc) {
+ 	return count;
+ }
+ 
++/**
++ * Check and enforce castle member limits
++ * @param gc Guild castle data
++ * @param g Guild data
++ */
++void guild_check_castle_limit(struct guild_castle *gc, struct guild *g) {
++	int castle_limit = battle_config.castle_member_limit;
++	int grace_period = battle_config.castle_limit_grace_period;
++	int protect_leaders = battle_config.castle_limit_protect_leaders;
++	int current_count;
++	
++	if (!castle_limit || !gc || !g || g->guild_id != gc->guild_id)
++		return;
++		
++	current_count = guild_castle_count_members(gc);
++	
++	if (current_count > castle_limit) {
++		struct map_session_data *sd;
++		struct guild_member *gm;
++		int i, kicked = 0;
++		
++		// First notify all guild members in the castle
++		for (i = 0; i < g->max_member; i++) {
++			if ((sd = g->member[i].sd) != NULL && map_id2gc(sd->bl.m) == gc) {
++				char message[256];
++				sprintf(message, "Castle member limit exceeded (%d/%d). Excess members will be removed in %d seconds.",
++					current_count, castle_limit, grace_period);
++				clif_messagecolor(&sd->bl, color_table[COLOR_RED], message, false, SELF);
++			}
++		}
++		
++		// Wait for grace period
++		timer->add(timer->gettick() + grace_period * 1000, guild_castle_limit_timer, gc->castle_id, 0);
++	}
++}
++
++/**
++ * Timer to remove excess members from castle
++ */
++int guild_castle_limit_timer(int tid, unsigned int tick, int id, intptr_t data) {
++	struct guild_castle *gc = guild_castle_search(id);
++	struct guild *g;
++	
++	if (!gc || !(g = guild_search(gc->guild_id)))
++		return 0;
++		
++	guild_check_castle_limit(gc, g);
++	return 0;
++}
++
+ /*==========================================
+  * Guild creation request
+  *------------------------------------------*/
+@@ -2456,6 +2505,9 @@ bool guild_member_in(int guild_id,int account_id,int char_id)
+ 	if( (g = guild_search(guild_id)) == NULL )
+ 		return false;
+ 
++	// Check castle member limits
++	guild_check_castle_limits(g);
++
+ 	for(i=0;i<g->max_member;i++) {
+ 		if(	g->member[i].account_id==account_id &&
+ 			g->member[i].char_id==char_id )
