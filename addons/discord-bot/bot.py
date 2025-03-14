@@ -1,163 +1,321 @@
 import discord
-from discord.ext import commands
-import hashlib
 import random
 import string
 import mysql.connector
-from mysql.connector import Error
+import asyncio
+import table2ascii
 
-# Configuration
-DB_CONFIG = {
-    'host': '$SQL_IP',
-    'user': '$SQL_USER',
-    'password': 'SQL_PASS',
-    'database': '$SQL_DB'
-}
+from discord.ext import commands
 
-DISCORD_TOKEN = 'Discord_Bot_Token'
-COMMAND_PREFIX = '!'
+# Initialize the bot with intents
+# Use default intents
 
-# Database Utility
-class Database:
-    def __init__(self):
-        self.config = DB_CONFIG
-        self.connection = None
-        self.cursor = None
-
-    def connect(self):
-        try:
-            self.connection = mysql.connector.connect(**self.config)
-            self.cursor = self.connection.cursor()
-            return True
-        except Error as e:
-            print(f"Error connecting to MySQL: {e}")
-            return False
-
-    def disconnect(self):
-        if self.cursor:
-            self.cursor.close()
-        if self.connection:
-            self.connection.close()
-
-    def execute_query(self, query, params=None):
-        try:
-            if not self.connection or not self.connection.is_connected():
-                self.connect()
-            
-            self.cursor.execute(query, params or ())
-            self.connection.commit()
-            return self.cursor.fetchall()
-        except Error as e:
-            print(f"Error executing query: {e}")
-            return None
-        finally:
-            self.disconnect()
-
-    def check_user_exists(self, discord_id):
-        query = "SELECT * FROM login WHERE email = %s"
-        result = self.execute_query(query, (discord_id,))
-        return bool(result)
-
-    def check_username_exists(self, username):
-        query = "SELECT * FROM login WHERE userid = %s"
-        result = self.execute_query(query, (username,))
-        return bool(result)
-
-    def create_account(self, account_id, username, password, gender, discord_id):
-        query = """
-        INSERT INTO login (
-            account_id, userid, user_pass, sex, email, group_id, 
-            state, unban_time, expiration_time, logincount, 
-            lastlogin, last_ip, birthdate, character_slots, 
-            pincode, pincode_change, vip_time, old_group, discord_id
-        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        values = (
-            str(account_id), username, password, gender, discord_id,
-            '0', '0', '0', '0', '0', '2022-02-20 00:00:00', '',
-            '2022-02-20', '9', '', '0', '0', '0', discord_id
-        )
-        return self.execute_query(query, values)
-
-    def reset_password(self, discord_id, new_password):
-        query = "UPDATE login SET user_pass = %s WHERE email = %s"
-        return self.execute_query(query, (new_password, discord_id))
-
-    def get_online_players(self):
-        query = "SELECT `name`, `class`, `base_level`, `job_level` FROM `char` WHERE `online` = '1'"
-        return self.execute_query(query)
-
-# Define intents
 intents = discord.Intents.default()
 intents.message_content = True
 
-# Bot Setup
-bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Account Commands
-@bot.command(name='accreate')
-async def create_account(ctx, username: str, password: str, gender: str):
-    """Create a new game account"""
-    db = Database()
-    if gender.upper() not in ['M', 'F']:
-        await ctx.send("❌ Gender must be 'M' or 'F'")
+
+# Database configuration
+db_config = {
+    'host': '$SERVER_IP',  # Database host address
+    'user': '$DB_USER',  # Database username
+    'password': '$DB_PASS',  # Database password
+    'database': '$DB_NAME'  # Database name
+}
+
+class_names = {
+    0: 'Novice',
+    1: 'Swordsman',
+    2: 'Mage',
+    3: 'Archer',
+    4: 'Acolyte',
+    5: 'Merchant',
+    6: 'Thief',
+    7: 'Knight',
+    8: 'Priest',
+    9: 'Wizard',
+    10: 'Blacksmith',
+    11: 'Hunter',
+    12: 'Assassin',
+    13: 'Knight (Mounted)',
+    14: 'Crusader',
+    15: 'Monk',
+    16: 'Sage',
+    17: 'Rogue',
+    18: 'Alchemist',
+    19: 'Bard',
+    20: 'Dancer',
+    21: 'Crusader (Mounted)',
+    22: 'Wedding',
+    23: 'Super Novice',
+    24: 'Gunslinger',
+    25: 'Ninja',
+    26: 'Xmas',
+    27: 'Summer',
+    28: 'Hanbok',
+    29: 'Oktoberfest',
+    4001: 'High Novice',
+    4002: 'High Swordsman',
+    4003: 'High Mage',
+    4004: 'High Archer',
+    4005: 'High Acolyte',
+    4006: 'High Merchant',
+    4007: 'High Thief',
+    4008: 'Lord Knight',
+    4009: 'High Priest',
+    4010: 'High Wizard',
+    4011: 'Whitesmith',
+   4012: 'Sniper',
+    4013: 'Assassin Cross',
+    4014: 'Lord Knight (Mounted)',
+    4015: 'Paladin',
+    4016: 'Champion',
+    4017: 'Professor',
+    4018: 'Stalker',
+    4019: 'Creator',
+    4020: 'Clown',
+    4021: 'Gypsy',
+    4022: 'Paladin (Mounted)',
+    4023: 'Baby',
+    4024: 'Baby Swordsman',
+    4025: 'Baby Mage',
+    4026: 'Baby Archer',
+    4027: 'Baby Acolyte',
+    4028: 'Baby Merchant',
+    4029: 'Baby Thief',
+    4030: 'Baby Knight',
+    4031: 'Baby Priest',
+    4032: 'Baby Wizard',
+    4033: 'Baby Blacksmith',
+    4034: 'Baby Hunter',
+    4035: 'Baby Assassin',
+    4036: 'Baby Knight (Mounted)',
+    4037: 'Baby Crusader',
+    4038: 'Baby Monk',
+    4039: 'Baby Sage',
+    4040: 'Baby Rogue',
+    4041: 'Baby Alchemist',
+    4042: 'Baby Bard',
+    4043: 'Baby Dancer',
+    4044: 'Baby Crusader (Mounted)',
+    4045: 'Super Baby',
+    4046: 'Taekwon',
+    4047: 'Star Gladiator',
+    4048: 'Star Gladiator (Flying)',
+    4049: 'Soul Linker'
+}
+
+
+async def clear_channel(channel):
+    async for message in channel.history(limit=None):
+        await message.delete()
+
+# Connection event
+@bot.event
+async def on_ready():
+    print(f'Connected as {bot.user.name} ({bot.user.id})')
+
+#-----------------------------------------------
+# Command !accreate
+@bot.command()
+async def accreate(ctx, *, args=None):
+    # Retrieve the user's Discord ID
+    discord_id = ctx.author.id
+    if args is None:
+        await ctx.send(f"Oh dear, {ctx.author.mention}! You got a bit mixed up, didn't you? To create an account, use the correct command: `!accreate user:<username>,gender:<M or F>`. Let's try again!")
         return
 
-    if db.check_username_exists(username):
-        await ctx.send("❌ Username already exists")
+    try:
+        # Parse the arguments to extract the username and gender
+        user_args = args.split(',')
+        username = user_args[0].split(':')[1].strip()  # Extract the username
+        gender = user_args[1].split(':')[1].strip()  # Extract the gender (M or F)
+
+        # Check that the username contains only letters and numbers
+        if not username.isalnum():
+            await ctx.send(f"Ah, usernames! They need to be as simple and elegant as my dance steps. No special characters, just letters and numbers. Try again, {ctx.author.mention}!")
+            return
+
+        # Check that the gender is either 'M' (male) or 'F' (female)
+        if gender not in ('M', 'F'):
+            await ctx.send(f"Of course, of course! Gender is important, just like choosing the right potion before a battle. `M` for male and `F` for female. Make your choice, brave {ctx.author.mention}!")
+            return
+
+        # Check if the user already exists in the database
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        query = "SELECT * FROM azurerath.login WHERE email = %s"
+        cursor.execute(query, (discord_id,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            await ctx.send(f"Ah, this {ctx.author.mention} is already registered in our great book of heroes! No need to create another account. But if you've forgotten your password, I can help you reset it!")
+            return
+
+        # Check if the user already exists
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        query = "SELECT * FROM azurerath.login WHERE userid = %s"
+        cursor.execute(query, (username,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            await ctx.send(f"Oh dear, it smells like a duplicate! This user is already in our system. Maybe they have an evil twin somewhere... or just another account. Try another name, {ctx.author.mention}!")
+            return
+            # You can add other actions here in case of an existing user
+    except IndexError:
+        await ctx.send(f"Oh dear, {ctx.author.mention}! You got a bit mixed up, didn't you? To create an account, use the correct command: `!accreate user:<username>,gender:<M or F>`. Let's try again!")
         return
 
-    if db.check_user_exists(str(ctx.author.id)):
-        await ctx.send("❌ You already have an account")
-        return
+    # Generate a random password
+    password = generate_random_password()
 
-    hashed_password = hashlib.sha1(password.encode()).hexdigest()
-    account_id = ''.join(random.choices(string.digits, k=10))
-    
-    if db.create_account(account_id, username, hashed_password, gender, str(ctx.author.id)):
-        await ctx.send(f"✅ Account created successfully!\nUsername: {username}\nPassword: {password}")
-    else:
-        await ctx.send("❌ Failed to create account")
+    # Retrieve the user's Discord ID
+    discord_id = ctx.author.id
 
-@bot.command(name='passrenew')
-async def renew_password(ctx, new_password: str):
-    """Renew your account password"""
-    db = Database()
-    if not db.check_user_exists(str(ctx.author.id)):
-        await ctx.send("❌ You don't have an account")
-        return
+    # Establish the database connection
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
 
-    hashed_password = hashlib.sha1(new_password.encode()).hexdigest()
-    if db.reset_password(str(ctx.author.id), hashed_password):
-        await ctx.send(f"✅ Password renewed successfully!\nNew password: {new_password}")
-    else:
-        await ctx.send("❌ Failed to renew password")
+        # Execute the SQL query to add the user
+        # Get the last inserted account_id
+        cursor.execute("SELECT MAX(account_id) FROM azurerath.login")
+        last_account_id = cursor.fetchone()[0] or 20000000  # Default to 20000000 if no records exist
+        new_account_id = last_account_id + 1
 
-# Stats Commands
-@bot.command(name='online')
-async def show_online_players(ctx):
-    """Show currently online players"""
-    db = Database()
-    players = db.get_online_players()
-    if not players:
-        await ctx.send("No players are currently online")
-        return
+        # Insert the user into the database
+        insert_query = "INSERT INTO azurerath.login (account_id, userid, user_pass, sex, email, group_id, state, unban_time, expiration_time, logincount, lastlogin, last_ip, birthdate, character_slots, pincode, pincode_change, vip_time, old_group, discord_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (str(new_account_id), username, password, gender, discord_id, '0', '0', '0', '0', '0', '2022-02-20 00:00:00', '', '2022-02-20', '9', '', '0', '0', '0', discord_id)
+        cursor.execute(insert_query, values)
+        conn.commit()
+        await ctx.send(f"Congratulations, {ctx.author.mention}! Your account is ready! I'll send you the details via DM!")
+        await ctx.author.send(f"Congratulations, {ctx.author.mention}! Your account is ready! Here are the details:\nUsername: {username}\nPassword: {password}\nKeep them safe, like a treasure in a chest!")
 
-    embed = discord.Embed(
-        title="Online Players",
-        color=discord.Color.green()
-    )
+    except mysql.connector.Error as err:
+        print(f"Error adding user: {err}")
 
-    for player in players:
-        name, class_id, base_level, job_level = player
-        class_name = "Unknown"  # Replace with actual class name lookup if needed
-        embed.add_field(
-            name=name,
-            value=f"Class: {class_name}\nBase Level: {base_level}\nJob Level: {job_level}",
-            inline=False
-        )
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
-    await ctx.send(embed=embed)
 
-# Run the Bot
-bot.run(DISCORD_TOKEN) 
+#-----------------------------------------------
+# Command !passrenew
+@bot.command()
+async def passrenew(ctx):
+    # Retrieve the user's Discord ID
+    discord_id = ctx.author.id
+
+	# Check if the user already exists in the database
+		conn = mysql.connector.connect(**db_config)
+		cursor = conn.cursor()
+		query = "SELECT * FROM azurerath.login WHERE email = %s"
+		cursor.execute(query, (discord_id,))
+		existing_user = cursor.fetchone()
+
+		if existing_user:
+			# Generate a new random password
+			new_password = generate_random_password()
+
+			# Update the password in the database
+			update_query = "UPDATE azurerath.login SET user_pass = %s WHERE email = %s"
+			cursor.execute(update_query, (new_password, discord_id))
+			conn.commit()
+			await ctx.send(f"Whoops, that's private! {ctx.author.mention}, I'll send you a DM!")
+			await ctx.author.send(f"Ah, a fresh start! Your password has been reset, {ctx.author.mention}. \nHere is the new one: New password: {new_password} \nDon't forget to note it down somewhere safe!")
+		else:
+			await ctx.send(f"No worries, {ctx.author.mention}! Sometimes even the bravest lose their way. If you want to create an account, follow my instructions and we'll guide you to adventure!")
+
+		cursor.close()
+		conn.close()
+
+# Function to generate a random password
+def generate_random_password(length=8):
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
+
+@bot.command()
+async def blossom(ctx):
+    help_message = f"""
+    Hi, {ctx.author.mention}! I'm Blossom, the dedicated Kafra who watches over your needs. Here are the services I offer:
+
+- 🌟 **Create an account**:
+Use the command `!accreate user:<username>,gender:<M or F>` to register in our log. Whether you're a proud warrior or a daring magician, I welcome you with joy!
+
+- 🔑 **Reset password**:
+If you've misplaced your precious passwords, don't worry! Simply use `!passrenew` and I'll provide you with a brand new password. Don't forget to note it down somewhere safe!
+
+Feel free to reach out if you need additional help. Let the adventure continue! 🌟🗡️
+    """
+    await ctx.send(help_message)
+
+
+#-----------------------------------------------
+@bot.command()
+async def create_channel(ctx):
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        login_query = "SELECT `name`, `class`, `base_level`, `job_level` FROM `char` WHERE `online` = '1'"
+        cursor.execute(login_query)
+        results = cursor.fetchall()  # Read all results
+        player_count = len(results)  # Count the number of connected players
+        
+        print(f"players-connected-{player_count}")
+
+        # Search for an existing channel whose name matches the pattern
+        guild = ctx.guild
+        model_name = f"players-connected-"
+        existing_channel = None
+        for channel in guild.text_channels:
+            if channel.name.startswith(model_name):
+                existing_channel = channel
+                break
+
+        if existing_channel:
+            # Rename the existing channel
+            new_name = f"players-connected-{player_count}"
+            await existing_channel.edit(name=new_name)
+            print(f"Channel renamed: {new_name}")
+            
+            # Create a list to store the table lines
+            table_lines = []
+            
+            # Add the table header
+            header = ["UserName", "Class", "BaseLvl", "JobLvl"]
+
+            # Iterate through the results and add each line to the table
+            for row in results:
+                name, char_class, base_level, job_level = row
+                class_name = class_names.get(char_class, "Unknown")
+                # Use str() to convert integers to strings
+                table_line = [str(name), str(class_name), str(base_level), str(job_level)]
+                table_lines.append(table_line)
+
+            # Convert the list of lists to ASCII text
+            ascii_table = table2ascii.table2ascii(header=header, body=table_lines, first_col_heading=True)
+
+            await clear_channel(existing_channel)
+            await existing_channel.send(f"Connected players:\n```\n{ascii_table}\n```")
+        else:
+            await ctx.send("No existing channel to rename.")
+            # Create a text channel with the number of connected players here (if necessary)
+            channel_name = f"players-connected-{player_count}"
+            await guild.create_text_channel(channel_name)
+            print(f"Channel created: {channel_name}")
+
+    except mysql.connector.Error as e:
+        print(f"Error executing query: {e}")
+
+    finally:
+        cursor.close()
+        conn.close()
+    await asyncio.sleep(600)  # Wait 60 seconds before re-executing
+    await create_channel(ctx)  # Recursive call
+
+# Run the bot with your token
+bot.run('$DISCORD_TOKEN')
