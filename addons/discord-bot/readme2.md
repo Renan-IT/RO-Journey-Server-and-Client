@@ -1,0 +1,2 @@
+ALTER TABLE `login`
+ADD COLUMN `discord_id` VARCHAR(20) DEFAULT NULL;
