@@ -1,0 +1,13 @@
+--- src/map/battle.c
++++ src/map/battle.c
+@@ -123,6 +123,10 @@
+ void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int64 div, uint16 skill_id, uint16 skill_lv, enum battle_dmg_type type) {
+     // Existing code...
+
++    if (target->type == BL_PC && map_flag_gvg2(target->m)) {
++        struct map_session_data *sd = BL_CAST(BL_PC, target);
++        pc_adddamage(sd, damage);
++    }
+
+     // Rest of the existing code...
+ }

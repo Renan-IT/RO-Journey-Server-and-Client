@@ -1,0 +1,56 @@
+-	script	WoE Stats Tracker	-1,{
+OnAgitStart:
+OnAgitStart2:
+OnAgitStart3:
+	// Initialize variables and start tracking
+	initnpctimer;
+	callsub S_ResetStats;
+	end;
+
+OnAgitEnd:
+OnAgitEnd2:
+OnAgitEnd3:
+	// Stop tracking and save data
+	stopnpctimer;
+	callsub S_SaveStats;
+	end;
+
+OnTimer60000:
+	// Update stats every minute
+	callsub S_UpdateStats;
+	initnpctimer;
+	end;
+
+S_ResetStats:
+	// Reset all tracking variables
+	setarray .damage_received[0],0;
+	setarray .damage_healed[0],0;
+	setarray .skills_used[0],0;
+	return;
+
+S_UpdateStats:
+	// Update stats for all online players
+	set .@i, 0;
+	getmapusers("all_gvg");
+	set .@users, getusers(1);
+	while (.@i < .@users) {
+		set .@aid, getuid(.@i);
+		if (getguildname(.@aid) != "") {
+			set .damage_received[.@aid], .damage_received[.@aid] + getd("$damage_received_" + .@aid);
+			set .damage_healed[.@aid], .damage_healed[.@aid] + getd("$damage_healed_" + .@aid);
+			set .skills_used[.@aid], .skills_used[.@aid] + getd("$skills_used_" + .@aid);
+			setd "$damage_received_" + .@aid, 0;
+			setd "$damage_healed_" + .@aid, 0;
+			setd "$skills_used_" + .@aid, 0;
+		}
+		set .@i, .@i + 1;
+	}
+	return;
+
+S_SaveStats:
+	// Save stats to database
+	query_sql("INSERT INTO woe_stats (date, account_id, char_id, guild_id, damage_received, damage_healed, skills_used) VALUES " +
+		"(NOW(), ?, ?, ?, ?, ?, ?)", .@aid, getcharid(0, .@aid), getcharid(2, .@aid),
+		.damage_received[.@aid], .damage_healed[.@aid], .skills_used[.@aid]);
+	return;
+}

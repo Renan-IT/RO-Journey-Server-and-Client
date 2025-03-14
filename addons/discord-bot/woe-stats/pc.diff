@@ -1,0 +1,8 @@
+--- src/map/pc.c
++++ src/map/pc.c
+@@ -456,6 +456,12 @@
+ void pc_adddamage(struct map_session_data *sd, int64 damage) {
+     char var_name[32];
+     sprintf(var_name, "$damage_received_%d", sd->status.account_id);
+     pc_setglobalreg(sd, add_str(var_name), pc_readglobalreg(sd, add_str(var_name)) + damage);
+ }

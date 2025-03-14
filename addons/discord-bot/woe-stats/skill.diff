@@ -1,0 +1,14 @@
+--- src/map/skill.c
++++ src/map/skill.c
+@@ -789,6 +789,10 @@
+ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int64 tick, int flag) {
+     // Existing code...
+
++    if (sd && skill_get_inf(skill_id) & INF_SUPPORT_SKILL && map_flag_gvg2(sd->bl.m)) {
++        char var_name[32];
++        sprintf(var_name, "$skills_used_%d", sd->status.account_id);
++        pc_setglobalreg(sd, add_str(var_name), pc_readglobalreg(sd, add_str(var_name)) + 1);
++    }
+
+     // Rest of the existing code...
+ }

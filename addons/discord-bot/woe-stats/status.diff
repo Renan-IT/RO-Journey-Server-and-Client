@@ -1,0 +1,14 @@
+--- src/map/status.c
++++ src/map/status.c
+@@ -345,6 +345,10 @@
+ int status_heal(struct block_list *bl, int64 hp, int64 sp, int flag) {
+     // Existing code...
+
++    if (tsd && map_flag_gvg2(tsd->bl.m) && hp > 0) {
++        char var_name[32];
++        sprintf(var_name, "$damage_healed_%d", tsd->status.account_id);
++        pc_setglobalreg(tsd, add_str(var_name), pc_readglobalreg(tsd, add_str(var_name)) + hp);
++    }
+
+     // Rest of the existing code...
+ }
