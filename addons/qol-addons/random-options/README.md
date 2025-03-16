@@ -1,5 +1,5 @@
 1. Go to the path -> db/
-2. 1.1 Add in item_randomopt_db.yml:
+2. Add in item_randomopt_db.yml:
 
 ```
 Footer:
@@ -21,5 +21,5 @@ Footer:
   - Path: db/import/item_randomopt_group.yml
 ```
 2. Go to the path -> db/re
-2.1 Copy item_randomopt_group.yml and item_randomopt_db.yml
-2.2 Add both files in db/pre-re
+3. Copy item_randomopt_group.yml and item_randomopt_db.yml
+4. Add both files in db/pre-re
