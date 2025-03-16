@@ -1,5 +1,5 @@
 1. Go to the path -> db/
-1.1 Add in item_randomopt_db.yml:
+2. 1.1 Add in item_randomopt_db.yml:
 
 Footer:
   Imports:
