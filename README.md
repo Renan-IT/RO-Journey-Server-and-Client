@@ -222,53 +222,27 @@ If you prefer to set up the server manually, follow these steps:
 		-  Using : http://yourip/phpmyadmin/
 		-  Login with : `$DB_USER` & `$DB_PASS`
 
-5.  **Customize the  rAthena configuration Files**:
-
-	-   Edit the rAthena configuration files located in `rAthena/conf/` using `nano` or any text editor.
-		```bash
-		nano ./conf/char_athena.conf
-		```
-	- look for and replace `ragnarok` `ragnarok` with any user and password of your choice:
-		```
-		// Server Communication username and password.
-		userid: ragnarok
-		passwd: ragnarok
-		```
-		Exemple :
+5.  **Customize rAthena Configuration Files Using the `import` Directory**:
+     	```
+     	cd ~/rAthena/import
+     	```
+    
+   	- Create or modify files named `char_athena.conf`, `inter_athena.conf`, and `map_athena.conf` in this directory. 
+   	Use `nano` or any text editor to create or edit these files:
+ 
+	   	`nano char_athena.conf`
 		```
 		// Server Communication username and password.
 		userid: $SERVER_COM_USER
 		passwd: $SERVER_COM_PASS
-		```
-
-		next :
-		```
 		// Server name, use alternative character such as ASCII 160 for spaces.
-		// NOTE: Do not use spaces or any of these characters which are not allowed in
-		//       Windows filenames \/:*?"<>|
-		//       ... or else guild emblems won't work client-side!
 		server_name: $SERVER_NAME
 		// Login Server IP
-		// The character server connects to the login server using this IP address.
-		// NOTE: This is useful when you are running behind a firewall or are on
-		// a machine with multiple interfaces.
 		login_ip: $SERVER_IP
-		// Character Server IP 
-		// The IP address which clients will use to connect. 
-		// Set this to what your server's public IP address is. 
+		// Character Server IP
 		char_ip: $SERVER_IP
 		```
-		- Exit the editor pressing `Ctrl+X` key , Submitting `Y` to save.
-
-	- Now that you've edited the Server Communication username and password you have to update it from the MySQL Database `Login` table.
-		```bash
-	 	mysql -u $DB_USER -p$DB_PASS -D $DB_NAME -e "UPDATE login SET userid='$SERVER_COM_USER', user_pass='$SERVER_COM_PASS' WHERE account_id=1;"	
-		```
-	-   Next edit the `inter_athena.conf` so the server will be able to read your MySQL Database.
-	(Make sure to use the `$DB_USER` , `$DB_PASS` & `$DB_NAME` you made earlier)
-		```bash
-		nano ./conf/inter_athena.conf
-		```
+		`nano inter_athena.conf`
 
 		```
 		// MySQL Login server
@@ -317,29 +291,20 @@ If you prefer to set up the server manually, follow these steps:
 		log_codepage:
 		log_login_db: loginlog
 		```
-		- Exit the editor pressing `Ctrl+X` key , Submitting `Y` to save.
-	-   The last file you need to edit is : `map_athena.txt`
-		```bash
-		nano ./conf/map_athena.conf
-		```
-		change `s1` `p1` to the you set up earlier :
+    
+		`nano map_athena.conf`
 		```
 		userid: $SERVER_COM_USER
 		passwd: $SERVER_COM_PASS
-		```
-
-		Uncomment the following lines (Removing the `//`)
-		```
 		char_ip: $SERVER_IP
 		char_port: 6121
 		map_ip: $SERVER_IP
 		map_port: 5121
-		```
-		- Exit the editor pressing `Ctrl+X` key , Submitting `Y` to save.
-
-	- Give the execution acces to the files
+		```    
+		
+ 	- Now that you've edited the Server Communication username and password you have to update it from the MySQL Database `Login` table.
 		```bash
-		sudo chmod a+x ./configure
+	 	mysql -u $DB_USER -p$DB_PASS -D $DB_NAME -e "UPDATE login SET userid='$SERVER_COM_USER', user_pass='$SERVER_COM_PASS' WHERE account_id=1;"	
 		```
 
 6.  **Compile & Run the Emulator**:
