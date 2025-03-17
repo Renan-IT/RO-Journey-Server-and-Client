@@ -1,0 +1,97 @@
+prontera,155,185,5    script    Fairy Service    715,{
+    mes "[Fairy Service]";
+    mes "Greetings, dear adventurer!";
+    mes "I am the Fairy of Swift Journeys.";
+    mes "For a small offering of Zeny, I can whisk you away to any town in Midgard.";
+    mes "But be warned!  My magic is...a little quirky. You might find yourself looking a bit...different during the trip.";
+    next;
+
+    mes "[Fairy Service]";
+    mes "Are you ready for your magical journey?";
+    next;
+
+    menu "Yes, take me away!","No, perhaps another time.";
+    if (select == 1) {
+        mes "[Fairy Service]";
+        mes "Excellent! Now, where shall we go?";
+        next;
+
+        menu "Prontera","Izlude","Payon","Alberta","Geffen","Morroc","Al De Baran","Comodo","Yuno","Rachel","Lighthalzen","Hugel","Einbroch","Louyang","Jawaii","Amatsu","Kunlun","Ayothaya","Exit";
+        switch (select) {
+            case 1: set .@town$,"Prontera,155,185"; goto L_Teleport;
+            case 2: set .@town$,"Izlude,131,117"; goto L_Teleport;
+            case 3: set .@town$,"Payon,204,96"; goto L_Teleport;
+            case 4: set .@town$,"Alberta,124,67"; goto L_Teleport;
+            case 5: set .@town$,"Geffen,118,58"; goto L_Teleport;
+            case 6: set .@town$,"Morroc,51,55"; goto L_Teleport;
+            case 7: set .@town$,"Al De Baran,126,125"; goto L_Teleport;
+            case 8: set .@town$,"Comodo,208,153"; goto L_Teleport;
+            case 9: set .@town$,"Yuno,158,205"; goto L_Teleport;
+            case 10: set .@town$,"Rachel,155,117"; goto L_Teleport;
+            case 11: set .@town$,"Lighthalzen,144,123"; goto L_Teleport;
+            case 12: set .@town$,"Hugel,121,152"; goto L_Teleport;
+            case 13: set .@town$,"Einbroch,206,177"; goto L_Teleport;
+            case 14: set .@town$,"Louyang,183,179"; goto L_Teleport;
+            case 15: set .@town$,"Jawaii,200,200"; goto L_Teleport;
+            case 16: set .@town$,"Amatsu,200,200"; goto L_Teleport;
+            case 17: set .@town$,"Kunlun,200,200"; goto L_Teleport;
+            case 18: set .@town$,"Ayothaya,200,200"; goto L_Teleport;
+            case 19: close;
+        }
+
+        L_Teleport:
+        // Cost of teleportation (adjust as needed)
+        set .@cost, 1000;
+
+        if (Zeny < .@cost) {
+            mes "[Fairy Service]";
+            mes "Alas, you do not have enough Zeny.";
+            close;
+        }
+
+        mes "[Fairy Service]";
+        mes "Hold on tight!  A little fairy dust for the road...";
+        next;
+
+        // Disguise as Creamy
+        disguise 1126; // Creamy
+        set .@save_look,getcharid(3);
+
+        // Pay the cost
+        Zeny = Zeny - .@cost;
+        mes "[Fairy Service]";
+        mes "Fee: "+ .@cost +" Zeny";
+        mes "Thank you. Please wait a few seconds!";
+        next;
+
+        // Delay before teleport
+        sleep2 3;
+
+        // Teleport the player
+        setarray .@town$,explode(",",.@town$);
+        warp .@town$[0],.@town$[1],.@town$[2];
+
+        // Remove Disguise after teleport
+        disguise 0;
+        setcharid(3,.@save_look);
+
+        mes "[Fairy Service]";
+        mes "Welcome to your destination!";
+        close;
+    } else {
+        mes "[Fairy Service]";
+        mes "Farewell, and may your path be blessed.";
+        close;
+    }
+}
+
+// Remove Creamy Disguise on Login
+login,0,0,0    script    RemoveCreamyDisguise    NONE,{
+    if (getcharid(3) == 1126) {
+        disguise 0;
+        mes "[System]";
+        mes "The Fairy's magic has worn off.";
+        close;
+    }
+    end;
+}
