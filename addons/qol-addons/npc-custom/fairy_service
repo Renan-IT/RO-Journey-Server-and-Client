@@ -1,22 +1,73 @@
-// Fairy Service NPC - Duplicate across towns
+// Fairy Service NPC - Using Butterfly Wings and Giant Butterfly Wings
 prontera,155,185,5    script    Fairy Service    715,{
     mes "[Fairy Service]";
     mes "Greetings, dear adventurer!";
     mes "I am the Fairy of Swift Journeys.";
-    mes "For a small offering of Zeny, I can whisk you away to any town in Midgard.";
-    mes "But be warned!  My magic is...a little quirky. You might find yourself looking a bit...different during the trip.";
+    mes "I can whisk you away to any town in Midgard.";
+    mes "I require a Butterfly Wing or a Giant Butterfly Wing as payment.";
     next;
 
     mes "[Fairy Service]";
-    mes "Are you ready for your magical journey?";
+    mes "Which will you offer?";
     next;
 
-    menu "Yes, take me away!","No, perhaps another time.";
-    if (select == 1) {
+    menu "Butterfly Wing","Giant Butterfly Wing (Special)","No, perhaps another time.";
+
+    switch (select) {
+        case 1: goto L_ButterflyWing;
+        case 2: goto L_GiantButterflyWing;
+        case 3: close;
+    }
+
+    L_ButterflyWing:
+        if (countitem(501) <= 0) { // Butterfly Wing ID: 501
+            mes "[Fairy Service]";
+            mes "You do not have any Butterfly Wings!";
+            close;
+        }
+
+        delitem 501,1; // Remove 1 Butterfly Wing
         mes "[Fairy Service]";
         mes "Excellent! Now, where shall we go?";
         next;
+        goto L_TownMenu;
 
+    L_GiantButterflyWing:
+        if (countitem(502) <= 0) { // Giant Butterfly Wing ID: 502
+            mes "[Fairy Service]";
+            mes "You do not have any Giant Butterfly Wings!";
+            close;
+        }
+
+        delitem 502,1; // Remove 1 Giant Butterfly Wing
+        mes "[Fairy Service]";
+        mes "Aha! A Giant Butterfly Wing. Prepare for a truly magical journey!";
+        next;
+        disguise 4336; //Bloody Butterfly
+        set .@effect, getcharid(3);
+        areachange .@effect;
+        
+        mes "[Fairy Service]";
+        mes "Hold on tight!  You'll be blessed soon!";
+        next;
+        
+        Wears 1005;
+	
+        benefit 10,10; //Blessing, Agi Up Level 10
+        setskilldelay 300000; //300 Seconds = 5 minutes
+        set .@timer_name$, unique_timer_name$();
+        setd .@timer_name$, "enchant_done:"+ .@effect;
+	    addtimer 300000, .@timer_name$, getnpcid();
+       
+        mes "[Fairy Service]";
+        mes "Now, where shall we go?";
+        next;
+        goto L_TownMenu;
+        
+      
+       
+
+    L_TownMenu:
         menu "Prontera","Izlude","Payon","Alberta","Geffen","Morroc","Al De Baran","Comodo","Yuno","Rachel","Lighthalzen","Hugel","Einbroch","Louyang","Jawaii","Amatsu","Kunlun","Ayothaya","Exit";
         switch (select) {
             case 1: set .@town$,"Prontera,155,185"; goto L_Teleport;
@@ -41,34 +92,12 @@ prontera,155,185,5    script    Fairy Service    715,{
         }
 
         L_Teleport:
-        // Cost of teleportation (adjust as needed)
-        set .@cost, 1000;
-
-        if (Zeny < .@cost) {
-            mes "[Fairy Service]";
-            mes "Alas, you do not have enough Zeny.";
-            close;
-        }
-
+        //Disguise as Creamy
+        disguise 1126; // Creamy
+        set .@save_look,getcharid(3);
+        
         mes "[Fairy Service]";
         mes "Hold on tight!  A little fairy dust for the road...";
-        next;
-
-        // Save original look to account storage
-        getaccountreg .@save_look, "#original_look";
-        if (.@save_look == 0) {
-            set .@save_look, getcharid(3);
-            setaccountreg "#original_look", .@save_look;
-        }
-
-        // Disguise as Creamy
-        disguise 1126; // Creamy
-
-        // Pay the cost
-        Zeny = Zeny - .@cost;
-        mes "[Fairy Service]";
-        mes "Fee: "+ .@cost +" Zeny";
-        mes "Thank you. Please wait a few seconds!";
         next;
 
         // Delay before teleport
@@ -78,20 +107,14 @@ prontera,155,185,5    script    Fairy Service    715,{
         setarray .@town$,explode(",",.@town$);
         warp .@town$[0],.@town$[1],.@town$[2];
 
-        // Remove Disguise after teleport and restore original look
+        // Remove Disguise after teleport
         disguise 0;
-        getaccountreg .@original_look, "#original_look";
-        setcharid 3, .@original_look;
-        delaccountreg "#original_look";
+        setcharid(3,.@save_look);
 
         mes "[Fairy Service]";
         mes "Welcome to your destination!";
         close;
-    } else {
-        mes "[Fairy Service]";
-        mes "Farewell, and may your path be blessed.";
-        close;
-    }
+        
     duplicate prontera,155,185
     duplicate izlude,131,117
     duplicate payon,204,96
@@ -111,7 +134,16 @@ prontera,155,185,5    script    Fairy Service    715,{
     duplicate kunlun,200,200
     duplicate ayothaya,200,200
 }
-
+OnEnchant_Timer:
+	bindatnpc("Fairy Service::OnEnchant_Timer");
+	.@effect$ = getd( strnpcinfo(3) );
+	if ( .@effect$ != "" ) {
+		setcharid 3, .@effect$;
+		disguise 0;
+		areachange .@effect$;
+	}
+	delflag strnpcinfo(3);
+	end;
 // Remove Creamy Disguise on Login
 login,0,0,0    script    RemoveCreamyDisguise    NONE,{
     if (getcharid(3) == 1126) {
