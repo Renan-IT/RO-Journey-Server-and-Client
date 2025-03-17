@@ -1,3 +1,4 @@
+// Fairy Service NPC - Duplicate across towns
 prontera,155,185,5    script    Fairy Service    715,{
     mes "[Fairy Service]";
     mes "Greetings, dear adventurer!";
@@ -53,9 +54,15 @@ prontera,155,185,5    script    Fairy Service    715,{
         mes "Hold on tight!  A little fairy dust for the road...";
         next;
 
+        // Save original look to account storage
+        getaccountreg .@save_look, "#original_look";
+        if (.@save_look == 0) {
+            set .@save_look, getcharid(3);
+            setaccountreg "#original_look", .@save_look;
+        }
+
         // Disguise as Creamy
         disguise 1126; // Creamy
-        set .@save_look,getcharid(3);
 
         // Pay the cost
         Zeny = Zeny - .@cost;
@@ -71,9 +78,11 @@ prontera,155,185,5    script    Fairy Service    715,{
         setarray .@town$,explode(",",.@town$);
         warp .@town$[0],.@town$[1],.@town$[2];
 
-        // Remove Disguise after teleport
+        // Remove Disguise after teleport and restore original look
         disguise 0;
-        setcharid(3,.@save_look);
+        getaccountreg .@original_look, "#original_look";
+        setcharid 3, .@original_look;
+        delaccountreg "#original_look";
 
         mes "[Fairy Service]";
         mes "Welcome to your destination!";
@@ -83,6 +92,24 @@ prontera,155,185,5    script    Fairy Service    715,{
         mes "Farewell, and may your path be blessed.";
         close;
     }
+    duplicate prontera,155,185
+    duplicate izlude,131,117
+    duplicate payon,204,96
+    duplicate alberta,124,67
+    duplicate geffen,118,58
+    duplicate morroc,51,55
+    duplicate "al de baran",126,125
+    duplicate comodo,208,153
+    duplicate yuno,158,205
+    duplicate rachel,155,117
+    duplicate lighthalzen,144,123
+    duplicate hugel,121,152
+    duplicate einbroch,206,177
+    duplicate louyang,183,179
+    duplicate jawaii,200,200
+    duplicate amatsu,200,200
+    duplicate kunlun,200,200
+    duplicate ayothaya,200,200
 }
 
 // Remove Creamy Disguise on Login
