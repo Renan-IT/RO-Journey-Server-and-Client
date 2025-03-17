@@ -2,8 +2,8 @@
 
 # Check for root privileges
 if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 
-   exit 1
+    echo "This script must be run as root"
+    exit 1
 fi
 
 # Update and upgrade the system
@@ -40,6 +40,7 @@ install_dependency g++
 install_dependency libmysqlclient-dev
 install_dependency libssl-dev
 install_dependency screen
+
 sudo apt autoremove -y
 sudo apt clean
 
@@ -51,7 +52,6 @@ for pkg in build-essential zlib1g-dev libpcre3-dev libmariadb-dev libmariadb-dev
         exit 1
     fi
 done
-
 echo "All dependencies installed successfully."
 
 # Prompt for user inputs
@@ -93,75 +93,67 @@ mysql -e "GRANT ALL ON log.* TO '$DB_USER'@'localhost';"
 echo "Cloning the rAthena repository..."
 USER_HOME="/home/$(logname)"
 RATHENA_DIR="$USER_HOME/rAthena"
-
-# Remove existing directory if it exists to avoid conflicts
 if [ -d "$RATHENA_DIR" ]; then
     echo "Removing existing rAthena directory..."
     rm -rf "$RATHENA_DIR"
 fi
-
 git clone https://github.com/rathena/rathena.git "$RATHENA_DIR"
 cd "$RATHENA_DIR"
 git pull
 
-# Configure server files
-echo "Configuring server files..."
-sed -i "s/^userid:.*$/userid: $SERVER_COM_USER/" conf/char_athena.conf
-sed -i "s/^passwd:.*$/passwd: $SERVER_COM_PASS/" conf/char_athena.conf
-sed -i "s/^server_name:.*$/server_name: $SERVER_NAME/" conf/char_athena.conf
-sed -i "s/^login_ip:.*$/login_ip: $SERVER_IP/" conf/char_athena.conf
-sed -i "s/^char_ip:.*$/char_ip: $SERVER_IP/" conf/char_athena.conf
-sed -i "s/^map_ip:.*$/map_ip: $SERVER_IP/" conf/char_athena.conf
+# Create import directory if it doesn't exist
+if [ ! -d "$RATHENA_DIR/import" ]; then
+    mkdir "$RATHENA_DIR/import"
+fi
 
-# Configure inter_athena.conf
+# Configure server files using the import directory
+echo "Configuring server files using the import directory..."
+cd "$RATHENA_DIR/import"
+
+# Create or modify configuration files
+touch char_athena.conf inter_athena.conf map_athena.conf
+
+# Configure each file
+echo "Configuring char_athena.conf..."
+echo "userid: $SERVER_COM_USER" > char_athena.conf
+echo "passwd: $SERVER_COM_PASS" >> char_athena.conf
+echo "server_name: $SERVER_NAME" >> char_athena.conf
+echo "login_ip: $SERVER_IP" >> char_athena.conf
+echo "char_ip: $SERVER_IP" >> char_athena.conf
+
 echo "Configuring inter_athena.conf..."
-sed -i "s/login_server_ip: 127.0.0.1/login_server_ip: localhost/" conf/inter_athena.conf
-sed -i "s/login_server_port: 3306/login_server_port: 3306/" conf/inter_athena.conf
-sed -i "s/login_server_id: ragnarok/login_server_id: $DB_USER/" conf/inter_athena.conf
-sed -i "s/login_server_pw: ragnarok/login_server_pw: $DB_PASS/" conf/inter_athena.conf
-sed -i "s/login_server_db: ragnarok/login_server_db: $DB_NAME/" conf/inter_athena.conf
+echo "login_server_ip: localhost" > inter_athena.conf
+echo "login_server_port: 3306" >> inter_athena.conf
+echo "login_server_id: $DB_USER" >> inter_athena.conf
+echo "login_server_pw: $DB_PASS" >> inter_athena.conf
+echo "login_server_db: $DB_NAME" >> inter_athena.conf
+echo "char_server_ip: localhost" >> inter_athena.conf
+echo "char_server_port: 3306" >> inter_athena.conf
+echo "char_server_id: $DB_USER" >> inter_athena.conf
+echo "char_server_pw: $DB_PASS" >> inter_athena.conf
+echo "char_server_db: $DB_NAME" >> inter_athena.conf
+echo "map_server_ip: localhost" >> inter_athena.conf
+echo "map_server_port: 3306" >> inter_athena.conf
+echo "map_server_id: $DB_USER" >> inter_athena.conf
+echo "map_server_pw: $DB_PASS" >> inter_athena.conf
+echo "map_server_db: $DB_NAME" >> inter_athena.conf
+echo "log_db_ip: localhost" >> inter_athena.conf
+echo "log_db_port: 3306" >> inter_athena.conf
+echo "log_db_id: $DB_USER" >> inter_athena.conf
+echo "log_db_pw: $DB_PASS" >> inter_athena.conf
+echo "log_db_db: log" >> inter_athena.conf
 
-sed -i "s/ipban_db_ip: 127.0.0.1/ipban_db_ip: localhost/" conf/inter_athena.conf
-sed -i "s/ipban_db_port: 3306/ipban_db_port: 3306/" conf/inter_athena.conf
-sed -i "s/ipban_db_id: ragnarok/ipban_db_id: $DB_USER/" conf/inter_athena.conf
-sed -i "s/ipban_db_pw: ragnarok/ipban_db_pw: $DB_PASS/" conf/inter_athena.conf
-sed -i "s/ipban_db_db: ragnarok/ipban_db_db: $DB_NAME/" conf/inter_athena.conf
-
-sed -i "s/char_server_ip: 127.0.0.1/char_server_ip: localhost/" conf/inter_athena.conf
-sed -i "s/char_server_port: 3306/char_server_port: 3306/" conf/inter_athena.conf
-sed -i "s/char_server_id: ragnarok/char_server_id: $DB_USER/" conf/inter_athena.conf
-sed -i "s/char_server_pw: ragnarok/char_server_pw: $DB_PASS/" conf/inter_athena.conf
-sed -i "s/char_server_db: ragnarok/char_server_db: $DB_NAME/" conf/inter_athena.conf
-
-sed -i "s/map_server_ip: 127.0.0.1/map_server_ip: localhost/" conf/inter_athena.conf
-sed -i "s/map_server_port: 3306/map_server_port: 3306/" conf/inter_athena.conf
-sed -i "s/map_server_id: ragnarok/map_server_id: $DB_USER/" conf/inter_athena.conf
-sed -i "s/map_server_pw: ragnarok/map_server_pw: $DB_PASS/" conf/inter_athena.conf
-sed -i "s/map_server_db: ragnarok/map_server_db: $DB_NAME/" conf/inter_athena.conf
-
-sed -i "s/web_server_ip: 127.0.0.1/web_server_ip: localhost/" conf/inter_athena.conf
-sed -i "s/web_server_port: 3306/web_server_port: 3306/" conf/inter_athena.conf
-sed -i "s/web_server_id: ragnarok/web_server_id: $DB_USER/" conf/inter_athena.conf
-sed -i "s/web_server_pw: ragnarok/web_server_pw: $DB_PASS/" conf/inter_athena.conf
-sed -i "s/web_server_db: ragnarok/web_server_db: $DB_NAME/" conf/inter_athena.conf
-
-sed -i "s/log_db_ip: 127.0.0.1/log_db_ip: localhost/" conf/inter_athena.conf
-sed -i "s/log_db_port: 3306/log_db_port: 3306/" conf/inter_athena.conf
-sed -i "s/log_db_id: ragnarok/log_db_id: $DB_USER/" conf/inter_athena.conf
-sed -i "s/log_db_pw: ragnarok/log_db_pw: $DB_PASS/" conf/inter_athena.conf
-sed -i "s/log_db_db: ragnarok/log_db_db: $DB_NAME/" conf/inter_athena.conf
-
-# Configure map_athena.conf
 echo "Configuring map_athena.conf..."
-sed -i "s/^userid:.*$/userid: $SERVER_COM_USER/" conf/map_athena.conf
-sed -i "s/^passwd:.*$/passwd: $SERVER_COM_PASS/" conf/map_athena.conf
-sed -i "s|^//\?char_ip:.*$|char_ip: $SERVER_IP|" conf/map_athena.conf
-sed -i "s|^//\?char_port:.*$|char_port: 6121|" conf/map_athena.conf
-sed -i "s|^//\?map_ip:.*$|map_ip: $SERVER_IP|" conf/map_athena.conf
-sed -i "s|^//\?map_port:.*$|map_port: 5121|" conf/map_athena.conf
+echo "userid: $SERVER_COM_USER" > map_athena.conf
+echo "passwd: $SERVER_COM_PASS" >> map_athena.conf
+echo "char_ip: $SERVER_IP" >> map_athena.conf
+echo "char_port: 6121" >> map_athena.conf
+echo "map_ip: $SERVER_IP" >> map_athena.conf
+echo "map_port: 5121" >> map_athena.conf
 
 # Compile the server
 echo "Compiling the server..."
+cd "$RATHENA_DIR"
 ./configure --enable-prere=yes --enable-vip=no --enable-64bit=yes --enable-debug=no
 make clean
 make server
