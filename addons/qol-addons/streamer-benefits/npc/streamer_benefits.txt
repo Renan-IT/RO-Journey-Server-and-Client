@@ -1,142 +1,125 @@
-prontera,153,185,4	script	Streamer Benefits	4_F_ANGEL,{
-	// Check if player is a streamer
-	if (getaccountreg(getcharid(3), "#STREAMER") != 1) {
-		mes "[Streamer Benefits]";
-		mes "This NPC is only available for registered streamers.";
-		close;
-	}
-	
-	mes "[Streamer Benefits]";
-	mes "Welcome " + strcharinfo(0) + "!";
-	mes "What would you like to do?";
-	next;
-	
-	switch(select("Get Starter Pack:Manage Code Generation:View Online Bonus:Close")) {
-	case 1:
-		if (getd("$Streamer_"+getcharid(0)+"_StarterClaimed")) {
-			mes "[Streamer Benefits]";
-			mes "You have already claimed your starter pack!";
-			close;
-		}
-		
-		// Give starter items
-		getitem 12208,10; // Battle Manual
-		getitem 12210,10; // Bubble Gum
-		getitem 616,10;   // Old Card Album
-		Zeny += 500000;   // 500k zeny
-		
-		setd "$Streamer_"+getcharid(0)+"_StarterClaimed", 1;
-		
-		mes "[Streamer Benefits]";
-		mes "Here's your streamer starter pack!";
-		mes "Good luck with your stream!";
-		close;
-		
-	case 2:
-		mes "[Streamer Benefits]";
-		mes "Code Generation Settings:";
-		mes "Current Status: " + (getd("$Streamer_"+getcharid(0)+"_AutoCodes") ? "^00FF00Active^000000" : "^FF0000Inactive^000000");
-		next;
-		
-		switch(select("Toggle Auto Generation:View Current Code:Back")) {
-		case 1:
-			if (!getd("$Streamer_"+getcharid(0)+"_AutoCodes")) {
-				setd "$Streamer_"+getcharid(0)+"_AutoCodes", 1;
-				// Initialize timer for first code
-				initnpctimer;
-				mes "Auto code generation has been ^00FF00activated^000000!";
-				mes "Codes will appear randomly every 40-60 minutes.";
-				mes "Viewers can win random prizes:";
-				mes "- 10,000 to 50,000 zeny";
-				mes "- Bubble Gum";
-				mes "- Battle Manual";
-				mes "- Old Card Album";
-				mes "- Old Purple Box";
-			} else {
-				setd "$Streamer_"+getcharid(0)+"_AutoCodes", 0;
-				stopnpctimer;
-				mes "Auto code generation has been ^FF0000deactivated^000000.";
-			}
-			close;
-			
-		case 2:
-			if (getd("$RedeemCode_Active") == "") {
-				mes "No active code at the moment.";
-				close;
-			}
-			mes "Current Active Code:";
-			mes "^FF0000" + getd("$RedeemCode_Active") + "^000000";
-			mes "First viewer to redeem gets a random prize!";
-			close;
-			
-		case 3:
-			end;
-		}
-		
-	case 3:
-		// Calculate current total bonus (5% per streamer, max 25%)
-		.@total_bonus = getd("$StreamerBonus_Total");
-		.@my_bonus = (getd("$Streamer_"+getcharid(0)+"_Online") ? 5 : 0);
-		
-		mes "[Streamer Benefits]";
-		mes "Your contribution:";
-		mes "- Drop Rate: +" + .@my_bonus + "%";
-		mes "- Experience Rate: +" + .@my_bonus + "%";
-		mes "";
-		mes "Current total server bonus:";
-		mes "- Drop Rate: +" + min(.@total_bonus, 25) + "%";
-		mes "- Experience Rate: +" + min(.@total_bonus, 25) + "%";
-		mes "^777777(Max bonus: 25% from 5 streamers)^000000";
-		close;
-		
-	case 4:
-		close;
-	}
+prontera,153,185,4	script	Streamer Benefits	10454,{
+    .@account_id = getcharid(3);
+    .@char_id = getcharid(0);
+    .@is_streamer = (.@account_id == 20000000 || .@account_id == 20000002);
 
-OnInit:
-	// Initialize variables
-	setd "$StreamerBonus_Total", 0;
-	end;
+    if (.@is_streamer) {
+        mes "[Streamer Benefits]";
+        mes "Welcome " + strcharinfo(0) + "!";
+        mes "What would you like to do?";
+        next;
 
-OnPCLoginEvent:
-	if (getaccountreg(getcharid(3), "#STREAMER") == 1) {
-		setd "$Streamer_"+getcharid(0)+"_Online", 1;
-		setd "$StreamerBonus_Total", getd("$StreamerBonus_Total") + 5;
-		announce "Streamer " + strcharinfo(0) + " is now online! Server bonus increased!", bc_all;
-	}
-	end;
+        switch(select("Get Starter Pack:Manage Code Generation:Close")) {
+            case 1:
+                if (getd("$S"+.@account_id+"_SC")) {
+                    mes "[Streamer Benefits]";
+                    mes "You have already claimed your starter pack!";
+                    close;
+                }
 
-OnPCLogoutEvent:
-	if (getaccountreg(getcharid(3), "#STREAMER") == 1) {
-		setd "$Streamer_"+getcharid(0)+"_Online", 0;
-		setd "$StreamerBonus_Total", max(0, getd("$StreamerBonus_Total") - 5);
-		announce "Streamer " + strcharinfo(0) + " is now offline.", bc_all;
-	}
-	end;
+                getitem 12208,10;
+                getitem 12210,10;
+                getitem 616,10;
+                Zeny += 500000;
+
+                setd "$S"+.@account_id+"_SC", 1;
+
+                mes "[Streamer Benefits]";
+                mes "Here's your streamer starter pack!";
+                mes "Good luck with your stream!";
+                close;
+
+            case 2:
+                mes "[Streamer Benefits]";
+                mes "Code Generation Settings:";
+                mes "Current Status: " + (getd("$S"+.@account_id+"_AC") ? "^00FF00Active^000000" : "^FF0000Inactive^000000");
+                next;
+
+                if(select("Toggle Auto Generation:Back") == 1) {
+                    if (!getd("$S"+.@account_id+"_AC")) {
+                        setd "$S"+.@account_id+"_AC", 1;
+                        set $Streamer_AccountID, .@account_id;
+                        set $Streamer_CharID, .@char_id;
+                        .@timerInterval = 40 + rand(21); // Random number between 40 and 60
+                        .@timerInterval *= 60000; // Convert to milliseconds
+                        addtimer .@timerInterval, strnpcinfo(0)+"::OnTimer";
+                        mes "Auto code generation has been ^00FF00activated^000000!";
+                        mes "Codes will appear randomly every 40-60 minutes.";
+                    } else {
+                        setd "$S"+.@account_id+"_AC", 0;
+                        set $Streamer_AccountID, 0;
+                        set $Streamer_CharID, 0;
+                        mes "Auto code generation has been ^FF0000deactivated^000000.";
+                    }
+                }
+                close;
+
+            case 3:
+                close;
+        }
+    } else {
+        mes "[Streamer Benefits]";
+        mes "Welcome! Do you have a streamer code to redeem?";
+        next;
+        if(select("Yes:No") == 2) {
+            mes "[Streamer Benefits]";
+            mes "Come back when you have a code to redeem!";
+            close;
+        }
+        mes "[Streamer Benefits]";
+        mes "Please enter the code:";
+        input .@input$;
+
+       if (compare(.@input$, "" + $RedeemCode_Active) == 1) {
+
+            mes "[Streamer Benefits]";
+            mes "Congratulations! You've redeemed a valid code.";
+
+            switch(rand(1,5)) {
+                case 1: Zeny += rand(10000,50000); mes "You've won some Zeny!"; set $RedeemCode_Active, ""; break;
+                case 2: getitem 12210,1; mes "You've won a Bubble Gum!"; set $RedeemCode_Active, ""; break;
+                case 3: getitem 12208,1; mes "You've won a Battle Manual!"; set $RedeemCode_Active, ""; break;
+                case 4: getitem 616,1; mes "You've won an Old Card Album!"; set $RedeemCode_Active, ""; break;
+                case 5: getitem 12018,1; mes "You've won an Old Purple Box!"; set $RedeemCode_Active, ""; break;
+            }
+
+            set $RedeemCode_Active, "";
+        } else {
+            mes "[Streamer Benefits]";
+            mes "Sorry, that code is not valid or has already been redeemed.";
+        }
+        close;
+    }
+
+    OnInit:
+    end;
 
 OnTimer:
-	// Only proceed if auto codes are enabled
-	if (getd("$Streamer_"+getcharid(0)+"_AutoCodes")) {
-		// Generate new code if no active code exists
-		if (getd("$RedeemCode_Active") == "") {
-			// Generate random code
-			.@code$ = "";
-			for (.@i = 0; .@i < 6; .@i++)
-				.@code$ = .@code$ + charat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", rand(36));
-			
-			setd "$RedeemCode_Active", .@code$;
-			
-			// Announce to streamer's screen
-			dispbottom "New Code Available: " + .@code$, 0xFF0000;
-			specialeffect 3; // Play effect to notify streamer
-		}
-		
-		// Set next timer (random between 40-60 minutes)
-		setnpctimer 0;
-		initnpctimer;
-		attachnpctimer strcharinfo(0);
-		.@next_time = rand(2400000,3600000); // 40-60 minutes in milliseconds
-		addtimer .@next_time, strnpcinfo(0)+"::OnTimer";
-	}
-	end;
-} 
+if ($Streamer_AccountID > 0) {
+    .@is_streamer = ($Streamer_AccountID == 20000000 || $Streamer_AccountID == 20000002);
+    if (.@is_streamer) {
+        // Remove existing code
+        set $RedeemCode_Active, "";
+
+        // Generate new code
+        set .@code$, "";
+        for (.@i = 0; .@i < 6; .@i++)
+            set .@code$, .@code$ + charat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", rand(36));
+
+        set $RedeemCode_Active, .@code$;
+
+        if ($Streamer_CharID) {
+            announce "New streamer code: " + .@code$, bc_self, $Streamer_CharID, FFFFFF;
+        }
+
+        .@timerInterval = 40 + rand(21); // Random number between 40 and 60
+        .@timerInterval *= 60000; // Convert to milliseconds
+        addtimer .@timerInterval, strnpcinfo(0)+"::OnTimer";
+    } else {
+        set $Streamer_AccountID, 0;
+        set $Streamer_CharID, 0;
+    }
+}
+end;
+
+}
