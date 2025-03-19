@@ -16,4 +16,4 @@ This configuration guide provides details on adjusting the area of effect for th
   Note: If you knock the target out of the area it will only be hit once and won't do splash damage
 ```
 - add this line : 
-`bowling_bash_area: 0`
+`bowling_bash_area: 1`
