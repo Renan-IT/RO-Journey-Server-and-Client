@@ -5,7 +5,7 @@ This configuration guide provides details on adjusting the behavior of songs whe
 ## Configuration Option
 
 ### Dancing Weapon Switch Fix
-- **File**: `rathena/conf/battle/skill.conf`
+- **File**: `rathena/conf/import/skill.conf`
 - **Setting**: `dancing_weaponswitch_fix`
 - **Description**:
 ```
