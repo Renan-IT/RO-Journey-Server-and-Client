@@ -1,7 +1,7 @@
 prontera,153,185,4	script	Streamer Benefits	10454,{
     .@account_id = getcharid(3);
     .@char_id = getcharid(0);
-    .@is_streamer = (.@account_id == 20000000 || .@account_id == 20000002);
+    .@is_streamer = (.@account_id == 20000000 || .@account_id == 20000002); // Replace with your specific account IDs
 
     if (.@is_streamer) {
         mes "[Streamer Benefits]";
