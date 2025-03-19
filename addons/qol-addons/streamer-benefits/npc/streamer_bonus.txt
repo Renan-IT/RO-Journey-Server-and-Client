@@ -1,10 +1,21 @@
 -	script	StreamerBonus	FAKE_NPC,{
 OnInit:
+	setarray .streamer_accounts[0], 20000000, 20000001; // Replace with your specific account IDs
 	setd "$StreamerBonus_Total", 0;
 	end;
 
 OnPCLoginEvent:
-	if (getaccountreg(getcharid(3), "#STREAMER") == 1) {
+	.@account_id = getcharid(3);
+	
+	.@is_streamer = 0;
+	for (.@i = 0; .@i < getarraysize(.streamer_accounts); .@i++) {
+		if (.@account_id == .streamer_accounts[.@i]) {
+			.@is_streamer = 1;
+			break;
+		}
+	}
+	
+	if (.@is_streamer) {
 		// Update total bonus (5% per streamer)
 		setd "$StreamerBonus_Total", min(25, getd("$StreamerBonus_Total") + 5);
 		.@current_bonus = min(25, getd("$StreamerBonus_Total"));
@@ -17,11 +28,23 @@ OnPCLoginEvent:
 		setbattleflag "item_rate_equip", getbattleflag("item_rate_equip") + .@current_bonus;
 		
 		announce "Streamer " + strcharinfo(0) + " is now online! Current server bonus: +" + .@current_bonus + "%!", bc_all;
+	} else {
+		// Optional: You can add a message here if needed
 	}
 	end;
 
 OnPCLogoutEvent:
-	if (getaccountreg(getcharid(3), "#STREAMER") == 1) {
+	.@account_id = getcharid(3);
+	
+	.@is_streamer = 0;
+	for (.@i = 0; .@i < getarraysize(.streamer_accounts); .@i++) {
+		if (.@account_id == .streamer_accounts[.@i]) {
+			.@is_streamer = 1;
+			break;
+		}
+	}
+	
+	if (.@is_streamer) {
 		// Update total bonus
 		.@old_bonus = min(25, getd("$StreamerBonus_Total"));
 		setd "$StreamerBonus_Total", max(0, getd("$StreamerBonus_Total") - 5);
@@ -47,4 +70,4 @@ OnPCLogoutEvent:
 		}
 	}
 	end;
-} 
+}
