@@ -7,4 +7,11 @@ This configuration guide provides details on adjusting the behavior of songs whe
 ### Dancing Weapon Switch Fix
 - **File**: `rathena/conf/battle/skill.conf`
 - **Setting**: `dancing_weaponswitch_fix`
-- **Description**: This setting determines whether the switching of weapons cancels songs. On official servers, a fix is in place to prevent this behavior. The default value is `yes`, which means the fix is applied. Setting this to `no` will allow songs to be canceled when weapons are switched.
+- **Description**:
+```
+  Dancing Weapon Switch
+  On official servers, a fix is in place that prevents the switching of weapons to cancel songs.
+  Default: yes
+```
+add this line :
+`dancing_weaponswitch_fix: no`
