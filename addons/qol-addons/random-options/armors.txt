@@ -1,0 +1,314 @@
+- Item: Adventure_Suit - class: Armor
+- Item: Adventurere's_Suit_ - class: Armor
+- Item: Wind_Sprits_Armor - class: Armor
+- Item: Antenna - class: Upper Headgear
+- Item: Cape_Of_Ancient_Lord - class: Garment
+- Item: Angelic_Chain - class: Upper Headgear
+- Item: Kiss_Of_Angel - class: Upper Headgear
+- Item: Angel's_Arrival - class: Footgear
+- Item: Angel's_Warmth - class: Garment
+- Item: Angel's_Safeguard - class: Shield
+- Item: Angel's_Protection - class: Armor
+- Item: Angelic_Ring - class: Accessory
+- Item: Eagle_Eyes - class: Middle Headgear
+- Item: Angry_Mouth - class: Lower Headgear
+- Item: Goblin_Mask_03 - class: Middle & Lower Headgear
+- Item: Apple_Of_Archer - class: Upper Headgear
+- Item: Hyper_Changer - class: Accessory
+- Item: Armor_Of_Naga - class: Armor
+- Item: Assassin_Mask_ - class: Lower Headgear
+- Item: Banana_Hat - class: Upper Headgear
+- Item: Bandana - class: Upper Headgear
+- Item: Hair_Protector - class: Upper Headgear
+- Item: Belt - class: Accessory
+- Item: Beret - class: Upper Headgear
+- Item: Big_Sis'_Ribbon - class: Upper Headgear
+- Item: Binoculars - class: Middle Headgear
+- Item: Biretta_ - class: Upper Headgear
+- Item: Bison_Horn - class: Accessory
+- Item: Black_Cat - class: Accessory
+- Item: Black_Leather_Boots - class: Footgear
+- Item: Bloody_Iron_Ball - class: Accessory
+- Item: Bomb_Wick - class: Upper Headgear
+- Item: Bone_Head - class: Upper Headgear
+- Item: Bone_Helm - class: Upper Headgear
+- Item: Bone_Helm_ - class: Upper Headgear
+- Item: Bone_Plate - class: Armor
+- Item: Bongun_Hat - class: U, M & L Headgear
+- Item: Boots - class: Footgear
+- Item: Boots_ - class: Footgear
+- Item: Thimble_Of_Archer - class: Accessory
+- Item: Bowman_Scarf - class: Accessory
+- Item: Bradium_Ring - class: Accessory
+- Item: Bradium_Shield - class: Shield
+- Item: Brooch - class: Accessory
+- Item: Brooch_ - class: Accessory
+- Item: Fedora_ - class: Upper Headgear
+- Item: Buckler_ - class: Shield
+- Item: Hat_Of_Cake - class: Upper Headgear
+- Item: Cap - class: Upper Headgear
+- Item: Cap_ - class: Upper Headgear
+- Item: Mitten_Of_Presbyter - class: Accessory
+- Item: Chain_Mail_ - class: Armor
+- Item: Chameleon_Armor - class: Armor
+- Item: Cigar - class: Lower Headgear
+- Item: Circlet_ - class: Upper Headgear
+- Item: Earth_Sprits_Armor - class: Armor
+- Item: Clip - class: Accessory
+- Item: Pierrot_Nose - class: Lower Headgear
+- Item: Coat_ - class: Armor
+- Item: Blue_Coif_ - class: Upper & Middle Headgear
+- Item: Cold_Heart - class: Accessory
+- Item: Coronet - class: Upper Headgear
+- Item: Corsair - class: Upper Headgear
+- Item: Cotton_Shirt - class: Armor
+- Item: Cotton_Shirt_ - class: Armor
+- Item: Critical_Ring - class: Accessory
+- Item: Cross_Shield - class: Shield
+- Item: Crown - class: Upper Headgear
+- Item: Chrystal_Pumps - class: Footgear
+- Item: Cursed_Hand - class: Accessory
+- Item: Cursed_Star - class: Accessory
+- Item: Fillet - class: Upper Headgear
+- Item: Diabolus_Helmet - class: U, M & L Headgear
+- Item: Dark_Blindfold - class: Middle Headgear
+- Item: Diabolus_Armor - class: Armor
+- Item: Diabolus_Boots - class: Footgear
+- Item: Diabolus_Manteau - class: Garment
+- Item: Diabolus_Ring - class: Accessory
+- Item: Diabolus_Robe - class: Armor
+- Item: Diamond_Ring - class: Accessory
+- Item: Divine_Cloth - class: Armor
+- Item: Dragon_Breath - class: Garment
+- Item: Wing_Of_Eagle - class: Garment
+- Item: Ear_Mufs - class: Upper Headgear
+- Item: Earring - class: Accessory
+- Item: Earring_ - class: Accessory
+- Item: Egg_Shell - class: Upper Headgear
+- Item: Elven_Ears - class: Middle Headgear
+- Item: Satanic_Chain - class: Upper Headgear
+- Item: Exorcism_Bible - class: Shield
+- Item: Expert_Ring - class: Accessory
+- Item: An_Eye_Of_Dullahan - class: Accessory
+- Item: Eyes_Stone_Ring - class: Accessory
+- Item: Falcon_Robe - class: Garment
+- Item: Fancy_Flower - class: Upper Headgear
+- Item: Fin_Helm - class: Middle Headgear
+- Item: Flame_Manteau - class: Garment
+- Item: Flower_Ring - class: Accessory
+- Item: Formal_Suit - class: Armor
+- Item: Fricca_Circlet - class: Upper Headgear
+- Item: Fricco_Shoes - class: Footgear
+- Item: Plate_Armor - class: Armor
+- Item: Plate_Armor_ - class: Armor
+- Item: Galapago_Cap - class: Upper Headgear
+- Item: Ganster_Mask - class: Lower Headgear
+- Item: Gas_Mask - class: Middle & Lower Headgear
+- Item: Gemmed_Sallet_ - class: Upper Headgear
+- Item: Ghost_Bandana - class: Upper Headgear
+- Item: Glittering_Clothes - class: Armor
+- Item: Glove - class: Accessory
+- Item: Glove_ - class: Accessory
+- Item: Goblin_Mask_04 - class: Middle & Lower Headgear
+- Item: Goblini_Mask - class: Middle & Lower Headgear
+- Item: Cursed_Lucky_Brooch - class: Accessory
+- Item: Goggle - class: Upper & Middle Headgear
+- Item: Goggle_ - class: Upper & Middle Headgear
+- Item: Goibne's_Armor - class: Armor
+- Item: Goibne's_Combat_Boots - class: Footgear
+- Item: Goibne's_Helmet - class: Upper Headgear
+- Item: Goibne's_Shoulder_Arms - class: Garment
+- Item: Gold_Ring - class: Accessory
+- Item: Golden_Gear - class: Upper Headgear
+- Item: Golden_Gear_ - class: Upper Headgear
+- Item: Granpa_Beard - class: Lower Headgear
+- Item: Loard_Circlet - class: Upper Headgear
+- Item: Grave_ - class: Footgear
+- Item: Green_Feeler - class: Upper Headgear
+- Item: Guard - class: Shield
+- Item: Guard_ - class: Shield
+- Item: Hair_Band - class: Upper Headgear
+- Item: Spirit_Chain - class: Upper Headgear
+- Item: Hat - class: Upper Headgear
+- Item: Hat_ - class: Upper Headgear
+- Item: Helm_Of_Sun - class: Upper & Middle Headgear
+- Item: Celestial_Robe - class: Garment
+- Item: Helm_ - class: Upper Headgear
+- Item: Helm_Of_Angel - class: Upper Headgear
+- Item: High_Fashion_Sandals - class: Footgear
+- Item: Spiky_Heel - class: Footgear
+- Item: Cone_Hat_ - class: Upper Headgear
+- Item: Holy_Guard - class: Shield
+- Item: Holy_Robe - class: Armor
+- Item: Hood_ - class: Garment
+- Item: Icarus_Wing - class: Accessory
+- Item: Improved_Tights - class: Armor
+- Item: Inccubus_Horn - class: Upper Headgear
+- Item: Indian_Hair_Piece - class: Upper Headgear
+- Item: Iron_Cane - class: Lower Headgear
+- Item: Iron_Wrist - class: Accessory
+- Item: Leather_Jacket - class: Armor
+- Item: Leather_Jacket_ - class: Armor
+- Item: Gemmed_Crown - class: Upper Headgear
+- Item: Joker_Jester - class: Upper Headgear
+- Item: Kandura - class: Armor
+- Item: Cat_Hairband - class: Upper Headgear
+- Item: Leather_Of_Tendrilion - class: Garment
+- Item: Full_Plate_Armor_ - class: Armor
+- Item: Lesser_Elemental_Ring - class: Accessory
+- Item: Librarian_Glove - class: Accessory
+- Item: Life_Link - class: Armor
+- Item: Linen_Glove - class: Accessory
+- Item: Clothes_Of_The_Lord - class: Armor
+- Item: Flame_Sprits_Armor - class: Armor
+- Item: Flame_Sprits_Armor_ - class: Armor
+- Item: Lunatic_Brooch - class: Accessory
+- Item: Mage_Coat - class: Armor
+- Item: Wizardry_Hat - class: Upper Headgear
+- Item: Magic_Study_Vol1 - class: Shield
+- Item: Magician_Hat - class: Upper Headgear
+- Item: Magni_Cap - class: Upper Headgear
+- Item: Magestic_Goat - class: Upper Headgear
+- Item: Magestic_Goat_ - class: Upper Headgear
+- Item: Mandragora_Cap - class: Upper Headgear
+- Item: Manteau - class: Garment
+- Item: Manteau_ - class: Garment
+- Item: Mantle_ - class: Armor
+- Item: Marionette_Doll - class: Upper Headgear
+- Item: Masquerade - class: Middle Headgear
+- Item: Matyr's_Flea_Guard - class: Accessory
+- Item: Memorize_Book - class: Shield
+- Item: Meteo_Plate_Armor - class: Armor
+- Item: Mini_Propeller - class: Upper Headgear
+- Item: Mink_Coat - class: Armor
+- Item: Mirror_Shield_ - class: Shield
+- Item: Mithril_Magic_Cape - class: Garment
+- Item: Holy_Bonnet - class: Upper Headgear
+- Item: Morpheus's_Armlet - class: Accessory
+- Item: Morpheus's_Hood - class: Upper Headgear
+- Item: Morpheus's_Ring - class: Accessory
+- Item: Morpheus's_Shawl - class: Garment
+- Item: Morrigane's_Belt - class: Accessory
+- Item: Morrigane's_Helm - class: Upper Headgear
+- Item: Morrigane's_Manteau - class: Garment
+- Item: Morrigane's_Pendant - class: Accessory
+- Item: Mr_Scream - class: Middle & Lower Headgear
+- Item: Muffler_ - class: Garment
+- Item: Munak_Turban - class: U, M & L Headgear
+- Item: Musika - class: Garment
+- Item: Necklace - class: Accessory
+- Item: Necklace_ - class: Accessory
+- Item: Ninja_Suit - class: Armor
+- Item: Nurse_Cap - class: Upper Headgear
+- Item: Fruit_Shell - class: Upper Headgear
+- Item: Piece_Of_Angent_Skin - class: Garment
+- Item: Odin's_Blessing - class: Armor
+- Item: Viking_Helm - class: Upper Headgear
+- Item: Orleans_Glove - class: Accessory
+- Item: Orleans_Gown - class: Armor
+- Item: Orleans_Server - class: Shield
+- Item: Padded_Armor - class: Armor
+- Item: Padded_Armor_ - class: Armor
+- Item: Panda_Cap - class: Upper Headgear
+- Item: G_Strings - class: Armor
+- Item: Pauldron - class: Garment
+- Item: Ph.D_Hat - class: Upper Headgear
+- Item: Pinguicula_Corsage - class: Accessory
+- Item: Smoking_Pipe - class: Lower Headgear
+- Item: Pirate_Bandana - class: Upper Headgear
+- Item: Platinum_Shield - class: Shield
+- Item: Pocket_Watch_ - class: Accessory
+- Item: Goblin_Mask_01 - class: Middle & Lower Headgear
+- Item: Poo_Poo_Hat - class: Upper Headgear
+- Item: Poring_Hat - class: Upper Headgear
+- Item: Pumpkin_Hat - class: Upper Headgear
+- Item: Ear_Of_Puppy - class: Upper Headgear
+- Item: Puppy_Love - class: Upper Headgear
+- Item: Ragamuffin_Cape - class: Garment
+- Item: Red_Bandana - class: Upper Headgear
+- Item: Red_Silk_Seal - class: Accessory
+- Item: Ribbon - class: Upper Headgear
+- Item: Ribbon_ - class: Upper Headgear
+- Item: Rider_Insignia - class: Garment
+- Item: Rider_Insignia_ - class: Garment
+- Item: Ring - class: Accessory
+- Item: Ring_ - class: Accessory
+- Item: Ring_Of_Flame_Lord - class: Accessory
+- Item: Ring_Of_Resonance - class: Accessory
+- Item: Robe_Of_Casting - class: Armor
+- Item: Ring_Of_Rogue - class: Accessory
+- Item: Centimental_Flower - class: Lower Headgear
+- Item: Oldman's_Romance - class: Upper Headgear
+- Item: Centimental_Leaf - class: Lower Headgear
+- Item: Rosary - class: Accessory
+- Item: Rosary_ - class: Accessory
+- Item: Event_Pierrot_Nose - class: Lower Headgear
+- Item: Herald_Of_GOD - class: Shield
+- Item: Safety_Helmet - class: Upper Headgear
+- Item: Safety_Ring - class: Accessory
+- Item: Saint_Robe_ - class: Armor
+- Item: Sandals_ - class: Footgear
+- Item: Santa's_Hat - class: Upper Headgear
+- Item: Water_Sprits_Armor - class: Armor
+- Item: Water_Sprits_Armor_ - class: Armor
+- Item: Scapulare_ - class: Armor
+- Item: Cuffs - class: Footgear
+- Item: Shadow_Guard - class: Shield
+- Item: Shadow_Walk - class: Footgear
+- Item: Shield_ - class: Shield
+- Item: Shield_Of_Naga - class: Shield
+- Item: Shinobi's_Sash - class: Accessory
+- Item: Shoes_ - class: Footgear
+- Item: Silk_Robe_ - class: Armor
+- Item: Silver_Ring - class: Accessory
+- Item: Silver_Robe_ - class: Armor
+- Item: Skin_Of_Ventus - class: Garment
+- Item: Skul_Ring - class: Accessory
+- Item: Pair_Of_Red_Ribbon - class: Middle Headgear
+- Item: Sniping_Suit - class: Armor
+- Item: Spinx_Helm - class: Upper & Lower Headgear
+- Item: Sharp_Gear - class: Upper Headgear
+- Item: Spiritual_Ring - class: Accessory
+- Item: Sprint_Mail - class: Armor
+- Item: Sprint_Ring - class: Accessory
+- Item: Sprint_Shoes - class: Footgear
+- Item: Star_Dust - class: Upper Headgear
+- Item: Stone_Buckler - class: Shield
+- Item: Stop_Post - class: Upper Headgear
+- Item: Strong_Shield - class: Shield
+- Item: Horn_Of_Succubus - class: Upper Headgear
+- Item: Sunflower - class: Upper Headgear
+- Item: Sunglasses - class: Middle Headgear
+- Item: Super_Novice_Hat_ - class: Upper Headgear
+- Item: Goblin_Mask_02 - class: Middle & Lower Headgear
+- Item: Clack_Of_Servival - class: Garment
+- Item: Sweet_Gents - class: Upper Headgear
+- Item: Thief_Clothes_ - class: Armor
+- Item: Thorny_Buckler - class: Shield
+- Item: Tiara - class: Upper Headgear
+- Item: Tidal_Shoes - class: Footgear
+- Item: Tights_ - class: Armor
+- Item: Tournament_Shield - class: Shield
+- Item: Ulfhedinn - class: Garment
+- Item: Ulle_Cap - class: Upper Headgear
+- Item: Undershirt - class: Garment
+- Item: Snowy_Horn - class: Upper Headgear
+- Item: Vali's_Manteau - class: Garment
+- Item: Valkyrie_Armor - class: Armor
+- Item: Valkyrie_Manteau - class: Garment
+- Item: Valkyrie_Shoes - class: Footgear
+- Item: Valkyrja's_Shield - class: Shield
+- Item: Variant_Shoes - class: Footgear
+- Item: Vesper_Core01 - class: Accessory
+- Item: Vesper_Core02 - class: Accessory
+- Item: Vesper_Core03 - class: Accessory
+- Item: Vesper_Core04 - class: Accessory
+- Item: Vidar's_Boots - class: Footgear
+- Item: Vital_Tree_Shoes - class: Footgear
+- Item: Wedding_Dress - class: Armor
+- Item: Wedding_Veil - class: Upper Headgear
+- Item: Western_Grace - class: Upper Headgear
+- Item: Star_Sparkling - class: Upper Headgear
+- Item: Wooden_Mail_ - class: Armor
+- Item: Wool_Scarf - class: Garment
+- Item: Gangster_Patch - class: Middle Headgear
