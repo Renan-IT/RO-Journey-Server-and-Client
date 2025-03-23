@@ -1,0 +1,334 @@
+- Item: Ahlspiess - class: Two-handed Spear
+- Item: Ancient_Magic - class: Book
+- Item: Arbalest_ - class: Bow
+- Item: Arc_Wand_ - class: One-handed Staff
+- Item: Assasin_Dagger - class: Dagger
+- Item: Asura_ - class: Dagger
+- Item: Altas_Weapon - class: Two-handed Sword
+- Item: Axe - class: One-handed Axe
+- Item: Axe_ - class: One-handed Axe
+- Item: Azoth - class: Dagger
+- Item: Balistar - class: Bow
+- Item: Base_Guitar - class: Musical Instrument
+- Item: Bastard_Sword_ - class: Two-handed Sword
+- Item: Battle_Axe_ - class: Two-handed Axe
+- Item: Battle_Fork - class: Two-handed Spear
+- Item: Battle_Hook - class: One-handed Spear
+- Item: Bazerald - class: Dagger
+- Item: Berdysz - class: Two-handed Axe
+- Item: Berserk - class: Knuckle
+- Item: Berserk_Guitar - class: Musical Instrument
+- Item: Bible - class: Book
+- Item: Blade_ - class: One-handed Sword
+- Item: Bladed_Whip - class: Whip
+- Item: Blood_Tears - class: Katar
+- Item: Brood_Axe - class: Two-handed Axe
+- Item: Bloody_Eater - class: Two-handed Sword
+- Item: Bloody_Roar - class: Katar
+- Item: Book - class: Book
+- Item: Book_Of_Billows - class: Book
+- Item: Book_Of_Gust_Of_Wind - class: Book
+- Item: Book_Of_Mother_Earth - class: Book
+- Item: Book_Of_The_Apocalypse - class: Book
+- Item: Book_Of_Blazing_Sun - class: Book
+- Item: Bow - class: Bow
+- Item: Bow_ - class: Bow
+- Item: Bradium_Stonehammer - class: Two-handed Axe
+- Item: Branch - class: Rifle
+- Item: Brionac - class: Two-handed Spear
+- Item: Broad_Sword_ - class: Two-handed Sword
+- Item: Skewer - class: One-handed Spear
+- Item: Burning_Bow - class: Bow
+- Item: Guitar_Of_Passion - class: Musical Instrument
+- Item: Buster_ - class: Two-handed Axe
+- Item: Butcher - class: Gatling Gun
+- Item: Butcher_ - class: Gatling Gun
+- Item: Byeorrun_Gum - class: One-handed Sword
+- Item: Cardo - class: Two-handed Spear
+- Item: Carrot_Whip - class: Whip
+- Item: Cello - class: Musical Instrument
+- Item: Chain - class: Mace
+- Item: Chain_ - class: Mace
+- Item: Cakram - class: Katar
+- Item: Chemeti - class: Whip
+- Item: Cinquedea_ - class: Dagger
+- Item: Claw_ - class: Knuckle
+- Item: Claymore - class: Two-handed Sword
+- Item: Club - class: Mace
+- Item: Club_ - class: Mace
+- Item: Combat_Knife - class: Dagger
+- Item: Combo_Battle_Glove - class: Knuckle
+- Item: Composite_Bow_ - class: Bow
+- Item: Coward_ - class: Dagger
+- Item: Crescent_Scythe - class: Two-handed Spear
+- Item: Crescent_Scythe_ - class: Two-handed Spear
+- Item: Crimson_Bolt_ - class: Revolver
+- Item: Croce_Staff - class: One-handed Staff
+- Item: CrossBow_ - class: Bow
+- Item: Cursed_Dagger - class: Dagger
+- Item: Cursed_Lyre - class: Bow
+- Item: Curved_Sword - class: One-handed Sword
+- Item: Cutlas - class: One-handed Sword
+- Item: Cutter__ - class: Dagger
+- Item: Cutter_ - class: Dagger
+- Item: The_Cyclone_ - class: Rifle
+- Item: Dagger_ - class: Dagger
+- Item: Counter_Dagger - class: Dagger
+- Item: Dagger_Of_Hunter - class: Dagger
+- Item: Damascus_ - class: Dagger
+- Item: Dea_Staff - class: Two-handed Staff
+- Item: Dead_Tree_Cane - class: One-handed Staff
+- Item: Death_Guidance - class: Two-handed Sword
+- Item: Twilight_Desert - class: Dagger
+- Item: Destroyer - class: Grenade Launcher
+- Item: Destroyer_ - class: Grenade Launcher
+- Item: Dirk_ - class: Dagger
+- Item: Divine_Cross - class: Two-handed Staff
+- Item: Doom_Slayer - class: Two-handed Axe
+- Item: Doom_Slayer_ - class: Two-handed Axe
+- Item: Double_Bound - class: Bow
+- Item: Dragon_Killer - class: Dagger
+- Item: Dragon_Slayer - class: Two-handed Sword
+- Item: Dragon_Wing - class: Bow
+- Item: Drifter - class: Gatling Gun
+- Item: Drill_Katar - class: Katar
+- Item: Dusk - class: Rifle
+- Item: Earth_Bow - class: Bow
+- Item: Edge - class: One-handed Sword
+- Item: Electric_Eel - class: Whip
+- Item: Electric_Fist - class: Knuckle
+- Item: Electronic_Guitar - class: Musical Instrument
+- Item: Electric_Wire - class: Whip
+- Item: Elemental_Sword - class: One-handed Sword
+- Item: Encyclopedia - class: Book
+- Item: Eraser - class: One-handed Staff
+- Item: Erde - class: Mace
+- Item: Bone_Wand - class: One-handed Staff
+- Item: Exercise - class: Dagger
+- Item: Falchion - class: One-handed Sword
+- Item: Falchion_ - class: One-handed Sword
+- Item: Falken_Blitz - class: Bow
+- Item: Finger_ - class: Knuckle
+- Item: Fire_Brand - class: One-handed Sword
+- Item: Fisherman's_Dagger - class: Dagger
+- Item: Flail - class: Mace
+- Item: Flail_ - class: Mace
+- Item: Forturn_Sword - class: Dagger
+- Item: Frozen_Bow - class: Bow
+- Item: Gae_Bolg - class: Two-handed Spear
+- Item: Gaia_Sword - class: One-handed Sword
+- Item: Whip_Of_Earth - class: Whip
+- Item: Kakkung_ - class: Bow
+- Item: The_Garrison - class: Revolver
+- Item: Gate_Keeper - class: Shotgun
+- Item: Gate_KeeperDD - class: Shotgun
+- Item: Guitar_Of_Gentle_Breeze - class: Musical Instrument
+- Item: Walking_Stick - class: One-handed Staff
+- Item: Giant_Axe - class: Two-handed Axe
+- Item: Ginnungagap - class: Dagger
+- Item: Girl's_Diary - class: Book
+- Item: Gladius - class: Dagger
+- Item: Gladius_ - class: Dagger
+- Item: Glaive - class: Two-handed Spear
+- Item: Glaive_ - class: Two-handed Spear
+- Item: Gold_Lux - class: Revolver
+- Item: Golden_Mace - class: Mace
+- Item: Grand_Cross - class: Mace
+- Item: Great_Axe - class: Two-handed Axe
+- Item: Great_Bow_ - class: Bow
+- Item: Guitar_Of_Vast_Land - class: Musical Instrument
+- Item: Grimtooth_ - class: Dagger
+- Item: Guillotine - class: Two-handed Axe
+- Item: Guisarme - class: Two-handed Spear
+- Item: Guisarme_ - class: Two-handed Spear
+- Item: Guitar_ - class: Musical Instrument
+- Item: Gungnir - class: One-handed Spear
+- Item: Gust_Bow - class: Bow
+- Item: Hae_Dong_Gum_ - class: One-handed Sword
+- Item: Hakujin - class: Dagger
+- Item: Hakujin_ - class: Dagger
+- Item: Halberd_ - class: Two-handed Spear
+- Item: Hammer_ - class: Two-handed Axe
+- Item: Hardback - class: Book
+- Item: Harp - class: Musical Instrument
+- Item: Harp_ - class: Musical Instrument
+- Item: Harp_Of_Nepenthes - class: Musical Instrument
+- Item: Claw_Of_Garm - class: Knuckle
+- Item: Healing_Staff - class: One-handed Staff
+- Item: Heart_Breaker - class: Two-handed Axe
+- Item: Hell_Fire - class: Two-handed Spear
+- Item: Holy_Avenger - class: One-handed Sword
+- Item: Holy_Stick - class: One-handed Staff
+- Item: Horn_Of_Hilthrion - class: Knuckle
+- Item: Hunting_Spear - class: One-handed Spear
+- Item: Hurricane_Fury - class: Two-handed Axe
+- Item: Huuma_Blaze - class: Fuuma Shuriken
+- Item: Huuma_Calm_Mind - class: Fuuma Shuriken
+- Item: Huuma_Giant_Wheel - class: Fuuma Shuriken
+- Item: Huuma_Giant_Wheel_ - class: Fuuma Shuriken
+- Item: Huuma_Bird_Wing - class: Fuuma Shuriken
+- Item: Hypnotist's_Staff_ - class: One-handed Staff
+- Item: Ice_Falchon - class: One-handed Sword
+- Item: House_Auger - class: Dagger
+- Item: House_Auger_ - class: Dagger
+- Item: Icicle_Fist - class: Knuckle
+- Item: Whip_Of_Ice_Piece - class: Whip
+- Item: Immaterial_Sword - class: One-handed Sword
+- Item: Infiltrator - class: Katar
+- Item: Inverse_Scale - class: Katar
+- Item: Iron_Driver - class: Mace
+- Item: Ivory_Knife - class: Dagger
+- Item: Ivory_Lance - class: Two-handed Spear
+- Item: Ixion_Wing - class: Bow
+- Item: Jamadhar_ - class: Katar
+- Item: Javelin_ - class: One-handed Spear
+- Item: Jewel_Sword - class: One-handed Sword
+- Item: Jitte_ - class: Dagger
+- Item: Jur_ - class: Katar
+- Item: Kaiser_Knuckle - class: Knuckle
+- Item: Kamaitachi - class: Dagger
+- Item: Katana - class: Two-handed Sword
+- Item: Katana_ - class: Two-handed Sword
+- Item: Katar_ - class: Katar
+- Item: Katar_Of_Cold_Icicle - class: Katar
+- Item: Katar_Of_Piercing_Wind - class: Katar
+- Item: Katar_Of_Thornbush - class: Katar
+- Item: Katar_Of_Raging_Blaze - class: Katar
+- Item: Katzbalger - class: Two-handed Sword
+- Item: Khukri - class: Dagger
+- Item: Mama's_Knife - class: Dagger
+- Item: Knife - class: Dagger
+- Item: Knife_ - class: Dagger
+- Item: Krasnaya - class: Two-handed Sword
+- Item: Krieg - class: Dagger
+- Item: Krishna - class: Katar
+- Item: Kronos - class: Two-handed Staff
+- Item: La'cryma_Stick - class: One-handed Staff
+- Item: Lance_ - class: Two-handed Spear
+- Item: Lariat - class: Whip
+- Item: Death_Note - class: Book
+- Item: Legacy_Of_Dragon - class: Book
+- Item: Lever_Action_Rifle - class: Rifle
+- Item: Lich_Bone_Wand - class: One-handed Staff
+- Item: Right_Epsilon - class: Two-handed Axe
+- Item: Nail_Of_Loki - class: Katar
+- Item: Guitar_Of_Blue_Solo - class: Musical Instrument
+- Item: Long_Barrel_ - class: Rifle
+- Item: Long_Horn - class: One-handed Spear
+- Item: Long_Mace - class: Mace
+- Item: Longinus's_Spear - class: Two-handed Spear
+- Item: Luna_Bow - class: Bow
+- Item: Lunakaligo - class: Mace
+- Item: Lute_ - class: Musical Instrument
+- Item: Mace_ - class: Mace
+- Item: Magma_Fist - class: Knuckle
+- Item: Main_Gauche - class: Dagger
+- Item: Main_Gauche_ - class: Dagger
+- Item: Mandolin_ - class: Musical Instrument
+- Item: Masamune - class: Two-handed Sword
+- Item: Mighty_Staff - class: One-handed Staff
+- Item: Moonlight_Sword - class: Dagger
+- Item: Morning_Star - class: Mace
+- Item: Morning_Star_ - class: Mace
+- Item: Muramasa - class: Two-handed Sword
+- Item: Murasame - class: Dagger
+- Item: Murasame_ - class: Dagger
+- Item: Muscle_Cutter - class: Two-handed Sword
+- Item: Mysteltainn_ - class: One-handed Sword
+- Item: Nagan - class: One-handed Sword
+- Item: Nemesis - class: Mace
+- Item: Nepenthes_Bow - class: Bow
+- Item: Orc_Archer_Bow - class: Bow
+- Item: Orcish_Axe - class: One-handed Axe
+- Item: Orcish_Sword - class: One-handed Sword
+- Item: Oriental_Lute - class: Musical Instrument
+- Item: Partizan_ - class: Two-handed Spear
+- Item: Piercing_Staff - class: One-handed Staff
+- Item: Pike_ - class: One-handed Spear
+- Item: Platinum_Shotel - class: One-handed Sword
+- Item: Poison_Knife - class: Dagger
+- Item: Pole_Axe - class: One-handed Spear
+- Item: Principles_Of_Magic - class: Book
+- Item: Quadrille - class: Mace
+- Item: Queen's_Whip - class: Whip
+- Item: Rante_ - class: Whip
+- Item: Lapier_ - class: One-handed Sword
+- Item: Rapture_Rose - class: Whip
+- Item: Whip_Of_Red_Flame - class: Whip
+- Item: Red_Square_Bag - class: Mace
+- Item: Release_Of_Wish - class: One-handed Staff
+- Item: Ring_Pommel_Saber_ - class: One-handed Sword
+- Item: Rod_ - class: One-handed Staff
+- Item: Rope_ - class: Whip
+- Item: Ruber - class: One-handed Sword
+- Item: Bow_Of_Rudra - class: Bow
+- Item: Sabbath - class: Two-handed Axe
+- Item: Saber_ - class: One-handed Sword
+- Item: Diary_Of_Great_Sage - class: Book
+- Item: Sandstorm - class: Dagger
+- Item: Sasimi - class: One-handed Sword
+- Item: Scalpel - class: Dagger
+- Item: Schweizersabel - class: Two-handed Sword
+- Item: Scimiter_ - class: One-handed Sword
+- Item: Sea_Witch_Foot - class: Whip
+- Item: Seismic_Fist - class: Knuckle
+- Item: Ghoul_Leg - class: Katar
+- Item: Six_Shooter_ - class: Revolver
+- Item: Jump_Rope - class: Whip
+- Item: Slayer_ - class: Two-handed Sword
+- Item: Smasher_ - class: Mace
+- Item: Solar_Sword - class: One-handed Sword
+- Item: Staff_Of_Soul - class: Two-handed Staff
+- Item: Spear_ - class: One-handed Spear
+- Item: Various_Jur - class: Katar
+- Item: Spectral_Spear - class: Two-handed Spear
+- Item: Spike - class: Mace
+- Item: Staff_ - class: One-handed Staff
+- Item: Staff_Of_Bordeaux - class: One-handed Staff
+- Item: Destruction_Rod - class: Two-handed Staff
+- Item: Star_Dust_Blade - class: One-handed Sword
+- Item: Stem_Of_Nepenthes - class: Whip
+- Item: Stiletto - class: Dagger
+- Item: Stiletto_ - class: Dagger
+- Item: Hora_ - class: Knuckle
+- Item: Sucsamad - class: Dagger
+- Item: Survival_Rod_ - class: One-handed Staff
+- Item: Survival_Rod2_ - class: One-handed Staff
+- Item: Sword_Mace_ - class: Mace
+- Item: Tablet - class: Book
+- Item: Tae_Goo_Lyeon - class: Two-handed Sword
+- Item: Thorn_Staff - class: One-handed Staff
+- Item: Thunder_P_ - class: Shotgun
+- Item: Tomahawk - class: Two-handed Axe
+- Item: Tooth_Blade - class: Dagger
+- Item: Town_Sword_ - class: One-handed Sword
+- Item: Trident - class: Two-handed Spear
+- Item: Trident_ - class: Two-handed Spear
+- Item: Tsurugi_ - class: One-handed Sword
+- Item: Twin_Edge_B - class: One-handed Sword
+- Item: Twin_Edge_R - class: One-handed Sword
+- Item: Two_Handed_Axe_ - class: Two-handed Axe
+- Item: Two_Hand_Sword_ - class: Two-handed Sword
+- Item: Unholy_Touch - class: Katar
+- Item: Vecer_Axe - class: One-handed Axe
+- Item: Veteran_Axe - class: Two-handed Axe
+- Item: Veteran_Hammer - class: Mace
+- Item: Veteran_Sword - class: Two-handed Sword
+- Item: Violin_ - class: Musical Instrument
+- Item: Waghnakh - class: Knuckle
+- Item: Waghnakh_ - class: Knuckle
+- Item: Wand - class: One-handed Staff
+- Item: Wand_ - class: One-handed Staff
+- Item: Blessed_Wand - class: One-handed Staff
+- Item: War_Axe - class: One-handed Axe
+- Item: Wasteland_Outlaw - class: Revolver
+- Item: Weihna - class: Dagger
+- Item: Whip_Of_Balance - class: Whip
+- Item: Wild_Beast_Claw - class: Katar
+- Item: Windhawk - class: One-handed Axe
+- Item: Staff_Of_Wing - class: One-handed Staff
+- Item: Wizardy_Staff - class: Two-handed Staff
+- Item: Spanner - class: Mace
+- Item: Zeny_Knife - class: Dagger
+- Item: Zephyrus - class: Two-handed Spear
+- Item: Zweihander - class: Two-handed Sword
