@@ -1,4 +1,4 @@
-# Setting up a functional rAthena server and client in `2025`
+# Setting up a functional rAthena server and client in `2026`
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
@@ -6,20 +6,21 @@
   - [Quick Setup (Automated)](#quick-setup-automated)
   - [Manual Setup](#manual-setup)
 - [Client Setup](#client)
-- [Discord Bot Integration](#discord-bot-integration)
-- [Quality of Life Addons](#quality-of-life-addons)
 - [Troubleshooting](#troubleshooting)
 - [Security Considerations](#security-considerations)
 - [Maintenance](#maintenance)
 - [Additional Setup for Running the Server](#additional-setup-for-running-the-server)
   - [Installing Screen](#installing-screen)
   - [Running the Server in a Screen Session](#running-the-server-in-a-screen-session)
+- [Additional Section](#additional-section)
+  - [Discord Bot Integration](#discord-bot-integration)
+  - [Quality of Life Addons](#quality-of-life-addons)
 
 ## Prerequisites
 Before starting, ensure you have:
-- Ubuntu Minimal 20.04 LTS or later
+- Ubuntu Minimal 24.04 LTS or later
 - At least 2GB RAM (4GB recommended)
-- 20GB free disk space
+- 1GB free disk space
 - A stable internet connection
 - Basic knowledge of Linux commands
 - A public IP address (if hosting for external access)
@@ -94,17 +95,18 @@ If you prefer to set up the server manually, follow these steps:
         sudo apt install libmariadb-dev -y
         sudo apt install libmariadb-dev-compat -y
         sudo add-apt-repository ppa:ondrej/php -y
-        sudo apt install php -y
-        sudo apt install phpmyadmin -y
+        sudo apt install libmysqlclient-dev -y
+        sudo apt install libssl-dev -y
         sudo apt install mysql-server -y
         sudo apt install mysql-client -y
+        sudo apt install php -y
+        #sudo apt install phpmyadmin -y
         sudo apt install nano -y
         sudo apt install git -y
         sudo apt install make -y
         sudo apt install gcc -y
         sudo apt install g++ -y
-        sudo apt install libmysqlclient-dev -y
-        sudo apt install libssl-dev -y
+
         sudo apt autoremove -y
         sudo apt clean
         ```
@@ -148,6 +150,7 @@ If you prefer to set up the server manually, follow these steps:
 
 4.  **Setting Up the MySQL Database**:
 
+    -   Access MySQL shell `sudo mysql`
 	-   Inside the MySQL shell, we need to perform the following actions:
 		
 		-   Create a new database (replace  `$DB_NAME`  with your desired database name).
@@ -157,14 +160,14 @@ If you prefer to set up the server manually, follow these steps:
 		-   Create an additional database named  `log`  and grant privileges for it.
 	-   Commands :
 		```bash
-		mysql -e "CREATE DATABASE $DB_NAME;"
-		mysql -e "CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
-		mysql -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';"
-		mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;"
-		mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'%' WITH GRANT OPTION;"
-		mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;"
-		mysql -e "CREATE DATABASE log;"
-		mysql -e "GRANT ALL ON log.* TO '$DB_USER'@'localhost';"
+		sudo mysql -e "CREATE DATABASE $DB_NAME;"
+		sudo mysql -e "CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
+		sudo mysql -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';"
+		sudo mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;"
+		sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'%' WITH GRANT OPTION;"
+		sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;"
+		sudo mysql -e "CREATE DATABASE log;"
+		sudo mysql -e "GRANT ALL ON log.* TO '$DB_USER'@'localhost';"
 		```
 	-   Now you need to import all the necessary SQL files in the correct order. Make sure you're in the rAthena directory:
 		```bash
@@ -174,37 +177,37 @@ If you prefer to set up the server manually, follow these steps:
 	-   Import the SQL files in this specific order:
 		```bash
 		# Import main database tables
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/main.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/web.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/roulette_default_data.sql
-			mysql -u $DB_USER -p$DB_PASS log < sql-files/logs.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/main.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/web.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/roulette_default_data.sql
+			sudo mysql -u $DB_USER -p$DB_PASS log < sql-files/logs.sql
 			# Pre-Renewal - Import only for Pre-renewal Server
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_equip.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_etc.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_usable.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db2.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_db.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_db2.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_skill_db.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_skill_db2.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/compatibility/item_db_compat.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/compatibility/item_db2_compat.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_equip.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_etc.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_usable.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db2.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_db.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_db2.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_skill_db.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_skill_db2.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/compatibility/item_db_compat.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/compatibility/item_db2_compat.sql
 		    # Renewal- Import only for Renewal Server
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_re.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_re_equip.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_re_etc.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_re_usable.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db2_re.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_db_re.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_db2_re.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_skill_db_re.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_skill_db2_re.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/compatibility/item_db_re_compat.sql
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/compatibility/item_db2_re_compat.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_re.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_re_equip.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_re_etc.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db_re_usable.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/item_db2_re.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_db_re.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_db2_re.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_skill_db_re.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/mob_skill_db2_re.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/compatibility/item_db_re_compat.sql
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/compatibility/item_db2_re_compat.sql
 			# 4. Common required files
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/upgrades/(date).sql # Replace with the most recent upgrade file
-			mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/tools/convert_engine_innodb.sql # Recommended
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/upgrades/(date).sql # Replace with the most recent upgrade file
+			sudo mysql -u $DB_USER -p$DB_PASS $DB_NAME < sql-files/tools/convert_engine_innodb.sql # Recommended
 		```
 
 	-   Note: Files with `_re` suffix are for Renewal mode. If you're using Pre-Renewal mode, you can skip those files.
@@ -214,7 +217,7 @@ If you prefer to set up the server manually, follow these steps:
 		Make sure to replace : `$ADMIN_USER` & `$ADMIN_PASS` with your user and password
 		(This can be edited later directly onto the phpMyAdmin UI)
 		```bash
-		mysql -e "INSERT INTO \`$DB_NAME\`.\`login\` (\`account_id\`, \`userid\`, \`user_pass\`, \`sex\`, \`email\`, \`group_id\`, \`state\`, \`unban_time\`, \`expiration_time\`, \`logincount\`, \`lastlogin\`, \`last_ip\`, \`birthdate\`, \`character_slots\`, \`pincode\`, \`pincode_change\`, \`vip_time\`, \`old_group\`) VALUES ('20000000', '$ADMIN_USER', '$ADMIN_PASS', 'M', 'admin@email.com', '99', '0', '0', '0', '0', '2022-02-20 00:00:00', '', '2022-02-20', '9', '', '0', '0', '0');"
+		sudo mysql -e "INSERT INTO \`$DB_NAME\`.\`login\` (\`account_id\`, \`userid\`, \`user_pass\`, \`sex\`, \`email\`, \`group_id\`, \`state\`, \`unban_time\`, \`expiration_time\`, \`logincount\`, \`lastlogin\`, \`last_ip\`, \`birthdate\`, \`character_slots\`, \`pincode\`, \`pincode_change\`, \`vip_time\`, \`old_group\`) VALUES ('20000000', '$ADMIN_USER', '$ADMIN_PASS', 'M', 'admin@email.com', '99', '0', '0', '0', '0', '2022-02-20 00:00:00', '', '2022-02-20', '9', '', '0', '0', '0');"
 		```
 		
 	-   You can now any time login to your MySQL Database using your phpMyAdmin hosted website.
@@ -224,13 +227,13 @@ If you prefer to set up the server manually, follow these steps:
 
 5.  **Customize rAthena Configuration Files Using the `import` Directory**:
      	```
-     	cd ~/rAthena/import
+     	cd ~/rAthena/conf/import
      	```
     
-   	- Create or modify files named `char_athena.conf`, `inter_athena.conf`, and `map_athena.conf` in this directory. 
+   	- Create or modify files named `char_conf.txt`, `inter_conf.txt`, and `map_conf.txt` in this directory. 
    	Use `nano` or any text editor to create or edit these files:
  
-	   	`nano char_athena.conf`
+	   	`nano char_conf.txt`
 		```
 		// Server Communication username and password.
 		userid: $SERVER_COM_USER
@@ -242,7 +245,7 @@ If you prefer to set up the server manually, follow these steps:
 		// Character Server IP
 		char_ip: $SERVER_IP
 		```
-		`nano inter_athena.conf`
+		`nano inter_conf.txt`
 
 		```
 		// MySQL Login server
@@ -292,7 +295,7 @@ If you prefer to set up the server manually, follow these steps:
 		log_login_db: loginlog
 		```
     
-		`nano map_athena.conf`
+		`nano map_conf.txt`
 		```
 		userid: $SERVER_COM_USER
 		passwd: $SERVER_COM_PASS
@@ -304,7 +307,7 @@ If you prefer to set up the server manually, follow these steps:
 		
  	- Now that you've edited the Server Communication username and password you have to update it from the MySQL Database `Login` table.
 		```bash
-	 	mysql -u $DB_USER -p$DB_PASS -D $DB_NAME -e "UPDATE login SET userid='$SERVER_COM_USER', user_pass='$SERVER_COM_PASS' WHERE account_id=1;"	
+	 	sudo mysql -u $DB_USER -p$DB_PASS -D $DB_NAME -e "UPDATE login SET userid='$SERVER_COM_USER', user_pass='$SERVER_COM_PASS' WHERE account_id=1;"	
 		```
 
 6.  **Compile & Run the Emulator**:
@@ -410,15 +413,6 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 - **Click** `Select Recommended` and apply the patches.
 - **Copy** the patched ragexe to the `client` folder.
 
-## Discord Bot Integration
-This server comes with a Discord bot that provides various features to help manage your server and enhance player experience. The bot includes account management, WoE statistics tracking, and server status monitoring.
-
-For detailed information about the bot's features, setup instructions, and configuration, please refer to the [Discord Bot README](addons/discord-bot/README.md).
-
-## Quality of Life Addons
-This server comes with various Quality of Life (QoL) improvements to enhance the player experience. These addons are located in the `addons/qol-addons/` directory, where you can find detailed documentation for each feature.
-
-To learn more about available QoL features and their installation, please refer to the [QoL Addons README](addons/qol-addons/README.md).
 
 ## Troubleshooting
 Common issues and solutions:
@@ -480,6 +474,7 @@ Common issues and solutions:
    - Regularly check and rotate logs in `log/` directory
    - Monitor error logs for issues
 
+
 ## Additional Setup for Running the Server
 
 To run the rAthena server in a separate session, we use `screen`. This allows the server to run independently of your terminal session, so it continues running even if you disconnect.
@@ -514,3 +509,16 @@ The setup script starts the server in a `screen` session named `rathena_server`.
 
 Debug phpmyadmin :
 sudo ln -s /usr/share/phpmyadmin /var/www/html
+
+## Additional Section
+
+### Discord Bot Integration
+This server comes with a Discord bot that provides various features to help manage your server and enhance player experience. The bot includes account management, WoE statistics tracking, and server status monitoring.
+
+For detailed information about the bot's features, setup instructions, and configuration, please refer to the [Discord Bot README](addons/discord-bot/README.md).
+
+### Quality of Life Addons
+This server comes with various Quality of Life (QoL) improvements to enhance the player experience. These addons are located in the `addons/qol-addons/` directory, where you can find detailed documentation for each feature.
+
+To learn more about available QoL features and their installation, please refer to the [QoL Addons README](addons/qol-addons/README.md).
+
