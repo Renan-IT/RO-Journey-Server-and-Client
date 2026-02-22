@@ -357,7 +357,7 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
   - [Ragexe Client](http://nemo.herc.ws/clients/) - Use `2022-04-06_Ragexe_1648707856`
   - [kRO Full Client 2023-04-04](https://rathena.org/board/topic/106413-kro-full-client-2023-04-04-includes-bgm-rsu/)
   - [ROenglishRE](https://github.com/llchrisll/ROenglishRE)
-  - [GRF Editor](https://rathena.org/board/files/file/2766-grf-editor/)
+  # - [GRF Editor](https://rathena.org/board/files/file/2766-grf-editor/)
 
 ### 2. Extracting Archives
 
@@ -391,25 +391,13 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
   - `option (6)` Exit
   - `CLSGenerator.bat`: Select all "all in one" packages
 - **Open** the newly created `Client/` folder.
+- **Copy** All Files to the fullclient kro Folder
 
 ### 5. Client Configuration
 
 - **Edit** the `clientinfo.xml` file in the `data` folder to specify your client's name and change the IP address.
 
-### 6. Creating the Translation GRF
-
-- **Open** GRF Editor, create a new GRF file, and add all files from the `data` folder.
-- **Save** the GRF as `server.grf`.
-- **Copy** the `server.grf` file to the `client(kro)` folder.
-- **Copy** all files from the `Client/` folder to the `client` folder.
-
-### 7. Editing DATA.ini
-
-- **Edit** the `DATA.ini` file in the `client` folder:
-  - Add the line `0=server.grf` above `1=data.grf`
-  - Ensure `2=rdata.grf` is listed and save the changes.
-
-### 8. Patching the Ragexe
+### 6. Patching the Ragexe
 
 - **Execute** `./WARP/win32/WARP.exe`.
 - **Load** `./ragexe/2022-04-06_Ragexe_1648707856.exe` as the source in WARP.
