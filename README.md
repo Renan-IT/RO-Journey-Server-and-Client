@@ -382,15 +382,19 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 ### 4. File Copying
 
 - **Navigate to** `ROenglishRE-master/Tools` and execute the following scripts:
+  - `ClientGenerator.bat`: Select `re (0)` and `2022-04-06 (11)` exit
   - `ClientGenerator.bat`: Select `prere (1)` and `2022-04-06 (11)`
-  - `AdditionsGenerator.bat`: Enter `20220406` and add every "all in one" package
+  - `AdditionsGenerator.bat`: Enter `20220406` 
+  - `option (1)` and add every "all in one" package (1), Back (0)
+  - `option (2)` and add every "all in one" package (1), Back (0)
+  - `option (3)` and add every "all in one" package (1), Back (0)
+  - `option (6)` Exit
   - `CLSGenerator.bat`: Select all "all in one" packages
 - **Open** the newly created `Client/` folder.
 
 ### 5. Client Configuration
 
 - **Edit** the `clientinfo.xml` file in the `data` folder to specify your client's name and change the IP address.
-- **Delete** the `\stylingshop` folder located in `data\luafiles514\lua files\`.
 
 ### 6. Creating the Translation GRF
 
@@ -409,8 +413,12 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 
 - **Execute** `./WARP/win32/WARP.exe`.
 - **Load** `./ragexe/2022-04-06_Ragexe_1648707856.exe` as the source in WARP.
+- **Load Patches**
 - **Use** the top-left menu to load the WARP session and select `./ROenglishRE/Addons/WARP SESSIONS/2019-06_Translation.yml`.
 - **Click** `Select Recommended` and apply the patches.
+- **Disabled Gamge Guard**
+- **Disable MessageBoxes**
+- **Enable Read data Folder First**
 - **Copy** the patched ragexe to the `client` folder.
 
 
