@@ -12,6 +12,7 @@
 - [Additional Setup for Running the Server](#additional-setup-for-running-the-server)
   - [Installing Screen](#installing-screen)
   - [Running the Server in a Screen Session](#running-the-server-in-a-screen-session)
+  - [Optional: Installing phpMyAdmin](#optional-installing-phpmyadmin)
 - [Additional Section](#additional-section)
   - [Discord Bot Integration](#discord-bot-integration)
   - [Quality of Life Addons](#quality-of-life-addons)
@@ -100,7 +101,6 @@ If you prefer to set up the server manually, follow these steps:
         sudo apt install mysql-server -y
         sudo apt install mysql-client -y
         sudo apt install php -y
-        #sudo apt install phpmyadmin -y
         sudo apt install nano -y
         sudo apt install git -y
         sudo apt install make -y
@@ -118,20 +118,12 @@ If you prefer to set up the server manually, follow these steps:
         -  `libmariadb-dev`  and  `libmariadb-dev-compat`: These packages provide development files and compatibility libraries for MariaDB (a MySQL fork).
         -   Ondřej Surý PHP repository provides PHP packages not available in the default Ubuntu repositories.
         -  `php`: Installs PHP, a server-side scripting language.
-        -  `phpmyadmin`: A web-based interface for managing MySQL databases.
         -  `mysql-server`  and  `mysql-client`: Installs MySQL server and client components.
         -  `nano`: A lightweight and user-friendly text editor
         -  `git`: Installs the Git version control system. Git is widely used for managing source code repositories
         -  `make` `gcc` `g++`: Install essential development tools for compiling and building software
         -  `libmysqlclient-dev`: Provides development files for the MySQL client library
         -  `libssl-dev`: Provides development files for the OpenSSL library
-
-    -   Notes:
-        After installing phpMyAdmin, you'll be prompted to configure a database. Follow these instructions:
-
-        -   When prompted, type  **"yes"**  to configure the database.
-        -   Set up a password for the database user.
-        -   Select  **"1"**  (for  **apache2**) when asked to choose a web server.
 
 3.  **Clone the rAthena Repository**:
 
@@ -215,15 +207,12 @@ If you prefer to set up the server manually, follow these steps:
 	-   After importing all SQL files, create your first admin account:
 	
 		Make sure to replace : `$ADMIN_USER` & `$ADMIN_PASS` with your user and password
-		(This can be edited later directly onto the phpMyAdmin UI)
+		(This can be edited later using MySQL commands or a database management tool)
 		```bash
 		sudo mysql -e "INSERT INTO \`$DB_NAME\`.\`login\` (\`account_id\`, \`userid\`, \`user_pass\`, \`sex\`, \`email\`, \`group_id\`, \`state\`, \`unban_time\`, \`expiration_time\`, \`logincount\`, \`lastlogin\`, \`last_ip\`, \`birthdate\`, \`character_slots\`, \`pincode\`, \`pincode_change\`, \`vip_time\`, \`old_group\`) VALUES ('20000000', '$ADMIN_USER', '$ADMIN_PASS', 'M', 'admin@email.com', '99', '0', '0', '0', '0', '2022-02-20 00:00:00', '', '2022-02-20', '9', '', '0', '0', '0');"
 		```
 		
-	-   You can now any time login to your MySQL Database using your phpMyAdmin hosted website.
-
-		-  Using : http://yourip/phpmyadmin/
-		-  Login with : `$DB_USER` & `$DB_PASS`
+	-   You can manage your MySQL database using the command line or install an optional web interface like phpMyAdmin (see [Optional: Installing phpMyAdmin](#optional-installing-phpmyadmin)).
 
 5.  **Customize rAthena Configuration Files Using the `import` Directory**:
      	```
@@ -503,8 +492,30 @@ The setup script starts the server in a `screen` session named `rathena_server`.
 
 
 
-Debug phpmyadmin :
-sudo ln -s /usr/share/phpmyadmin /var/www/html
+### Optional: Installing phpMyAdmin
+
+phpMyAdmin is a web-based interface for managing MySQL databases. It is not required for the server to function but can be useful for database administration.
+
+1. **Install phpMyAdmin**:
+   ```bash
+   sudo apt install phpmyadmin -y
+   ```
+
+2. **Configure phpMyAdmin**:
+   - When prompted, select the web server (usually apache2).
+   - Choose "yes" to configure the database for phpMyAdmin with dbconfig-common.
+   - Set a password for the phpMyAdmin database user.
+
+3. **Enable phpMyAdmin in Apache**:
+   ```bash
+   sudo ln -s /usr/share/phpmyadmin /var/www/html
+   ```
+
+4. **Access phpMyAdmin**:
+   - Open your web browser and go to `http://your-server-ip/phpmyadmin`
+   - Log in with your MySQL username and password.
+
+> **Note**: Ensure your firewall allows HTTP traffic (port 80) if accessing remotely. For security, consider using HTTPS and restricting access.
 
 ## Additional Section
 
