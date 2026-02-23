@@ -404,7 +404,7 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
 - **Load Patches**
 - **Use** the top-left menu to load the WARP session and select `./ROenglishRE/Addons/WARP SESSIONS/2019-06_Translation.yml`.
 - **Click** `Select Recommended` and apply the patches.
-- **Disabled Gamge Guard**
+- Make sur **Game Guard** is **Disabled**
 - **Disable MessageBoxes**
 - **Enable Read data Folder First**
 - **Copy** the patched ragexe to the `client` folder.
