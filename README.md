@@ -346,7 +346,7 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
   - [Ragexe Client](http://nemo.herc.ws/clients/) - Use `2022-04-06_Ragexe_1648707856`
   - [kRO Full Client 2023-04-04](https://rathena.org/board/topic/106413-kro-full-client-2023-04-04-includes-bgm-rsu/)
   - [ROenglishRE](https://github.com/llchrisll/ROenglishRE)
-  # - [GRF Editor](https://rathena.org/board/files/file/2766-grf-editor/)
+  - [GRF Editor](https://rathena.org/board/files/file/2766-grf-editor/) (optional)
 
 ### 2. Extracting Archives
 
@@ -354,7 +354,7 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
   - `kRO_FullClient_20230404.zip`
   - `ROenglishRE-master.zip`
   - WARP archive
-- **Install** the GRF Editor.
+- **Install** the GRF Editor (optional).
 
 ### 3. File Organization
 
