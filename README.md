@@ -381,6 +381,7 @@ Our example client version is going to be **20220406** formated as `YYYMMDD`:
   - `CLSGenerator.bat`: Select all "all in one" packages
 - **Open** the newly created `Client/` folder.
 - **Copy** All Files to the fullclient kro Folder
+- **Copy** `System` Folder from `ROenglishRE-master\Addons\Official Fonts` to kro Folder
 
 ### 5. Client Configuration
 
